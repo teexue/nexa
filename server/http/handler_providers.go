@@ -9,7 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/provider"
 )
 

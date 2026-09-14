@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // Runner executes one kanban item to completion and returns the aggregated

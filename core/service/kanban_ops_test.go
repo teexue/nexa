@@ -7,9 +7,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/kanban"
-	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/kanban"
+	"github.com/teexue/nexa/core/service"
+	"github.com/teexue/nexa/core/store"
 )
 
 func newKanbanService(t *testing.T) (*service.Service, *store.DB) {

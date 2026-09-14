@@ -9,15 +9,15 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 )
 
 // Run executes an agent and streams events back to the client.
-func (s *GRPCServer) Run(req *commonagentv1.RunRequest, stream grpc.ServerStreamingServer[commonagentv1.AgentEvent]) error {
+func (s *GRPCServer) Run(req *nexav1.RunRequest, stream grpc.ServerStreamingServer[nexav1.AgentEvent]) error {
 	ctx := withRequestLocale(stream.Context())
 
 	if err := s.checkAuth(ctx); err != nil {
@@ -82,7 +82,7 @@ func mapGRPCRunError(ctx context.Context, err error) error {
 }
 
 // Approve resolves a pending tool approval.
-func (s *GRPCServer) Approve(ctx context.Context, req *commonagentv1.ApproveRequest) (*commonagentv1.ApproveResponse, error) {
+func (s *GRPCServer) Approve(ctx context.Context, req *nexav1.ApproveRequest) (*nexav1.ApproveResponse, error) {
 	ctx = withRequestLocale(ctx)
 	if err := s.checkAuth(ctx); err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (s *GRPCServer) Approve(ctx context.Context, req *commonagentv1.ApproveRequ
 		return nil, status.Error(codes.NotFound, i18n.TCtx(ctx, "api.grpc.error.approval_not_found", "id", req.ApprovalId))
 	}
 
-	return &commonagentv1.ApproveResponse{
+	return &nexav1.ApproveResponse{
 		Resolved:   true,
 		ApprovalId: req.ApprovalId,
 		Approved:   req.Approved,

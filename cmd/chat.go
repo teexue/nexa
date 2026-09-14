@@ -13,13 +13,13 @@ import (
 	"syscall"
 
 	"github.com/chzyer/readline"
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/tui"
+	"github.com/teexue/nexa/core/tui"
 	"github.com/teexue/nexakit/registry"
 	"golang.org/x/term"
 )

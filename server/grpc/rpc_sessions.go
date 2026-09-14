@@ -7,14 +7,14 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/teexue/common-agent/core/auth"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/auth"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/session"
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 )
 
 // ListSessions returns all persisted sessions.
-func (s *GRPCServer) ListSessions(ctx context.Context, _ *commonagentv1.ListSessionsRequest) (*commonagentv1.ListSessionsResponse, error) {
+func (s *GRPCServer) ListSessions(ctx context.Context, _ *nexav1.ListSessionsRequest) (*nexav1.ListSessionsResponse, error) {
 	ctx = withRequestLocale(ctx)
 	if err := s.checkAuth(ctx); err != nil {
 		return nil, err
@@ -24,19 +24,19 @@ func (s *GRPCServer) ListSessions(ctx context.Context, _ *commonagentv1.ListSess
 		return nil, status.Error(codes.FailedPrecondition, i18n.TCtx(ctx, "api.grpc.error.failed_precondition", "error", err.Error()))
 	}
 
-	items := make([]*commonagentv1.SessionMeta, len(metas))
+	items := make([]*nexav1.SessionMeta, len(metas))
 	for i, m := range metas {
-		items[i] = &commonagentv1.SessionMeta{
+		items[i] = &nexav1.SessionMeta{
 			Id:        m.ID,
 			AgentName: m.Agent,
 			UpdatedAt: m.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
 		}
 	}
-	return &commonagentv1.ListSessionsResponse{Sessions: items}, nil
+	return &nexav1.ListSessionsResponse{Sessions: items}, nil
 }
 
 // GetSession returns a specific session with its messages.
-func (s *GRPCServer) GetSession(ctx context.Context, req *commonagentv1.GetSessionRequest) (*commonagentv1.GetSessionResponse, error) {
+func (s *GRPCServer) GetSession(ctx context.Context, req *nexav1.GetSessionRequest) (*nexav1.GetSessionResponse, error) {
 	ctx = withRequestLocale(ctx)
 	if err := s.checkAuth(ctx); err != nil {
 		return nil, err
@@ -50,15 +50,15 @@ func (s *GRPCServer) GetSession(ctx context.Context, req *commonagentv1.GetSessi
 	}
 
 	msgs := sess.GetMessages()
-	protoMsgs := make([]*commonagentv1.Message, len(msgs))
+	protoMsgs := make([]*nexav1.Message, len(msgs))
 	for i, m := range msgs {
-		protoMsgs[i] = &commonagentv1.Message{
+		protoMsgs[i] = &nexav1.Message{
 			Role:    string(m.Role),
 			Content: m.Content,
 		}
 	}
 
-	return &commonagentv1.GetSessionResponse{
+	return &nexav1.GetSessionResponse{
 		Id:        sess.ID,
 		AgentName: sess.Agent,
 		Messages:  protoMsgs,
@@ -66,7 +66,7 @@ func (s *GRPCServer) GetSession(ctx context.Context, req *commonagentv1.GetSessi
 }
 
 // DeleteSession deletes a persisted session.
-func (s *GRPCServer) DeleteSession(ctx context.Context, req *commonagentv1.DeleteSessionRequest) (*commonagentv1.DeleteSessionResponse, error) {
+func (s *GRPCServer) DeleteSession(ctx context.Context, req *nexav1.DeleteSessionRequest) (*nexav1.DeleteSessionResponse, error) {
 	ctx = withRequestLocale(ctx)
 	if err := s.checkAuth(ctx); err != nil {
 		return nil, err
@@ -77,5 +77,5 @@ func (s *GRPCServer) DeleteSession(ctx context.Context, req *commonagentv1.Delet
 		}
 		return nil, status.Error(codes.InvalidArgument, i18n.TCtx(ctx, "api.grpc.error.invalid_argument", "error", err.Error()))
 	}
-	return &commonagentv1.DeleteSessionResponse{}, nil
+	return &nexav1.DeleteSessionResponse{}, nil
 }

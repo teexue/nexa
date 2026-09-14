@@ -7,10 +7,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/kanban"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/kanban"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 	"github.com/teexue/nexakit/builtin"
 )
 

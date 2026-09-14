@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
 )
 

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/huh"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 	"golang.org/x/term"
 )
 

@@ -6,9 +6,9 @@ import (
 	"sort"
 
 	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/tui"
+	"github.com/teexue/nexa/core/tui"
 )
 
 // serviceChatRunner adapts service.Service to tui.ChatRunner.

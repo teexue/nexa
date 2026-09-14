@@ -71,14 +71,14 @@ function AboutRow() {
   }, [])
   return (
     <a
-      href="https://github.com/teexue/common-agent"
+      href="https://github.com/teexue/nexa"
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center justify-between gap-3 border-t border-border px-5 py-3.5 transition-colors hover:bg-muted/40"
     >
       <span className="min-w-0">
         <span className="block font-mono text-xs font-medium text-foreground">
-          common-agent {appVersion || "dev"}
+          Nexa {appVersion || "dev"}
         </span>
         <span className="mt-0.5 block text-[11px] text-muted-foreground">
           {t("settings.aboutDesc")}

@@ -1,6 +1,6 @@
 package config
 
-import "github.com/teexue/common-agent/core/store"
+import "github.com/teexue/nexa/core/store"
 
 const (
 	// DefaultSubagentMaxTurns is the child-run turn cap when unset.

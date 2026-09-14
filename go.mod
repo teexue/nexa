@@ -1,4 +1,4 @@
-module github.com/teexue/common-agent
+module github.com/teexue/nexa
 
 go 1.26.5
 

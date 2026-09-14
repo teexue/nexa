@@ -7,9 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/skill"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/i18n"
+	"github.com/teexue/nexa/core/skill"
 )
 
 func runSkills(args []string) {

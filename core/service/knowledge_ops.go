@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/common-agent/core/knowledge"
+	"github.com/teexue/nexa/core/knowledge"
 )
 
 // CreateKnowledge creates a knowledge base.

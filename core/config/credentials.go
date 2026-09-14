@@ -5,7 +5,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // CredentialStore is a thread-safe store for API credentials backed by SQLite.

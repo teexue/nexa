@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/auth"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/auth"
+	"github.com/teexue/nexa/core/store"
 )
 
 const ginIdentityKey = "identity"

@@ -1,11 +1,11 @@
 .PHONY: all build frontend backend clean release \
-	lint check check-standards test test-integration ensure-dist \
+	lint check check-standards golangci test test-integration ensure-dist \
 	build-darwin-amd64 build-darwin-arm64 \
 	build-linux-amd64 build-linux-arm64 \
 	build-windows-amd64 build-windows-arm64
 
 BIN_DIR := bin
-BINARY  := common-agent
+BINARY  := nexa
 PKG     := ./cmd
 CGO     := 0
 
@@ -14,12 +14,12 @@ CGO     := 0
 # `make release VERSION=v1.2.3` (CI passes the release tag).
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 
-LDFLAGS := -s -w -X github.com/teexue/common-agent/core/version.Version=$(VERSION)
+LDFLAGS := -s -w -X github.com/teexue/nexa/core/version.Version=$(VERSION)
 
 all: build
 
-# After check-standards is green, build must depend on check.
-build: check frontend backend
+# Push CI runs this target. It must include every check that workflow runs.
+build: check test golangci frontend backend
 
 # go:embed all:dist in cmd/static.go requires the directory to exist and
 # contain at least one file. Frontend build replaces this with real assets.
@@ -36,6 +36,10 @@ check-standards:
 	python3 scripts/check-standards.py --quick
 
 check: lint check-standards
+
+# Same linter and config as .github/workflows/ci.yml. Not part of make lint.
+golangci: ensure-dist
+	golangci-lint run
 
 test: ensure-dist
 	go test ./...

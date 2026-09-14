@@ -3,7 +3,7 @@ package httpapi
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 )
 
 // respondError writes a localized JSON error body.

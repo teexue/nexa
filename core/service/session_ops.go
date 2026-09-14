@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // ListSessions returns metadata for sessions owned by userID. Sessions

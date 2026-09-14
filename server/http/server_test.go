@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexakit/tool"

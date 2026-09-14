@@ -87,7 +87,7 @@ export function shellLayoutProps(
     onDeleteSession: shell.onDeleteSession,
     agent: {
       id: "",
-      name: "common-agent",
+      name: "nexa",
       provider: "",
       model: "",
       tools: [] as string[],

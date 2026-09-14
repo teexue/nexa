@@ -6,7 +6,7 @@ import (
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/loop"
 )
 

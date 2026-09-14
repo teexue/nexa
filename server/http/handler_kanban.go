@@ -7,8 +7,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/service"
+	"github.com/teexue/nexa/core/store"
 )
 
 // kanbanItemResponse renders a kanban row for API responses, decoding tags.

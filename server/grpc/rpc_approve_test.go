@@ -7,14 +7,14 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 )
 
 func TestApprove_NoPending(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	_, err := client.Approve(context.Background(), &commonagentv1.ApproveRequest{
+	_, err := client.Approve(context.Background(), &nexav1.ApproveRequest{
 		ApprovalId: "nonexistent",
 		Approved:   true,
 	})
@@ -35,7 +35,7 @@ func TestApprove_MissingID(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	_, err := client.Approve(context.Background(), &commonagentv1.ApproveRequest{
+	_, err := client.Approve(context.Background(), &nexav1.ApproveRequest{
 		Approved: true,
 	})
 	if err == nil {

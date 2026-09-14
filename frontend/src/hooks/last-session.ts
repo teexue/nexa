@@ -1,4 +1,4 @@
-const KEY = "common-agent.last-session-id"
+const KEY = "nexa.last-session-id"
 
 /** Last workspace session for this tab; survives refresh, not new tabs. */
 export function readLastSessionId(): string | null {

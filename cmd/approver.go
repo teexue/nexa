@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/common-agent/core/tui"
+	"github.com/teexue/nexa/core/tui"
 )
 
 // CLIApprover prompts the user in the terminal to approve tool calls.

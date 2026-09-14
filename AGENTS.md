@@ -1,21 +1,21 @@
-# common-agent 编码规范
+# Nexa 编码规范
 
 通用 Agent 基座（Go 核心 + React 前端）。本文档为各 AI 代理提供编码指引。
 
 ## 构建与测试
 
 ```bash
-make                    # 先 check，再前端 production + 后端
+make                    # 先 check、test、golangci-lint，再前端 production + 后端
 make lint               # go vet + eslint --max-warnings 0 + prettier format:check
 make check-standards     # 文件/函数/参数/Go doc，规则见「计数」
 make check              # lint + check-standards
 make test               # go test ./... + pnpm test（不含 integration tag）
 make test-integration   # go test -tags=integration ./test/integration/...
-make build              # 必须依赖 check
+make build              # 覆盖 CI push：check + test + golangci-lint，再构建
 make release            # 必须先 check
 ```
 
-`golangci-lint run` 只在 CI 跑（gocyclo ≤ 15、嵌套 > 4 失败），不进 `make lint`。过闸门不得放宽阈值、删测试、eslint-disable / `nolint`、跳过 hook。无 `go generate` / `go install` / Docker。
+`golangci-lint run` 随 `make build` 执行（gocyclo 与嵌套超限失败），不进 `make lint`。过闸门不得放宽阈值、删测试、eslint-disable / `nolint`、跳过 hook。无 `go generate` / `go install` / Docker。
 
 - **Go**：`go mod` 管依赖，禁止手改 `go.mod` 版本号
 - **前端**：`pnpm add` / `pnpm add -D`，禁止手改 `package.json` 版本号
@@ -26,7 +26,7 @@ make release            # 必须先 check
 - **Tool 统一抽象**：一切能力通过 `Tool` 接口暴露，禁止在 loop 内 hardcode 业务逻辑
 - **Agent 驱动差异**：提示词、工具白名单、权限、模型配置来自 Agent YAML，禁止在 core 写 `switch agent` 分支
 - **事件流输出**：对外只有 `event.Event`。类型：`text_delta` / `reasoning_delta` / `tool_start` / `tool_result` / `tool_approval_required` / `compaction` / `sub_agent_start` / `sub_agent_end` / `error` / `done`
-- **事件是契约**：本仓库消费的事件类型必须在同一变更里同步 HTTP SSE、gRPC convert、TUI、前端 SSE 分发、`sdk/ts`、`sdk/python`。漏一处不得合并；commit 注明 breaking
+- **事件是契约**：本仓库消费的事件类型必须在同一变更里同步 HTTP SSE、gRPC convert、TUI、前端 SSE 分发。漏一处不得合并；commit 注明 breaking
 - **依赖方向**：`cmd → server → core`。core 不得依赖 server / cmd。HTTP 解析与编码在 `server/http`，业务在 `core/service`；handler 不调用 Provider、不复制 loop
 
 ## 目录与包布局
@@ -36,7 +36,6 @@ cmd/                  # 入口，仅 wiring
 core/{agent,config,hook,knowledge,service,skill,store,telemetry,audit,auth,i18n,kanban,tui,version}
 server/{http,grpc}
 frontend/             # React SPA（Vite + Tailwind + shadcn）
-sdk/{ts,python}
 ```
 
 本仓库负责配置、知识库、Skill 文件、Agent 文件、观测和界面。不得存在 `core/billing`、`core/tenant`、`core/workflow`（除非用户另开产品任务）。
@@ -46,7 +45,7 @@ sdk/{ts,python}
 | 入口 | `cmd/` | CLI wiring；默认命令启动 Web UI（`web`；`serve` 为别名） |
 | 传输 | `server/http/` | HTTP/SSE：解析请求 → 调用 `loop.Run` → 流式事件 |
 | 业务 | `core/service/` | HTTP/gRPC 共用业务；handler 不调 Provider、不复制 loop |
-| 核心 | `core/config/` | 用户配置 `~/.common-agent/`（settings、providers、`CredentialStore`、wizard） |
+| 核心 | `core/config/` | 用户配置 `~/.nexa/`（settings、providers、`CredentialStore`、wizard） |
 
 - 包名小写、短、无下划线（`loop` 而非 `agent_loop`）；目录名即包名
 - 每个目录一个包；禁止 `util`、`common`、`helper`、`misc` 包或文件（含 `handler_misc.go`，必须按资源拆并改名）
@@ -54,7 +53,7 @@ sdk/{ts,python}
 
 ## 关键约定
 
-- **配置目录**：`~/.common-agent/` — `state.db`（设置、供应商、凭证、会话等）、`agents/*.yaml`（Agent 定义）。禁止提交 credentials 或 `.env`。升级时会一次性把旧的 `config.yaml` / `providers.yaml` / `credentials.yaml` / `mcp.yaml` 迁入 SQLite。
+- **配置目录**：`~/.nexa/` — `state.db`（设置、供应商、凭证、会话等）、`agents/*.yaml`（Agent 定义）。禁止提交 credentials 或 `.env`。升级时会一次性把旧的 `config.yaml` / `providers.yaml` / `credentials.yaml` / `mcp.yaml` 迁入 SQLite。
 - **凭证**：`config.NewCredentialStore(home)` 创建线程安全 store（读 `state.db`），将其 `Lookup` 传给 catalog；包级旧函数已废弃
 - **工具命名**：snake_case，全局唯一（如 `read_file`）。通过 `registry.Register()` 显式注册，禁止 `init()` 魔法注册
 - **Provider 解析**：`cmd` 层按名从 catalog 解析并创建具体 `provider.Provider`。业务层只依赖接口
@@ -134,7 +133,7 @@ sdk/{ts,python}
 - **Commit**：Conventional Commits — `<type>(<scope>): <description>`
 - **Type**：`feat` / `fix` / `docs` / `refactor` / `test` / `chore` / `perf` / `style`
 - **分支**：`feat/<name>`、`fix/<name>`，短横线分隔，全小写
-- **PR**：标题遵循 Conventional Commits，关联 Issue，变更聚焦单一子任务。CI 必须跑 `make check` + `make test` + `golangci-lint`
+- **PR**：标题遵循 Conventional Commits，关联 Issue，变更聚焦单一子任务。CI 必须跑 `make build`
 
 ## 禁止事项
 

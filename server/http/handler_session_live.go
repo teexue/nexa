@@ -12,7 +12,7 @@ import (
 
 	"github.com/teexue/nexakit/event"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
 )
 

@@ -8,14 +8,14 @@ import (
 	"google.golang.org/grpc/status"
 
 	"github.com/teexue/nexakit/session"
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 )
 
 func TestListSessions_NotConfigured(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	_, err := client.ListSessions(context.Background(), &commonagentv1.ListSessionsRequest{})
+	_, err := client.ListSessions(context.Background(), &nexav1.ListSessionsRequest{})
 	if err == nil {
 		t.Fatal("expected error when store not configured")
 	}
@@ -39,7 +39,7 @@ func TestListSessions_WithStore(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	resp, err := client.ListSessions(context.Background(), &commonagentv1.ListSessionsRequest{})
+	resp, err := client.ListSessions(context.Background(), &nexav1.ListSessionsRequest{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -63,7 +63,7 @@ func TestDeleteSession_NotFound(t *testing.T) {
 	client, _, _, cleanup := setupTestGRPCWithStore(t)
 	defer cleanup()
 
-	_, err := client.DeleteSession(context.Background(), &commonagentv1.DeleteSessionRequest{Id: "nonexistent"})
+	_, err := client.DeleteSession(context.Background(), &nexav1.DeleteSessionRequest{Id: "nonexistent"})
 	if err == nil {
 		t.Fatal("expected error for nonexistent session")
 	}

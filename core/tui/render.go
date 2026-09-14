@@ -10,7 +10,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 
 	"github.com/teexue/nexakit/event"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 )
 
 // RenderOptions controls terminal output behavior.
@@ -53,74 +53,87 @@ func (r *Renderer) RenderEvents(events <-chan event.Event) {
 func (r *Renderer) render(ev event.Event) {
 	switch ev.Type {
 	case event.TypeTextDelta:
-		r.ensureAssistantBlock()
-		_, _ = io.WriteString(r.out, ev.Content)
-		r.needNL = !strings.HasSuffix(ev.Content, "\n")
-
+		r.writeAssistant(ev.Content)
 	case event.TypeReasoningDelta:
-		if !r.opts.ShowReasoning {
-			return
-		}
-		r.ensureAssistantBlock()
-		_, _ = io.WriteString(r.out, dimStyle.Render(ev.Content))
-		r.needNL = !strings.HasSuffix(ev.Content, "\n")
-
+		r.renderReasoning(ev.Content)
 	case event.TypeToolStart:
-		r.ensureAssistantBlock()
-		r.closeLine()
-		input := formatJSON(ev.Input)
-		line := ev.Tool
-		if input != "" {
-			line = fmt.Sprintf("%s(%s)", ev.Tool, input)
-		}
-		_, _ = fmt.Fprintln(r.out, toolStyle.Render("● "+line))
-
+		r.renderToolStart(ev.Tool, ev.Input)
 	case event.TypeToolResult:
-		r.closeLine()
-		output := formatJSON(ev.Output)
-		for _, line := range wrapToolResult(output) {
-			_, _ = fmt.Fprintln(r.out, mutedStyle.Render("  ↳ "+line))
-		}
-
+		r.renderToolResult(ev.Output)
 	case event.TypeToolApproval:
 		r.closeLine()
 		_, _ = fmt.Fprintln(r.out, toolStyle.Render("◎ "+ev.Tool))
-
 	case event.TypeCompaction:
 		r.closeLine()
 		_, _ = fmt.Fprintln(r.out, mutedStyle.Render("↻ "+ev.Content))
-
 	case event.TypeSubAgentStart:
-		r.closeLine()
-		if ev.Status == "queued" {
-			msg := i18n.T("tui.subagent.queued", "max", ev.Message)
-			if ev.Content != "" {
-				msg += ": " + ev.Content
-			}
-			_, _ = fmt.Fprintln(r.out, mutedStyle.Render("… "+msg))
-			break
-		}
-		_, _ = fmt.Fprintln(r.out, toolStyle.Render("→ "+ev.Tool))
-
+		r.renderSubAgentStart(ev)
 	case event.TypeSubAgentEnd:
 		r.closeLine()
 		_, _ = fmt.Fprintln(r.out, mutedStyle.Render("← "+ev.Tool))
-
 	case event.TypeError:
 		r.closeLine()
 		_, _ = fmt.Fprintln(r.out, Error(ev.Message))
-
 	case event.TypeDone:
-		r.closeLine()
-		if !r.opts.QuietDone {
-			status := ev.Status
-			if status == "" {
-				status = i18n.T("tui.done.status_unknown")
-			}
-			_, _ = fmt.Fprintln(r.out, Muted(i18n.T("tui.done.footer", "status", status, "turns", ev.Turns)))
-		}
-		r.opened = false
+		r.renderDone(ev)
 	}
+}
+
+func (r *Renderer) renderReasoning(content string) {
+	if !r.opts.ShowReasoning {
+		return
+	}
+	r.ensureAssistantBlock()
+	_, _ = io.WriteString(r.out, dimStyle.Render(content))
+	r.needNL = !strings.HasSuffix(content, "\n")
+}
+
+func (r *Renderer) writeAssistant(text string) {
+	r.ensureAssistantBlock()
+	_, _ = io.WriteString(r.out, text)
+	r.needNL = !strings.HasSuffix(text, "\n")
+}
+
+func (r *Renderer) renderToolStart(tool string, input any) {
+	r.ensureAssistantBlock()
+	r.closeLine()
+	line := tool
+	if formatted := formatJSON(input); formatted != "" {
+		line = fmt.Sprintf("%s(%s)", tool, formatted)
+	}
+	_, _ = fmt.Fprintln(r.out, toolStyle.Render("● "+line))
+}
+
+func (r *Renderer) renderToolResult(output any) {
+	r.closeLine()
+	for _, line := range wrapToolResult(formatJSON(output)) {
+		_, _ = fmt.Fprintln(r.out, mutedStyle.Render("  ↳ "+line))
+	}
+}
+
+func (r *Renderer) renderSubAgentStart(ev event.Event) {
+	r.closeLine()
+	if ev.Status != "queued" {
+		_, _ = fmt.Fprintln(r.out, toolStyle.Render("→ "+ev.Tool))
+		return
+	}
+	msg := i18n.T("tui.subagent.queued", "max", ev.Message)
+	if ev.Content != "" {
+		msg += ": " + ev.Content
+	}
+	_, _ = fmt.Fprintln(r.out, mutedStyle.Render("… "+msg))
+}
+
+func (r *Renderer) renderDone(ev event.Event) {
+	r.closeLine()
+	if !r.opts.QuietDone {
+		status := ev.Status
+		if status == "" {
+			status = i18n.T("tui.done.status_unknown")
+		}
+		_, _ = fmt.Fprintln(r.out, Muted(i18n.T("tui.done.footer", "status", status, "turns", ev.Turns)))
+	}
+	r.opened = false
 }
 
 func (r *Renderer) ensureAssistantBlock() {

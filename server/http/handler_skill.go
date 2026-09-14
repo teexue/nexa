@@ -8,8 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/skill"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/skill"
 )
 
 // SkillInfo is the JSON DTO for skill listing.

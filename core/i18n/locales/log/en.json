@@ -32,7 +32,7 @@
   "log.chat.init": "init chat",
   "log.chat.readline": "readline",
   "log.runtime.ready": "runtime ready",
-  "log.runtime.no_providers": "no providers configured; configure via Settings UI or `common-agent config set provider`",
+  "log.runtime.no_providers": "no providers configured; configure via Settings UI or `nexa config set provider`",
   "log.compaction.error": "compaction error",
   "log.compaction.compacted": "context compacted",
   "log.hook.turn_start_error": "hook OnTurnStart error",

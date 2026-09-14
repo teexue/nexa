@@ -15,7 +15,7 @@ function workspaceChrome(page: WorkspacePage) {
   return {
     agent: agent.agentInfo ?? {
       id: "",
-      name: "common-agent",
+      name: "nexa",
       provider: "",
       model: "",
       tools: [],

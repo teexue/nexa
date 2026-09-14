@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/builtin"
 	"github.com/teexue/nexakit/registry"
 )
@@ -38,7 +38,7 @@ func resolveProvider(catalog *provider.Catalog, useMock bool) func(a *agent.Agen
 			return mockProvider(), nil
 		}
 		if catalog == nil {
-			return nil, fmt.Errorf("no provider configured; add one in the Settings UI or run: common-agent config set provider")
+			return nil, fmt.Errorf("no provider configured; add one in the Settings UI or run: nexa config set provider")
 		}
 		return catalog.ResolveForAgent(a.Provider)
 	}

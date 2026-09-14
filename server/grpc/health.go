@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/grpc/health/grpc_health_v1"
 
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 )
 
 var _ grpc_health_v1.HealthServer = (*grpcHealthService)(nil)
@@ -70,6 +70,6 @@ func (h *grpcHealthService) refreshStatus(ctx context.Context) {
 
 	h.mu.Lock()
 	h.statuses[""] = status
-	h.statuses[commonagentv1.AgentService_ServiceDesc.ServiceName] = status
+	h.statuses[nexav1.AgentService_ServiceDesc.ServiceName] = status
 	h.mu.Unlock()
 }

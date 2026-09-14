@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/i18n"
 )
 
 func runTemplates(args []string) {

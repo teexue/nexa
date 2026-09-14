@@ -8,8 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/service"
 )
 
 // AgentListItem is the HTTP DTO for GET /v1/agents.

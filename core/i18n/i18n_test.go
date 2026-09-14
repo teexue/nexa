@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 )
 
 func TestNormalize(t *testing.T) {
@@ -32,12 +32,12 @@ func TestNormalize(t *testing.T) {
 }
 
 func TestResolveLocale(t *testing.T) {
-	t.Setenv("COMMON_AGENT_LOCALE", "")
+	t.Setenv("NEXA_LOCALE", "")
 	assert.Equal(t, "zh-CN", i18n.ResolveLocale("", ""))
 	assert.Equal(t, "en", i18n.ResolveLocale("en", "zh-CN"))
 	assert.Equal(t, "zh-CN", i18n.ResolveLocale("", "zh-CN"))
 
-	t.Setenv("COMMON_AGENT_LOCALE", "en")
+	t.Setenv("NEXA_LOCALE", "en")
 	assert.Equal(t, "en", i18n.ResolveLocale("", "zh-CN"))
 	assert.Equal(t, "zh-CN", i18n.ResolveLocale("zh-CN", "en"))
 }

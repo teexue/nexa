@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 )
 
 func TestLoadDemoAgent(t *testing.T) {

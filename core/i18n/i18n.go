@@ -81,7 +81,7 @@ func ResolveLocale(flagValue, settingsLocale string) string {
 	if flagValue != "" {
 		return Normalize(flagValue)
 	}
-	if env := os.Getenv("COMMON_AGENT_LOCALE"); env != "" {
+	if env := os.Getenv("NEXA_LOCALE"); env != "" {
 		return Normalize(env)
 	}
 	if settingsLocale != "" {

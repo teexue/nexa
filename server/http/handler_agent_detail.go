@@ -1,7 +1,7 @@
 package httpapi
 
 import (
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/permission"
 )
 

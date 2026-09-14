@@ -3,7 +3,7 @@ package service
 import (
 	"errors"
 
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // ErrStateNotConfigured is returned when auth/admin ops run without a state DB.

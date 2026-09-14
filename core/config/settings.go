@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // Settings holds user-level defaults persisted in state.db.

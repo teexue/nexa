@@ -59,7 +59,7 @@ type Manager struct {
 	root string
 }
 
-// NewManager creates a Manager rooted at dir (typically ~/.common-agent/knowledge).
+// NewManager creates a Manager rooted at dir (typically ~/.nexa/knowledge).
 func NewManager(root string) (*Manager, error) {
 	if root == "" {
 		return nil, fmt.Errorf("knowledge root is required")

@@ -16,11 +16,11 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/grpc/test/bufconn"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexakit/tool"
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 	"github.com/teexue/nexakit/registry"
 )
 
@@ -38,7 +38,7 @@ func (t *testTool) Execute(_ context.Context, _ json.RawMessage) (tool.Result, e
 	return tool.Result{Output: json.RawMessage(`"ok"`)}, nil
 }
 
-func setupTestGRPC(t *testing.T) (commonagentv1.AgentServiceClient, *GRPCServer, func()) {
+func setupTestGRPC(t *testing.T) (nexav1.AgentServiceClient, *GRPCServer, func()) {
 	t.Helper()
 
 	dir := t.TempDir()
@@ -89,7 +89,7 @@ max_tokens: 1024
 		t.Fatal(err)
 	}
 
-	client := commonagentv1.NewAgentServiceClient(conn)
+	client := nexav1.NewAgentServiceClient(conn)
 	cleanup := func() {
 		conn.Close()
 		srv.Stop()
@@ -98,7 +98,7 @@ max_tokens: 1024
 	return client, grpcSrv, cleanup
 }
 
-func setupTestGRPCWithStore(t *testing.T) (commonagentv1.AgentServiceClient, *GRPCServer, session.Store, func()) {
+func setupTestGRPCWithStore(t *testing.T) (nexav1.AgentServiceClient, *GRPCServer, session.Store, func()) {
 	t.Helper()
 
 	dir := t.TempDir()
@@ -154,7 +154,7 @@ max_tokens: 1024
 		t.Fatal(err)
 	}
 
-	client := commonagentv1.NewAgentServiceClient(conn)
+	client := nexav1.NewAgentServiceClient(conn)
 	cleanup := func() {
 		conn.Close()
 		srv.Stop()
@@ -167,7 +167,7 @@ func TestRun_BasicStream(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	stream, err := client.Run(context.Background(), &commonagentv1.RunRequest{
+	stream, err := client.Run(context.Background(), &nexav1.RunRequest{
 		Agent:  "test",
 		Prompt: "hello",
 	})
@@ -175,7 +175,7 @@ func TestRun_BasicStream(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var events []*commonagentv1.AgentEvent
+	var events []*nexav1.AgentEvent
 	for {
 		ev, err := stream.Recv()
 		if err == io.EOF {
@@ -193,7 +193,7 @@ func TestRun_BasicStream(t *testing.T) {
 
 	// Last event should be done.
 	last := events[len(events)-1]
-	if last.Type != commonagentv1.EventType_EVENT_TYPE_DONE {
+	if last.Type != nexav1.EventType_EVENT_TYPE_DONE {
 		t.Errorf("expected last event type DONE, got %v", last.Type)
 	}
 }
@@ -202,7 +202,7 @@ func TestRun_MissingAgent(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	stream, err := client.Run(context.Background(), &commonagentv1.RunRequest{
+	stream, err := client.Run(context.Background(), &nexav1.RunRequest{
 		Agent:  "nonexistent",
 		Prompt: "hello",
 	})
@@ -234,7 +234,7 @@ func TestRun_MissingPrompt(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	stream, err := client.Run(context.Background(), &commonagentv1.RunRequest{
+	stream, err := client.Run(context.Background(), &nexav1.RunRequest{
 		Agent: "test",
 	})
 	if err != nil {
@@ -263,7 +263,7 @@ func TestRun_SessionResume_NotConfigured(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	stream, err := client.Run(context.Background(), &commonagentv1.RunRequest{
+	stream, err := client.Run(context.Background(), &nexav1.RunRequest{
 		Agent:     "test",
 		Prompt:    "hello",
 		SessionId: "some-id",
@@ -294,7 +294,7 @@ func TestListTools(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	resp, err := client.ListTools(context.Background(), &commonagentv1.ListToolsRequest{})
+	resp, err := client.ListTools(context.Background(), &nexav1.ListToolsRequest{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -318,8 +318,8 @@ func TestListTools(t *testing.T) {
 }
 
 func TestEventToProto_And_Back(t *testing.T) {
-	original := commonagentv1.AgentEvent{
-		Type:       commonagentv1.EventType_EVENT_TYPE_TEXT_DELTA,
+	original := nexav1.AgentEvent{
+		Type:       nexav1.EventType_EVENT_TYPE_TEXT_DELTA,
 		Content:    "hello",
 		Tool:       "",
 		Input:      nil,

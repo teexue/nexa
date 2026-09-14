@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package commonagent.v1;
+package nexa.v1;
 
-option go_package = "github.com/teexue/common-agent/proto/commonagentv1";
+option go_package = "github.com/teexue/nexa/proto;nexav1";
 
 // EventType mirrors event.Type from core/event.
 enum EventType {

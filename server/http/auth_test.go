@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/store"
 )
 
 func setupAuthServer(t *testing.T) (*Server, *store.DB) {

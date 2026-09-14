@@ -3,7 +3,7 @@ package service
 import (
 	"strings"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/session"
 )
 

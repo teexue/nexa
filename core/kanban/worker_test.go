@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/kanban"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/kanban"
+	"github.com/teexue/nexa/core/store"
 )
 
 func openWorkerDB(t *testing.T) *store.DB {

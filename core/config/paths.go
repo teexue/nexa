@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 )
 
-const dirName = ".common-agent"
+const dirName = ".nexa"
 
-// Home returns ~/.common-agent, creating it when ensure is true.
+// Home returns ~/.nexa, creating it when ensure is true.
 func Home(ensure bool) (string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -79,7 +79,7 @@ func MCPFile(home string) string {
 	return filepath.Join(home, "mcp.yaml")
 }
 
-// EnsureDirs creates the ~/.common-agent directory structure (home, agents,
+// EnsureDirs creates the ~/.nexa directory structure (home, agents,
 // sessions, knowledge, skills) without writing any default content. Use this on startup so
 // the runtime has a place to read/write without pre-installing vendors or
 // agents — initial content is provided by `config init` or the Settings UI.

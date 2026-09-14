@@ -12,24 +12,24 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/audit"
-	"github.com/teexue/common-agent/core/auth"
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/audit"
+	"github.com/teexue/nexa/core/auth"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/common-agent/core/knowledge"
+	"github.com/teexue/nexa/core/knowledge"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/store"
-	"github.com/teexue/common-agent/core/telemetry"
+	"github.com/teexue/nexa/core/store"
+	"github.com/teexue/nexa/core/telemetry"
 	"github.com/teexue/nexakit/registry"
 )
 
 // Server exposes agent HTTP endpoints via Gin.
 type Server struct {
 	agentsDir     string
-	home          string // ~/.common-agent root; skills dirs derive from it
+	home          string // ~/.nexa root; skills dirs derive from it
 	registry      *registry.Registry
 	newProvider   func(a *agent.Agent) (provider.Provider, error)
 	staticFS      fs.FS // optional embedded frontend; nil disables static serving

@@ -16,13 +16,13 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/grpc/test/bufconn"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 	"github.com/teexue/nexakit/registry"
 )
 
-func setupTestGRPCWithAuth(t *testing.T, apiKey string) (commonagentv1.AgentServiceClient, func()) {
+func setupTestGRPCWithAuth(t *testing.T, apiKey string) (nexav1.AgentServiceClient, func()) {
 	t.Helper()
 
 	dir := t.TempDir()
@@ -74,7 +74,7 @@ max_tokens: 1024
 		t.Fatal(err)
 	}
 
-	client := commonagentv1.NewAgentServiceClient(conn)
+	client := nexav1.NewAgentServiceClient(conn)
 	cleanup := func() {
 		conn.Close()
 		srv.Stop()
@@ -87,7 +87,7 @@ func TestGRPCAuth_NoKey_Unauthenticated(t *testing.T) {
 	client, cleanup := setupTestGRPCWithAuth(t, "grpc-secret-key")
 	defer cleanup()
 
-	_, err := client.ListTools(context.Background(), &commonagentv1.ListToolsRequest{})
+	_, err := client.ListTools(context.Background(), &nexav1.ListToolsRequest{})
 	if err == nil {
 		t.Fatal("expected error without API key")
 	}
@@ -106,7 +106,7 @@ func TestGRPCAuth_WrongKey_Unauthenticated(t *testing.T) {
 	defer cleanup()
 
 	ctx := metadata.AppendToOutgoingContext(context.Background(), "authorization", "bearer wrong-key")
-	_, err := client.ListTools(ctx, &commonagentv1.ListToolsRequest{})
+	_, err := client.ListTools(ctx, &nexav1.ListToolsRequest{})
 	if err == nil {
 		t.Fatal("expected error with wrong API key")
 	}
@@ -125,7 +125,7 @@ func TestGRPCAuth_CorrectKey_Bearer(t *testing.T) {
 	defer cleanup()
 
 	ctx := metadata.AppendToOutgoingContext(context.Background(), "authorization", "bearer grpc-secret-key")
-	resp, err := client.ListTools(ctx, &commonagentv1.ListToolsRequest{})
+	resp, err := client.ListTools(ctx, &nexav1.ListToolsRequest{})
 	if err != nil {
 		t.Fatalf("expected success with correct Bearer key, got: %v", err)
 	}
@@ -139,7 +139,7 @@ func TestGRPCAuth_CorrectKey_XAPIKey(t *testing.T) {
 	defer cleanup()
 
 	ctx := metadata.AppendToOutgoingContext(context.Background(), "x-api-key", "grpc-secret-key")
-	resp, err := client.ListAgents(ctx, &commonagentv1.ListAgentsRequest{})
+	resp, err := client.ListAgents(ctx, &nexav1.ListAgentsRequest{})
 	if err != nil {
 		t.Fatalf("expected success with correct X-API-Key, got: %v", err)
 	}
@@ -153,7 +153,7 @@ func TestGRPCAuth_RunStreaming_RequiresKey(t *testing.T) {
 	defer cleanup()
 
 	// Without key → error.
-	stream, err := client.Run(context.Background(), &commonagentv1.RunRequest{
+	stream, err := client.Run(context.Background(), &nexav1.RunRequest{
 		Agent:  "test",
 		Prompt: "hello",
 	})
@@ -171,7 +171,7 @@ func TestGRPCAuth_RunStreaming_RequiresKey(t *testing.T) {
 
 	// With correct key → success.
 	ctx := metadata.AppendToOutgoingContext(context.Background(), "authorization", "bearer grpc-secret-key")
-	stream, err = client.Run(ctx, &commonagentv1.RunRequest{
+	stream, err = client.Run(ctx, &nexav1.RunRequest{
 		Agent:  "test",
 		Prompt: "hello",
 	})

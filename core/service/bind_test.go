@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/config"
 )
 
 func bindConfigDB(t *testing.T, home string) {

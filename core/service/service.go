@@ -6,14 +6,14 @@ package service
 import (
 	"log/slog"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/audit"
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/audit"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/common-agent/core/knowledge"
+	"github.com/teexue/nexa/core/knowledge"
 	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 	"github.com/teexue/nexakit/registry"
 )
 

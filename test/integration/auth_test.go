@@ -10,8 +10,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/store"
 )
 
 func TestAuthRequired(t *testing.T) {

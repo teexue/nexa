@@ -13,7 +13,7 @@ import (
 	"github.com/teexue/nexakit/event"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 )
 
 // ImageAttachment is an uploaded image in the run request.

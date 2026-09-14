@@ -12,9 +12,9 @@ import (
 
 // Skill scope constants.
 const (
-	// ScopeGlobal marks skills shared by all agents (~/.common-agent/skills).
+	// ScopeGlobal marks skills shared by all agents (~/.nexa/skills).
 	ScopeGlobal = "global"
-	// ScopeAgent marks skills private to one agent (~/.common-agent/agent-skills/<agent>).
+	// ScopeAgent marks skills private to one agent (~/.nexa/agent-skills/<agent>).
 	ScopeAgent = "agent"
 )
 

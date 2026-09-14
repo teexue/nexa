@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/teexue/common-agent/core/hook"
+	"github.com/teexue/nexa/core/hook"
 	kithook "github.com/teexue/nexakit/hook"
 )
 

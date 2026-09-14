@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/teexue/common-agent/core/version"
+	"github.com/teexue/nexa/core/version"
 )
 
 // runVersion prints the build version injected at release time via

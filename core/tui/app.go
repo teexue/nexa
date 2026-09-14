@@ -8,8 +8,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/session"
 )

@@ -39,13 +39,9 @@ function SidebarBrand({ onToggle }: { onToggle: () => void }) {
   return (
     <div className="flex items-center justify-between px-3.5 py-3">
       <div className="flex items-center gap-2.5">
-        <img
-          src="/logo.png"
-          alt="common-agent logo"
-          className="h-7 w-7 rounded-lg"
-        />
+        <img src="/logo.png" alt="Nexa logo" className="h-7 w-7 rounded-lg" />
         <span className="text-sm font-medium tracking-tight text-foreground">
-          common-agent
+          Nexa
         </span>
       </div>
       <Button

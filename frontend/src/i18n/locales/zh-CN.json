@@ -69,7 +69,7 @@
     "compaction": "上下文已压缩",
     "outputTruncated": "回复已达到最大输出 Tokens 上限被截断。可在 Agent 设置中提高「最大输出 Tokens」，或发送「继续」。",
     "noAgentTitle": "尚未配置 Agent",
-    "noAgentDesc": "创建一个 Agent YAML 配置文件来开始使用。可以通过左侧 Agent 列表的「+」按钮创建，或运行 <code>common-agent config init</code> 进行初始化。",
+    "noAgentDesc": "创建一个 Agent YAML 配置文件来开始使用。可以通过左侧 Agent 列表的「+」按钮创建，或运行 <code>nexa config init</code> 进行初始化。",
     "workspaceTitle": "Agent 工作区",
     "workspaceDesc": "在下方输入指令，Agent 会调用工具完成任务。可在左侧切换或创建不同的 Agent。",
     "filesChanged": "已修改 {{count}} 个文件",

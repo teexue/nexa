@@ -3,7 +3,7 @@ package config
 import (
 	"errors"
 
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // ErrDBNotBound is returned when config helpers run before BindDB / OpenAndBind.

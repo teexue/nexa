@@ -3,7 +3,7 @@ package service
 import (
 	"strings"
 
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // ListUsers returns all users as public views.

@@ -6,7 +6,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexakit/session"
 )

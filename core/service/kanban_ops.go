@@ -9,10 +9,10 @@ import (
 	"time"
 
 	"github.com/teexue/nexakit/event"
-	"github.com/teexue/common-agent/core/kanban"
+	"github.com/teexue/nexa/core/kanban"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // kanbanResultMaxLen caps the aggregated run result stored on an item.

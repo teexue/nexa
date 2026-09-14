@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 )
 
 // OptimizeRequest is the HTTP DTO for POST /v1/agents/optimize.

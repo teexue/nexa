@@ -11,13 +11,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 	"github.com/teexue/nexakit/registry"
 )
 
@@ -40,7 +40,7 @@ tools: [get_time]
 }
 
 // newRunService wires a CLI service against a temp home without touching the
-// user's real ~/.common-agent.
+// user's real ~/.nexa.
 func newRunService(t *testing.T) (*service.Service, *registry.Registry, string) {
 	t.Helper()
 	home := t.TempDir()

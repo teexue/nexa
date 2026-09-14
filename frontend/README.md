@@ -1,6 +1,6 @@
-# common-agent 前端
+# Nexa 前端
 
-React 19 SPA，为 common-agent 基座提供 Web 控制台（对话工作区、资源管理、看板、请求日志、管理后台、设置等）。
+React 19 SPA，为 nexa 基座提供 Web 控制台（对话工作区、资源管理、看板、请求日志、管理后台、设置等）。
 
 ## 技术栈
 

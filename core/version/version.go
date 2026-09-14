@@ -2,7 +2,7 @@
 //
 // The value is injected at build time via:
 //
-//	go build -ldflags "-X github.com/teexue/common-agent/core/version.Version=v1.2.3"
+//	go build -ldflags "-X github.com/teexue/nexa/core/version.Version=v1.2.3"
 //
 // Local/dev builds without the linker flag fall back to "dev". Releases are
 // tagged with a version and the Makefile / CI injects the tag into this var,

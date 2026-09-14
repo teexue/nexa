@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Download Common Agent into the current directory (macOS / Linux).
-# 一键下载 Common Agent 到当前目录（macOS / Linux）
+# Download Nexa into the current directory (macOS / Linux).
+# 一键下载 Nexa 到当前目录（macOS / Linux）
 #
 # Usage / 用法:
-#   curl -fsSL https://raw.githubusercontent.com/teexue/common-agent/main/scripts/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/teexue/nexa/main/scripts/install.sh | bash
 #   或：bash install.sh
 set -euo pipefail
 
-REPO="${COMMON_AGENT_REPO:-teexue/common-agent}"
-OUT_NAME="common-agent"
+REPO="${NEXA_REPO:-teexue/nexa}"
+OUT_NAME="nexa"
 
 # UI language from LANG/LC_* (zh* → zh, else en).
 resolve_lang() {
@@ -86,7 +86,7 @@ dest="$(pwd)/${OUT_NAME}"
 t downloading "$asset"
 echo "  ${url}"
 
-tmp="$(mktemp "${TMPDIR:-/tmp}/common-agent.XXXXXX")"
+tmp="$(mktemp "${TMPDIR:-/tmp}/nexa.XXXXXX")"
 cleanup() { rm -f "$tmp"; }
 trap cleanup EXIT
 

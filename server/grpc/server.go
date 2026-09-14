@@ -12,13 +12,13 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/telemetry"
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	"github.com/teexue/nexa/core/telemetry"
+	nexav1 "github.com/teexue/nexa/proto"
 	"github.com/teexue/nexakit/registry"
 )
 
@@ -45,9 +45,9 @@ func withRequestLocale(ctx context.Context) context.Context {
 	return i18n.WithLocale(ctx, bundle)
 }
 
-// GRPCServer implements commonagentv1.AgentServiceServer.
+// GRPCServer implements nexav1.AgentServiceServer.
 type GRPCServer struct {
-	commonagentv1.UnimplementedAgentServiceServer
+	nexav1.UnimplementedAgentServiceServer
 
 	agentsDir   string
 	registry    *registry.Registry
@@ -172,18 +172,18 @@ func (s *GRPCServer) hasAPIKey(key string) bool {
 
 // RegisterServer registers the GRPCServer on the given gRPC server.
 func (s *GRPCServer) RegisterServer(srv *grpc.Server) {
-	commonagentv1.RegisterAgentServiceServer(srv, s)
+	nexav1.RegisterAgentServiceServer(srv, s)
 
 	hs := &grpcHealthService{
 		grpcSrv:  s,
 		statuses: make(map[string]grpc_health_v1.HealthCheckResponse_ServingStatus),
 	}
 	hs.statuses[""] = grpc_health_v1.HealthCheckResponse_SERVING
-	hs.statuses[commonagentv1.AgentService_ServiceDesc.ServiceName] = grpc_health_v1.HealthCheckResponse_SERVING
+	hs.statuses[nexav1.AgentService_ServiceDesc.ServiceName] = grpc_health_v1.HealthCheckResponse_SERVING
 	s.healthSrv = hs
 
 	grpc_health_v1.RegisterHealthServer(srv, hs)
 }
 
 // ensure compilation
-var _ commonagentv1.AgentServiceServer = (*GRPCServer)(nil)
+var _ nexav1.AgentServiceServer = (*GRPCServer)(nil)

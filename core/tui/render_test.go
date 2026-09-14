@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/teexue/nexakit/event"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 )
 
 func TestRendererToolFlow(t *testing.T) {

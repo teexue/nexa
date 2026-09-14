@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/service"
+	"github.com/teexue/nexa/core/store"
 )
 
 func TestAdminUsersAndRegistration(t *testing.T) {

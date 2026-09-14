@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
 	"github.com/teexue/nexakit/event"
-	"github.com/teexue/common-agent/core/telemetry"
+	"github.com/teexue/nexa/core/telemetry"
 )
 
 func TestEncodeRunSSECoversAllTypes(t *testing.T) {

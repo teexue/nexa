@@ -10,16 +10,16 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/event"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/store"
-	"github.com/teexue/common-agent/core/tui"
+	"github.com/teexue/nexa/core/store"
+	"github.com/teexue/nexa/core/tui"
 )
 
 func main() {

@@ -4,7 +4,7 @@
 // - protoc             v5.29.3
 // source: proto/agent.proto
 
-package commonagentv1
+package nexav1
 
 import (
 	context "context"
@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AgentService_Run_FullMethodName           = "/commonagent.v1.AgentService/Run"
-	AgentService_Approve_FullMethodName       = "/commonagent.v1.AgentService/Approve"
-	AgentService_ListTools_FullMethodName     = "/commonagent.v1.AgentService/ListTools"
-	AgentService_ListAgents_FullMethodName    = "/commonagent.v1.AgentService/ListAgents"
-	AgentService_GetAgent_FullMethodName      = "/commonagent.v1.AgentService/GetAgent"
-	AgentService_UpdateAgent_FullMethodName   = "/commonagent.v1.AgentService/UpdateAgent"
-	AgentService_DeleteAgent_FullMethodName   = "/commonagent.v1.AgentService/DeleteAgent"
-	AgentService_ListSessions_FullMethodName  = "/commonagent.v1.AgentService/ListSessions"
-	AgentService_GetSession_FullMethodName    = "/commonagent.v1.AgentService/GetSession"
-	AgentService_DeleteSession_FullMethodName = "/commonagent.v1.AgentService/DeleteSession"
+	AgentService_Run_FullMethodName           = "/nexa.v1.AgentService/Run"
+	AgentService_Approve_FullMethodName       = "/nexa.v1.AgentService/Approve"
+	AgentService_ListTools_FullMethodName     = "/nexa.v1.AgentService/ListTools"
+	AgentService_ListAgents_FullMethodName    = "/nexa.v1.AgentService/ListAgents"
+	AgentService_GetAgent_FullMethodName      = "/nexa.v1.AgentService/GetAgent"
+	AgentService_UpdateAgent_FullMethodName   = "/nexa.v1.AgentService/UpdateAgent"
+	AgentService_DeleteAgent_FullMethodName   = "/nexa.v1.AgentService/DeleteAgent"
+	AgentService_ListSessions_FullMethodName  = "/nexa.v1.AgentService/ListSessions"
+	AgentService_GetSession_FullMethodName    = "/nexa.v1.AgentService/GetSession"
+	AgentService_DeleteSession_FullMethodName = "/nexa.v1.AgentService/DeleteSession"
 )
 
 // AgentServiceClient is the client API for AgentService service.
@@ -436,7 +436,7 @@ func _AgentService_DeleteSession_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AgentService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "commonagent.v1.AgentService",
+	ServiceName: "nexa.v1.AgentService",
 	HandlerType: (*AgentServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

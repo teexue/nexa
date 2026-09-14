@@ -7,14 +7,14 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	nexav1 "github.com/teexue/nexa/proto"
 )
 
 func TestListAgents(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	resp, err := client.ListAgents(context.Background(), &commonagentv1.ListAgentsRequest{})
+	resp, err := client.ListAgents(context.Background(), &nexav1.ListAgentsRequest{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -41,7 +41,7 @@ func TestGetAgent(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	resp, err := client.GetAgent(context.Background(), &commonagentv1.GetAgentRequest{Name: "test"})
+	resp, err := client.GetAgent(context.Background(), &nexav1.GetAgentRequest{Name: "test"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func TestGetAgent_NotFound(t *testing.T) {
 	client, _, cleanup := setupTestGRPC(t)
 	defer cleanup()
 
-	_, err := client.GetAgent(context.Background(), &commonagentv1.GetAgentRequest{Name: "nonexistent"})
+	_, err := client.GetAgent(context.Background(), &nexav1.GetAgentRequest{Name: "nonexistent"})
 	if err == nil {
 		t.Fatal("expected error for missing agent")
 	}

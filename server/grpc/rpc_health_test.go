@@ -14,10 +14,10 @@ import (
 	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/test/bufconn"
 
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/telemetry"
-	commonagentv1 "github.com/teexue/common-agent/proto"
+	"github.com/teexue/nexa/core/telemetry"
+	nexav1 "github.com/teexue/nexa/proto"
 	"github.com/teexue/nexakit/registry"
 )
 
@@ -42,7 +42,7 @@ func TestGRPCHealth_Check_Serving(t *testing.T) {
 
 	// Check the agent service.
 	resp, err = grpcSrv.healthSrv.Check(ctx, &grpc_health_v1.HealthCheckRequest{
-		Service: commonagentv1.AgentService_ServiceDesc.ServiceName,
+		Service: nexav1.AgentService_ServiceDesc.ServiceName,
 	})
 	if err != nil {
 		t.Fatalf("health Check for agent service failed: %v", err)
@@ -121,7 +121,7 @@ max_tokens: 1024
 
 	// Agent service should also be NOT_SERVING.
 	resp, err = grpcSrv.healthSrv.Check(context.Background(), &grpc_health_v1.HealthCheckRequest{
-		Service: commonagentv1.AgentService_ServiceDesc.ServiceName,
+		Service: nexav1.AgentService_ServiceDesc.ServiceName,
 	})
 	if err != nil {
 		t.Fatalf("health Check for agent service failed: %v", err)

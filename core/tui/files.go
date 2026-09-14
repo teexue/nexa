@@ -13,7 +13,7 @@ const (
 
 var skipDirNames = map[string]struct{}{
 	".git": {}, "node_modules": {}, "vendor": {}, "dist": {}, "build": {},
-	".cursor": {}, ".common-agent": {}, "__pycache__": {}, ".idea": {},
+	".cursor": {}, ".nexa": {}, "__pycache__": {}, ".idea": {},
 	".vscode": {}, "target": {}, ".next": {}, "coverage": {},
 }
 

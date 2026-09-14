@@ -32,7 +32,7 @@
   "log.chat.init": "初始化对话",
   "log.chat.readline": "读取输入",
   "log.runtime.ready": "运行时就绪",
-  "log.runtime.no_providers": "未配置任何提供商；请在设置页面配置或运行 `common-agent config set provider`",
+  "log.runtime.no_providers": "未配置任何提供商；请在设置页面配置或运行 `nexa config set provider`",
   "log.compaction.error": "上下文压缩错误",
   "log.compaction.compacted": "上下文已压缩",
   "log.hook.turn_start_error": "钩子 OnTurnStart 错误",

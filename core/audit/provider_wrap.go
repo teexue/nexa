@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/teexue/common-agent/core/auth"
+	"github.com/teexue/nexa/core/auth"
 	"github.com/teexue/nexakit/provider"
 )
 

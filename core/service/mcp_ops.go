@@ -5,10 +5,10 @@ import (
 	"log/slog"
 	"path/filepath"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/mcp"
-	"github.com/teexue/common-agent/core/version"
+	"github.com/teexue/nexa/core/version"
 	"github.com/teexue/nexakit/registry"
 )
 
@@ -29,7 +29,7 @@ func injectMCP(ctx context.Context, a *agent.Agent, agentsDir string, reg *regis
 		return nil, nil
 	}
 
-	mgr := mcp.NewManager(servers, log, mcp.ClientInfo{Name: "common-agent", Version: version.Version})
+	mgr := mcp.NewManager(servers, log, mcp.ClientInfo{Name: "nexa", Version: version.Version})
 	tools := mgr.ConnectAll(ctx)
 
 	var names []string

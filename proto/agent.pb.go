@@ -4,7 +4,7 @@
 // 	protoc        v5.29.3
 // source: proto/agent.proto
 
-package commonagentv1
+package nexav1
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -98,7 +98,7 @@ func (EventType) EnumDescriptor() ([]byte, []int) {
 // AgentEvent mirrors event.Event from core/event.
 type AgentEvent struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          EventType              `protobuf:"varint,1,opt,name=type,proto3,enum=commonagent.v1.EventType" json:"type,omitempty"`
+	Type          EventType              `protobuf:"varint,1,opt,name=type,proto3,enum=nexa.v1.EventType" json:"type,omitempty"`
 	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"` // text_delta / reasoning_delta
 	Tool          string                 `protobuf:"bytes,3,opt,name=tool,proto3" json:"tool,omitempty"`       // tool_start / tool_result / tool_approval
 	Input         []byte                 `protobuf:"bytes,4,opt,name=input,proto3" json:"input,omitempty"`     // tool_start / tool_approval (JSON)
@@ -1388,10 +1388,10 @@ var File_proto_agent_proto protoreflect.FileDescriptor
 
 const file_proto_agent_proto_rawDesc = "" +
 	"\n" +
-	"\x11proto/agent.proto\x12\x0ecommonagent.v1\"\xb6\x02\n" +
+	"\x11proto/agent.proto\x12\anexa.v1\"\xaf\x02\n" +
 	"\n" +
-	"AgentEvent\x12-\n" +
-	"\x04type\x18\x01 \x01(\x0e2\x19.commonagent.v1.EventTypeR\x04type\x12\x18\n" +
+	"AgentEvent\x12&\n" +
+	"\x04type\x18\x01 \x01(\x0e2\x12.nexa.v1.EventTypeR\x04type\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\x12\x12\n" +
 	"\x04tool\x18\x03 \x01(\tR\x04tool\x12\x14\n" +
 	"\x05input\x18\x04 \x01(\fR\x05input\x12 \n" +
@@ -1404,14 +1404,14 @@ const file_proto_agent_proto_rawDesc = "" +
 	"\amessage\x18\t \x01(\tR\amessage\x12\x16\n" +
 	"\x06status\x18\n" +
 	" \x01(\tR\x06status\x12\x14\n" +
-	"\x05turns\x18\v \x01(\x05R\x05turns\"\x8e\x01\n" +
+	"\x05turns\x18\v \x01(\x05R\x05turns\"\x87\x01\n" +
 	"\n" +
 	"RunRequest\x12\x14\n" +
 	"\x05agent\x18\x01 \x01(\tR\x05agent\x12\x16\n" +
 	"\x06prompt\x18\x02 \x01(\tR\x06prompt\x12\x1d\n" +
 	"\n" +
-	"session_id\x18\x03 \x01(\tR\tsessionId\x123\n" +
-	"\bmessages\x18\x04 \x03(\v2\x17.commonagent.v1.MessageR\bmessages\"7\n" +
+	"session_id\x18\x03 \x01(\tR\tsessionId\x12,\n" +
+	"\bmessages\x18\x04 \x03(\v2\x10.nexa.v1.MessageR\bmessages\"7\n" +
 	"\aMessage\x12\x12\n" +
 	"\x04role\x18\x01 \x01(\tR\x04role\x12\x18\n" +
 	"\acontent\x18\x02 \x01(\tR\acontent\"M\n" +
@@ -1430,18 +1430,18 @@ const file_proto_agent_proto_rawDesc = "" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1e\n" +
 	"\n" +
 	"parameters\x18\x03 \x01(\fR\n" +
-	"parameters\"C\n" +
-	"\x11ListToolsResponse\x12.\n" +
-	"\x05tools\x18\x01 \x03(\v2\x18.commonagent.v1.ToolInfoR\x05tools\"\x13\n" +
+	"parameters\"<\n" +
+	"\x11ListToolsResponse\x12'\n" +
+	"\x05tools\x18\x01 \x03(\v2\x11.nexa.v1.ToolInfoR\x05tools\"\x13\n" +
 	"\x11ListAgentsRequest\"\x88\x01\n" +
 	"\rAgentListItem\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1a\n" +
 	"\bprovider\x18\x02 \x01(\tR\bprovider\x12\x14\n" +
 	"\x05model\x18\x03 \x01(\tR\x05model\x12\x14\n" +
 	"\x05tools\x18\x04 \x03(\tR\x05tools\x12\x1b\n" +
-	"\tmax_turns\x18\x05 \x01(\x05R\bmaxTurns\"K\n" +
-	"\x12ListAgentsResponse\x125\n" +
-	"\x06agents\x18\x01 \x03(\v2\x1d.commonagent.v1.AgentListItemR\x06agents\"%\n" +
+	"\tmax_turns\x18\x05 \x01(\x05R\bmaxTurns\"D\n" +
+	"\x12ListAgentsResponse\x12.\n" +
+	"\x06agents\x18\x01 \x03(\v2\x16.nexa.v1.AgentListItemR\x06agents\"%\n" +
 	"\x0fGetAgentRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"\xcf\x01\n" +
 	"\x10GetAgentResponse\x12\x12\n" +
@@ -1467,16 +1467,16 @@ const file_proto_agent_proto_rawDesc = "" +
 	"\n" +
 	"agent_name\x18\x02 \x01(\tR\tagentName\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x03 \x01(\tR\tupdatedAt\"O\n" +
-	"\x14ListSessionsResponse\x127\n" +
-	"\bsessions\x18\x01 \x03(\v2\x1b.commonagent.v1.SessionMetaR\bsessions\"#\n" +
+	"updated_at\x18\x03 \x01(\tR\tupdatedAt\"H\n" +
+	"\x14ListSessionsResponse\x120\n" +
+	"\bsessions\x18\x01 \x03(\v2\x14.nexa.v1.SessionMetaR\bsessions\"#\n" +
 	"\x11GetSessionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"x\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"q\n" +
 	"\x12GetSessionResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
-	"agent_name\x18\x02 \x01(\tR\tagentName\x123\n" +
-	"\bmessages\x18\x03 \x03(\v2\x17.commonagent.v1.MessageR\bmessages\"&\n" +
+	"agent_name\x18\x02 \x01(\tR\tagentName\x12,\n" +
+	"\bmessages\x18\x03 \x03(\v2\x10.nexa.v1.MessageR\bmessages\"&\n" +
 	"\x14DeleteSessionRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"\x17\n" +
 	"\x15DeleteSessionResponse*\xbb\x02\n" +
@@ -1492,20 +1492,20 @@ const file_proto_agent_proto_rawDesc = "" +
 	"\x18EVENT_TYPE_SUB_AGENT_END\x10\b\x12\x14\n" +
 	"\x10EVENT_TYPE_ERROR\x10\t\x12\x13\n" +
 	"\x0fEVENT_TYPE_DONE\x10\n" +
-	"2\xcf\x06\n" +
-	"\fAgentService\x12?\n" +
-	"\x03Run\x12\x1a.commonagent.v1.RunRequest\x1a\x1a.commonagent.v1.AgentEvent0\x01\x12J\n" +
-	"\aApprove\x12\x1e.commonagent.v1.ApproveRequest\x1a\x1f.commonagent.v1.ApproveResponse\x12P\n" +
-	"\tListTools\x12 .commonagent.v1.ListToolsRequest\x1a!.commonagent.v1.ListToolsResponse\x12S\n" +
+	"2\xc3\x05\n" +
+	"\fAgentService\x121\n" +
+	"\x03Run\x12\x13.nexa.v1.RunRequest\x1a\x13.nexa.v1.AgentEvent0\x01\x12<\n" +
+	"\aApprove\x12\x17.nexa.v1.ApproveRequest\x1a\x18.nexa.v1.ApproveResponse\x12B\n" +
+	"\tListTools\x12\x19.nexa.v1.ListToolsRequest\x1a\x1a.nexa.v1.ListToolsResponse\x12E\n" +
 	"\n" +
-	"ListAgents\x12!.commonagent.v1.ListAgentsRequest\x1a\".commonagent.v1.ListAgentsResponse\x12M\n" +
-	"\bGetAgent\x12\x1f.commonagent.v1.GetAgentRequest\x1a .commonagent.v1.GetAgentResponse\x12V\n" +
-	"\vUpdateAgent\x12\".commonagent.v1.UpdateAgentRequest\x1a#.commonagent.v1.UpdateAgentResponse\x12V\n" +
-	"\vDeleteAgent\x12\".commonagent.v1.DeleteAgentRequest\x1a#.commonagent.v1.DeleteAgentResponse\x12Y\n" +
-	"\fListSessions\x12#.commonagent.v1.ListSessionsRequest\x1a$.commonagent.v1.ListSessionsResponse\x12S\n" +
+	"ListAgents\x12\x1a.nexa.v1.ListAgentsRequest\x1a\x1b.nexa.v1.ListAgentsResponse\x12?\n" +
+	"\bGetAgent\x12\x18.nexa.v1.GetAgentRequest\x1a\x19.nexa.v1.GetAgentResponse\x12H\n" +
+	"\vUpdateAgent\x12\x1b.nexa.v1.UpdateAgentRequest\x1a\x1c.nexa.v1.UpdateAgentResponse\x12H\n" +
+	"\vDeleteAgent\x12\x1b.nexa.v1.DeleteAgentRequest\x1a\x1c.nexa.v1.DeleteAgentResponse\x12K\n" +
+	"\fListSessions\x12\x1c.nexa.v1.ListSessionsRequest\x1a\x1d.nexa.v1.ListSessionsResponse\x12E\n" +
 	"\n" +
-	"GetSession\x12!.commonagent.v1.GetSessionRequest\x1a\".commonagent.v1.GetSessionResponse\x12\\\n" +
-	"\rDeleteSession\x12$.commonagent.v1.DeleteSessionRequest\x1a%.commonagent.v1.DeleteSessionResponseB4Z2github.com/teexue/common-agent/proto/commonagentv1b\x06proto3"
+	"GetSession\x12\x1a.nexa.v1.GetSessionRequest\x1a\x1b.nexa.v1.GetSessionResponse\x12N\n" +
+	"\rDeleteSession\x12\x1d.nexa.v1.DeleteSessionRequest\x1a\x1e.nexa.v1.DeleteSessionResponseB%Z#github.com/teexue/nexa/proto;nexav1b\x06proto3"
 
 var (
 	file_proto_agent_proto_rawDescOnce sync.Once
@@ -1522,59 +1522,59 @@ func file_proto_agent_proto_rawDescGZIP() []byte {
 var file_proto_agent_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 24)
 var file_proto_agent_proto_goTypes = []any{
-	(EventType)(0),                // 0: commonagent.v1.EventType
-	(*AgentEvent)(nil),            // 1: commonagent.v1.AgentEvent
-	(*RunRequest)(nil),            // 2: commonagent.v1.RunRequest
-	(*Message)(nil),               // 3: commonagent.v1.Message
-	(*ApproveRequest)(nil),        // 4: commonagent.v1.ApproveRequest
-	(*ApproveResponse)(nil),       // 5: commonagent.v1.ApproveResponse
-	(*ListToolsRequest)(nil),      // 6: commonagent.v1.ListToolsRequest
-	(*ToolInfo)(nil),              // 7: commonagent.v1.ToolInfo
-	(*ListToolsResponse)(nil),     // 8: commonagent.v1.ListToolsResponse
-	(*ListAgentsRequest)(nil),     // 9: commonagent.v1.ListAgentsRequest
-	(*AgentListItem)(nil),         // 10: commonagent.v1.AgentListItem
-	(*ListAgentsResponse)(nil),    // 11: commonagent.v1.ListAgentsResponse
-	(*GetAgentRequest)(nil),       // 12: commonagent.v1.GetAgentRequest
-	(*GetAgentResponse)(nil),      // 13: commonagent.v1.GetAgentResponse
-	(*UpdateAgentRequest)(nil),    // 14: commonagent.v1.UpdateAgentRequest
-	(*UpdateAgentResponse)(nil),   // 15: commonagent.v1.UpdateAgentResponse
-	(*DeleteAgentRequest)(nil),    // 16: commonagent.v1.DeleteAgentRequest
-	(*DeleteAgentResponse)(nil),   // 17: commonagent.v1.DeleteAgentResponse
-	(*ListSessionsRequest)(nil),   // 18: commonagent.v1.ListSessionsRequest
-	(*SessionMeta)(nil),           // 19: commonagent.v1.SessionMeta
-	(*ListSessionsResponse)(nil),  // 20: commonagent.v1.ListSessionsResponse
-	(*GetSessionRequest)(nil),     // 21: commonagent.v1.GetSessionRequest
-	(*GetSessionResponse)(nil),    // 22: commonagent.v1.GetSessionResponse
-	(*DeleteSessionRequest)(nil),  // 23: commonagent.v1.DeleteSessionRequest
-	(*DeleteSessionResponse)(nil), // 24: commonagent.v1.DeleteSessionResponse
+	(EventType)(0),                // 0: nexa.v1.EventType
+	(*AgentEvent)(nil),            // 1: nexa.v1.AgentEvent
+	(*RunRequest)(nil),            // 2: nexa.v1.RunRequest
+	(*Message)(nil),               // 3: nexa.v1.Message
+	(*ApproveRequest)(nil),        // 4: nexa.v1.ApproveRequest
+	(*ApproveResponse)(nil),       // 5: nexa.v1.ApproveResponse
+	(*ListToolsRequest)(nil),      // 6: nexa.v1.ListToolsRequest
+	(*ToolInfo)(nil),              // 7: nexa.v1.ToolInfo
+	(*ListToolsResponse)(nil),     // 8: nexa.v1.ListToolsResponse
+	(*ListAgentsRequest)(nil),     // 9: nexa.v1.ListAgentsRequest
+	(*AgentListItem)(nil),         // 10: nexa.v1.AgentListItem
+	(*ListAgentsResponse)(nil),    // 11: nexa.v1.ListAgentsResponse
+	(*GetAgentRequest)(nil),       // 12: nexa.v1.GetAgentRequest
+	(*GetAgentResponse)(nil),      // 13: nexa.v1.GetAgentResponse
+	(*UpdateAgentRequest)(nil),    // 14: nexa.v1.UpdateAgentRequest
+	(*UpdateAgentResponse)(nil),   // 15: nexa.v1.UpdateAgentResponse
+	(*DeleteAgentRequest)(nil),    // 16: nexa.v1.DeleteAgentRequest
+	(*DeleteAgentResponse)(nil),   // 17: nexa.v1.DeleteAgentResponse
+	(*ListSessionsRequest)(nil),   // 18: nexa.v1.ListSessionsRequest
+	(*SessionMeta)(nil),           // 19: nexa.v1.SessionMeta
+	(*ListSessionsResponse)(nil),  // 20: nexa.v1.ListSessionsResponse
+	(*GetSessionRequest)(nil),     // 21: nexa.v1.GetSessionRequest
+	(*GetSessionResponse)(nil),    // 22: nexa.v1.GetSessionResponse
+	(*DeleteSessionRequest)(nil),  // 23: nexa.v1.DeleteSessionRequest
+	(*DeleteSessionResponse)(nil), // 24: nexa.v1.DeleteSessionResponse
 }
 var file_proto_agent_proto_depIdxs = []int32{
-	0,  // 0: commonagent.v1.AgentEvent.type:type_name -> commonagent.v1.EventType
-	3,  // 1: commonagent.v1.RunRequest.messages:type_name -> commonagent.v1.Message
-	7,  // 2: commonagent.v1.ListToolsResponse.tools:type_name -> commonagent.v1.ToolInfo
-	10, // 3: commonagent.v1.ListAgentsResponse.agents:type_name -> commonagent.v1.AgentListItem
-	19, // 4: commonagent.v1.ListSessionsResponse.sessions:type_name -> commonagent.v1.SessionMeta
-	3,  // 5: commonagent.v1.GetSessionResponse.messages:type_name -> commonagent.v1.Message
-	2,  // 6: commonagent.v1.AgentService.Run:input_type -> commonagent.v1.RunRequest
-	4,  // 7: commonagent.v1.AgentService.Approve:input_type -> commonagent.v1.ApproveRequest
-	6,  // 8: commonagent.v1.AgentService.ListTools:input_type -> commonagent.v1.ListToolsRequest
-	9,  // 9: commonagent.v1.AgentService.ListAgents:input_type -> commonagent.v1.ListAgentsRequest
-	12, // 10: commonagent.v1.AgentService.GetAgent:input_type -> commonagent.v1.GetAgentRequest
-	14, // 11: commonagent.v1.AgentService.UpdateAgent:input_type -> commonagent.v1.UpdateAgentRequest
-	16, // 12: commonagent.v1.AgentService.DeleteAgent:input_type -> commonagent.v1.DeleteAgentRequest
-	18, // 13: commonagent.v1.AgentService.ListSessions:input_type -> commonagent.v1.ListSessionsRequest
-	21, // 14: commonagent.v1.AgentService.GetSession:input_type -> commonagent.v1.GetSessionRequest
-	23, // 15: commonagent.v1.AgentService.DeleteSession:input_type -> commonagent.v1.DeleteSessionRequest
-	1,  // 16: commonagent.v1.AgentService.Run:output_type -> commonagent.v1.AgentEvent
-	5,  // 17: commonagent.v1.AgentService.Approve:output_type -> commonagent.v1.ApproveResponse
-	8,  // 18: commonagent.v1.AgentService.ListTools:output_type -> commonagent.v1.ListToolsResponse
-	11, // 19: commonagent.v1.AgentService.ListAgents:output_type -> commonagent.v1.ListAgentsResponse
-	13, // 20: commonagent.v1.AgentService.GetAgent:output_type -> commonagent.v1.GetAgentResponse
-	15, // 21: commonagent.v1.AgentService.UpdateAgent:output_type -> commonagent.v1.UpdateAgentResponse
-	17, // 22: commonagent.v1.AgentService.DeleteAgent:output_type -> commonagent.v1.DeleteAgentResponse
-	20, // 23: commonagent.v1.AgentService.ListSessions:output_type -> commonagent.v1.ListSessionsResponse
-	22, // 24: commonagent.v1.AgentService.GetSession:output_type -> commonagent.v1.GetSessionResponse
-	24, // 25: commonagent.v1.AgentService.DeleteSession:output_type -> commonagent.v1.DeleteSessionResponse
+	0,  // 0: nexa.v1.AgentEvent.type:type_name -> nexa.v1.EventType
+	3,  // 1: nexa.v1.RunRequest.messages:type_name -> nexa.v1.Message
+	7,  // 2: nexa.v1.ListToolsResponse.tools:type_name -> nexa.v1.ToolInfo
+	10, // 3: nexa.v1.ListAgentsResponse.agents:type_name -> nexa.v1.AgentListItem
+	19, // 4: nexa.v1.ListSessionsResponse.sessions:type_name -> nexa.v1.SessionMeta
+	3,  // 5: nexa.v1.GetSessionResponse.messages:type_name -> nexa.v1.Message
+	2,  // 6: nexa.v1.AgentService.Run:input_type -> nexa.v1.RunRequest
+	4,  // 7: nexa.v1.AgentService.Approve:input_type -> nexa.v1.ApproveRequest
+	6,  // 8: nexa.v1.AgentService.ListTools:input_type -> nexa.v1.ListToolsRequest
+	9,  // 9: nexa.v1.AgentService.ListAgents:input_type -> nexa.v1.ListAgentsRequest
+	12, // 10: nexa.v1.AgentService.GetAgent:input_type -> nexa.v1.GetAgentRequest
+	14, // 11: nexa.v1.AgentService.UpdateAgent:input_type -> nexa.v1.UpdateAgentRequest
+	16, // 12: nexa.v1.AgentService.DeleteAgent:input_type -> nexa.v1.DeleteAgentRequest
+	18, // 13: nexa.v1.AgentService.ListSessions:input_type -> nexa.v1.ListSessionsRequest
+	21, // 14: nexa.v1.AgentService.GetSession:input_type -> nexa.v1.GetSessionRequest
+	23, // 15: nexa.v1.AgentService.DeleteSession:input_type -> nexa.v1.DeleteSessionRequest
+	1,  // 16: nexa.v1.AgentService.Run:output_type -> nexa.v1.AgentEvent
+	5,  // 17: nexa.v1.AgentService.Approve:output_type -> nexa.v1.ApproveResponse
+	8,  // 18: nexa.v1.AgentService.ListTools:output_type -> nexa.v1.ListToolsResponse
+	11, // 19: nexa.v1.AgentService.ListAgents:output_type -> nexa.v1.ListAgentsResponse
+	13, // 20: nexa.v1.AgentService.GetAgent:output_type -> nexa.v1.GetAgentResponse
+	15, // 21: nexa.v1.AgentService.UpdateAgent:output_type -> nexa.v1.UpdateAgentResponse
+	17, // 22: nexa.v1.AgentService.DeleteAgent:output_type -> nexa.v1.DeleteAgentResponse
+	20, // 23: nexa.v1.AgentService.ListSessions:output_type -> nexa.v1.ListSessionsResponse
+	22, // 24: nexa.v1.AgentService.GetSession:output_type -> nexa.v1.GetSessionResponse
+	24, // 25: nexa.v1.AgentService.DeleteSession:output_type -> nexa.v1.DeleteSessionResponse
 	16, // [16:26] is the sub-list for method output_type
 	6,  // [6:16] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name

@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/config"
 )
 
 func TestSubagentView_Defaults(t *testing.T) {

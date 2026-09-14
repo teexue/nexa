@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 func bindTestDB(t *testing.T) string {

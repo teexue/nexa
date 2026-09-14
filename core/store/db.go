@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-// DB wraps a GORM connection to ~/.common-agent/state.db.
+// DB wraps a GORM connection to ~/.nexa/state.db.
 type DB struct {
 	*gorm.DB
 	home string

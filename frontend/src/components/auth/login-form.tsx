@@ -101,14 +101,10 @@ function LoginBrand({ mode }: { mode: Mode }) {
   const { t } = useTranslation()
   return (
     <div className="flex flex-col items-center gap-3 text-center">
-      <img
-        src="/logo.png"
-        alt="common-agent"
-        className="h-12 w-12 rounded-xl"
-      />
+      <img src="/logo.png" alt="Nexa" className="h-12 w-12 rounded-xl" />
       <div>
         <h1 className="font-heading text-xl tracking-tight text-foreground">
-          common-agent
+          Nexa
         </h1>
         <p className="mt-1 text-xs text-muted-foreground">
           {mode === "login" ? t("auth.loginHint") : t("auth.registerHint")}

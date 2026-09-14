@@ -1,8 +1,8 @@
 <div align="center">
-  <h1>Common Agent</h1>
+  <h1>Nexa</h1>
   <p><strong>面向生产环境的通用 Agent Runtime 基座</strong></p>
   <p>
-    <a href="https://github.com/teexue/common-agent/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/teexue/common-agent?label=release"/></a>
+    <a href="https://github.com/teexue/nexa/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/teexue/nexa?label=release"/></a>
     <img alt="Go" src="https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go"/>
     <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?logo=react"/>
     <img alt="License" src="https://img.shields.io/badge/License-MIT-yellow"/>
@@ -60,29 +60,29 @@
 macOS / Linux：
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/teexue/common-agent/main/scripts/install.sh | bash
-./common-agent
+curl -fsSL https://raw.githubusercontent.com/teexue/nexa/main/scripts/install.sh | bash
+./nexa
 ```
 
 Windows（PowerShell）：
 
 ```powershell
-irm https://raw.githubusercontent.com/teexue/common-agent/main/scripts/install.ps1 | iex
-.\common-agent.exe
+irm https://raw.githubusercontent.com/teexue/nexa/main/scripts/install.ps1 | iex
+.\nexa.exe
 ```
 
-也可从 [Releases](https://github.com/teexue/common-agent/releases/latest) 手动下载对应平台的二进制，无需安装 Go 或 Node.js。无参数启动即打开 Web 控制台（默认 `http://localhost:8080`）。浏览器里注册第一个账户，该用户会成为管理员；随后在设置里填写模型提供商与 API Key 即可对话。关掉运行窗口或进程后服务会停止。
+也可从 [Releases](https://github.com/teexue/nexa/releases/latest) 手动下载对应平台的二进制，无需安装 Go 或 Node.js。无参数启动即打开 Web 控制台（默认 `http://localhost:8080`）。浏览器里注册第一个账户，该用户会成为管理员；随后在设置里填写模型提供商与 API Key 即可对话。关掉运行窗口或进程后服务会停止。
 
 按系统选择文件：
 
 | 系统 | 架构 | 文件 |
 |------|------|------|
-| Windows | x64 | `common-agent-windows-amd64.exe` |
-| Windows | ARM | `common-agent-windows-arm64.exe` |
-| macOS | Apple 芯片 | `common-agent-darwin-arm64` |
-| macOS | Intel | `common-agent-darwin-amd64` |
-| Linux | x64 | `common-agent-linux-amd64` |
-| Linux | ARM | `common-agent-linux-arm64` |
+| Windows | x64 | `nexa-windows-amd64.exe` |
+| Windows | ARM | `nexa-windows-arm64.exe` |
+| macOS | Apple 芯片 | `nexa-darwin-arm64` |
+| macOS | Intel | `nexa-darwin-amd64` |
+| Linux | x64 | `nexa-linux-amd64` |
+| Linux | ARM | `nexa-linux-arm64` |
 
 ### Windows
 

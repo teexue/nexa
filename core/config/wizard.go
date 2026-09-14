@@ -5,10 +5,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/store"
-	"github.com/teexue/common-agent/core/tui"
+	"github.com/teexue/nexa/core/store"
+	"github.com/teexue/nexa/core/tui"
 )
 
 // ProviderSpec is CLI input for configuring a provider.
@@ -29,7 +29,7 @@ type ProviderSpec struct {
 	ModelWindows map[string]int
 }
 
-// InitInteractive runs a wizard to bootstrap ~/.common-agent.
+// InitInteractive runs a wizard to bootstrap ~/.nexa.
 func InitInteractive(home string) error {
 	if err := ensureHome(home); err != nil {
 		return err

@@ -16,7 +16,7 @@ export function WorkspaceEmptyState({
         <div className="relative mx-auto mb-5 h-14 w-14">
           <img
             src="/logo.png"
-            alt="common-agent logo"
+            alt="Nexa logo"
             className="h-full w-full object-contain"
           />
         </div>

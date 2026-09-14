@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // CreateAPIKeyRequest is the input for generating a persisted API key.

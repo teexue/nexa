@@ -3,8 +3,8 @@ package service
 import (
 	"fmt"
 
-	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/subagent"
 )

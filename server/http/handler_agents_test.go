@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 )
 
 func TestHandleAgents(t *testing.T) {

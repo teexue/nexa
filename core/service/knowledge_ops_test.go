@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/common-agent/core/service"
+	"github.com/teexue/nexa/core/service"
 )
 
 func TestListEmbeddingVendors(t *testing.T) {

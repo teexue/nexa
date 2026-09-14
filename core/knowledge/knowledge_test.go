@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/common-agent/core/knowledge"
+	"github.com/teexue/nexa/core/knowledge"
 )
 
 func TestChunk(t *testing.T) {

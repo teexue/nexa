@@ -7,10 +7,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/i18n"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 // bindHomeDB opens state.db for config CLI commands and returns a closer.

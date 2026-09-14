@@ -7,9 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/audit"
+	"github.com/teexue/nexa/core/audit"
 	"github.com/teexue/nexakit/session"
-	"github.com/teexue/common-agent/core/store"
+	"github.com/teexue/nexa/core/store"
 )
 
 func (s *Server) handleSessionsList(c *gin.Context) {

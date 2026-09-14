@@ -19,7 +19,7 @@ void i18n
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
-      lookupLocalStorage: "common-agent-locale",
+      lookupLocalStorage: "nexa-locale",
     },
   })
 

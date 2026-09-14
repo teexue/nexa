@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/version"
+	"github.com/teexue/nexa/core/version"
 )
 
 // handleVersion returns the build version, injected at release time via

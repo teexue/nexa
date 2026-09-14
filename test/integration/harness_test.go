@@ -10,10 +10,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexakit/tool"
-	httpapi "github.com/teexue/common-agent/server/http"
+	httpapi "github.com/teexue/nexa/server/http"
 	"github.com/teexue/nexakit/registry"
 )
 

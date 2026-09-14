@@ -1,16 +1,16 @@
-# Download Common Agent into the current directory (Windows).
-# 一键下载 Common Agent 到当前目录（Windows）
+# Download Nexa into the current directory (Windows).
+# 一键下载 Nexa 到当前目录（Windows）
 #
 # Usage / 用法 (PowerShell):
-#   irm https://raw.githubusercontent.com/teexue/common-agent/main/scripts/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/teexue/nexa/main/scripts/install.ps1 | iex
 #   或：powershell -ExecutionPolicy Bypass -File .\install.ps1
 [CmdletBinding()]
 param(
-    [string]$Repo = $(if ($env:COMMON_AGENT_REPO) { $env:COMMON_AGENT_REPO } else { "teexue/common-agent" })
+    [string]$Repo = $(if ($env:NEXA_REPO) { $env:NEXA_REPO } else { "teexue/nexa" })
 )
 
 $ErrorActionPreference = "Stop"
-$OutName = "common-agent.exe"
+$OutName = "nexa.exe"
 
 function Resolve-UiLang {
     $culture = [System.Globalization.CultureInfo]::CurrentUICulture.Name
@@ -57,14 +57,14 @@ function Get-CpuArch {
 }
 
 $arch = Get-CpuArch
-$asset = "common-agent-windows-$arch.exe"
+$asset = "nexa-windows-$arch.exe"
 $url = "https://github.com/$Repo/releases/latest/download/$asset"
 $dest = Join-Path (Get-Location) $OutName
 
 Write-Host (T downloading $asset)
 Write-Host "  $url"
 
-$tmp = Join-Path ([System.IO.Path]::GetTempPath()) ("common-agent-" + [guid]::NewGuid().ToString("n") + ".exe")
+$tmp = Join-Path ([System.IO.Path]::GetTempPath()) ("nexa-" + [guid]::NewGuid().ToString("n") + ".exe")
 try {
     Invoke-WebRequest -Uri $url -OutFile $tmp -UseBasicParsing
     Move-Item -Force -Path $tmp -Destination $dest

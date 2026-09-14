@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"github.com/teexue/common-agent/core/config"
+	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/builtin"
 )
 

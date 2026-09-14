@@ -69,7 +69,7 @@
     "compaction": "Context compacted",
     "outputTruncated": "The reply was cut off at the max output token limit. Raise the agent's max output tokens, or send Continue.",
     "noAgentTitle": "No Agent configured",
-    "noAgentDesc": "Create an Agent YAML config to get started. Use the «+» button in the Agent list, or run <code>common-agent config init</code>.",
+    "noAgentDesc": "Create an Agent YAML config to get started. Use the «+» button in the Agent list, or run <code>nexa config init</code>.",
     "workspaceTitle": "Agent workspace",
     "workspaceDesc": "Type a prompt below and the agent will use its tools to get the job done. Switch or create agents from the left.",
     "filesChanged": "{{count}} file changed",
