@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/store"
 )
 

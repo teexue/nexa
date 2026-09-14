@@ -10,10 +10,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/teexue/common-agent/core/event"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 )
 
 type runSnapshot struct {

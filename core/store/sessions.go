@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
 )
 
 // SessionStore persists sessions in SQLite via GORM.

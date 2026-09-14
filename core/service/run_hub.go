@@ -4,8 +4,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/teexue/common-agent/core/event"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/provider"
 )
 
 const runSubBuffer = 256

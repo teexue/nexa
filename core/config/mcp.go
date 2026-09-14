@@ -3,7 +3,7 @@ package config
 import (
 	"fmt"
 
-	"github.com/teexue/common-agent/core/mcp"
+	"github.com/teexue/nexakit/mcp"
 )
 
 // LoadGlobalMCP reads global MCP servers from SQLite.

@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/embedding"
+	"github.com/teexue/nexakit/embedding"
 	"github.com/teexue/common-agent/core/knowledge"
 )
 

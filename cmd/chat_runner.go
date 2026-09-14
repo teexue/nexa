@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/tui"
 )
 

@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 )
 
 func (s *Service) applyRunModel(req RunRequest, sess *session.Session, a *agent.Agent) error {

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 )
 
 // modelWindowsForUpsert builds the model→window map to persist with a provider.

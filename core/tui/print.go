@@ -3,7 +3,7 @@ package tui
 import (
 	"os"
 
-	"github.com/teexue/common-agent/core/event"
+	"github.com/teexue/nexakit/event"
 )
 
 // PrintEvents renders events with DefaultRenderOptions.

@@ -10,8 +10,8 @@ import (
 
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/loop"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/session"
 )
 
 // focusPane tracks which region receives keys.

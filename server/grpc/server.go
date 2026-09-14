@@ -14,12 +14,12 @@ import (
 
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/telemetry"
 	commonagentv1 "github.com/teexue/common-agent/proto"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/registry"
 )
 
 // withRequestLocale attaches an i18n bundle from gRPC metadata.

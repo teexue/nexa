@@ -8,7 +8,7 @@ import (
 
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/mcp"
+	"github.com/teexue/nexakit/mcp"
 )
 
 // MCPServerInfo is the JSON DTO for MCP server listing.

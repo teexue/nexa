@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/teexue/common-agent/core/event"
+	"github.com/teexue/nexakit/event"
 )
 
 // ApplyEvent reduces a stream event into the conversation entries.

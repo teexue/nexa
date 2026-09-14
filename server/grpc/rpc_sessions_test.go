@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	commonagentv1 "github.com/teexue/common-agent/proto"
 )
 

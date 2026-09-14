@@ -16,11 +16,11 @@ import (
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/config"
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/tui"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/registry"
 	"golang.org/x/term"
 )
 

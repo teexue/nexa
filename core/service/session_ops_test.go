@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 )
 
 func TestListSessionsExcludesKanbanSessions(t *testing.T) {

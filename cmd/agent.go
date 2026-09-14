@@ -5,10 +5,10 @@ import (
 	"os"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/tools/builtin"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/builtin"
+	"github.com/teexue/nexakit/registry"
 )
 
 // resolveRunAgent picks the agent for CLI run/chat: an explicit --agent must

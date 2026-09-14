@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/event"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/provider"
 )
 
 func TestRunHub_SubscribeReplaysThenLive(t *testing.T) {

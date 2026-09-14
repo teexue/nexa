@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/loop"
 )
 
 // ChannelApprover blocks the agent loop until the TUI replies on a channel.

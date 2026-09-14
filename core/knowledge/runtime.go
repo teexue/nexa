@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/teexue/common-agent/core/embedding"
+	"github.com/teexue/nexakit/embedding"
 )
 
 // Runtime is a shared, swappable knowledge stack used by tools and HTTP.

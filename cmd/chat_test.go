@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/store"
 )
 

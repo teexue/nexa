@@ -3,8 +3,8 @@ package grpcapi
 import (
 	"encoding/json"
 
-	"github.com/teexue/common-agent/core/event"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/provider"
 	commonagentv1 "github.com/teexue/common-agent/proto"
 )
 

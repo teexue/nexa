@@ -16,18 +16,17 @@ import (
 
 	"github.com/teexue/common-agent/core/audit"
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/embedding"
 	"github.com/teexue/common-agent/core/i18n"
 	"github.com/teexue/common-agent/core/kanban"
 	"github.com/teexue/common-agent/core/knowledge"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
 	"github.com/teexue/common-agent/core/store"
 	"github.com/teexue/common-agent/core/telemetry"
 	grpcapi "github.com/teexue/common-agent/server/grpc"
 	httpapi "github.com/teexue/common-agent/server/http"
-	"github.com/teexue/common-agent/tools/builtin"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/embedding"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 )
 
 type webFlags struct {
@@ -88,7 +87,7 @@ func initKnowledge(cfg knowledgeInit) knowledgeRuntime {
 		}
 	}
 	kbRT := knowledge.NewRuntime(kbMgr, emb)
-	builtin.RegisterKnowledge(cfg.reg, kbRT)
+	knowledge.RegisterKnowledge(cfg.reg, kbRT)
 	return knowledgeRuntime{mgr: kbMgr, rt: kbRT, emb: emb}
 }
 

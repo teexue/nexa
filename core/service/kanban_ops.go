@@ -8,10 +8,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/teexue/common-agent/core/event"
+	"github.com/teexue/nexakit/event"
 	"github.com/teexue/common-agent/core/kanban"
-	"github.com/teexue/common-agent/core/loop"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/store"
 )
 

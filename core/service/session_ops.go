@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/store"
 )
 

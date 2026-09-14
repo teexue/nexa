@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 )
 
 func TestHandleSessionsList(t *testing.T) {

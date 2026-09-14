@@ -9,9 +9,9 @@ import (
 
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/kanban"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/store"
-	"github.com/teexue/common-agent/tools/builtin"
+	"github.com/teexue/nexakit/builtin"
 )
 
 // Kanban retries (reject/failure) must continue the original session, never

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/teexue/common-agent/core/mcp"
+	"github.com/teexue/nexakit/mcp"
 )
 
 // LoadGlobalMCP returns all global MCP server configs.

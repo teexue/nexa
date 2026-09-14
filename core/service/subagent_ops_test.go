@@ -11,11 +11,11 @@ import (
 
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/subagent"
-	"github.com/teexue/common-agent/tools/builtin"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/subagent"
+	"github.com/teexue/nexakit/builtin"
+	"github.com/teexue/nexakit/registry"
 )
 
 func TestSaveAndGetSubagentSettings(t *testing.T) {

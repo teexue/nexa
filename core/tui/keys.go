@@ -7,8 +7,8 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
 )
 
 func (m ChatModel) handleKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {

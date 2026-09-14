@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 )
 
 // ListProviderEntries returns all provider profile entries.

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/tools/builtin"
+	"github.com/teexue/nexakit/builtin"
 )
 
 // ShellView is the public DTO for command-terminal settings.

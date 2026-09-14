@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 )
 
 func (s *Server) handleProvidersList(c *gin.Context) {

@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/status"
 
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	commonagentv1 "github.com/teexue/common-agent/proto"
 )
 

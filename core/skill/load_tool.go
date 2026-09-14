@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/teexue/common-agent/core/tool"
+	"github.com/teexue/nexakit/tool"
 )
 
 // loadSkillTool implements the activation stage of progressive disclosure

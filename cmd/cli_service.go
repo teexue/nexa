@@ -7,14 +7,13 @@ import (
 
 	"github.com/teexue/common-agent/core/audit"
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/embedding"
 	"github.com/teexue/common-agent/core/knowledge"
-	"github.com/teexue/common-agent/core/provider"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
 	"github.com/teexue/common-agent/core/store"
-	"github.com/teexue/common-agent/tools/builtin"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/embedding"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 )
 
 // cliServiceConfig holds everything needed to assemble the shared Service for
@@ -73,7 +72,7 @@ func wireCLIKnowledge(svc *service.Service, cfg cliServiceConfig) {
 	}
 	emb := cliEmbedder(cfg)
 	rt := knowledge.NewRuntime(kbMgr, emb)
-	builtin.RegisterKnowledge(cfg.reg, rt)
+	knowledge.RegisterKnowledge(cfg.reg, rt)
 	svc.Knowledge = kbMgr
 	svc.Embedder = emb
 	svc.KnowledgeRuntime = rt

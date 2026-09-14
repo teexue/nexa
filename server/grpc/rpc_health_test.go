@@ -15,10 +15,10 @@ import (
 	"google.golang.org/grpc/test/bufconn"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/telemetry"
 	commonagentv1 "github.com/teexue/common-agent/proto"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/registry"
 )
 
 func TestGRPCHealth_Check_Serving(t *testing.T) {

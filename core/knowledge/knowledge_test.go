@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/embedding"
+	"github.com/teexue/nexakit/embedding"
 	"github.com/teexue/common-agent/core/knowledge"
 )
 

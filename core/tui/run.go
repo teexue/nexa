@@ -8,8 +8,8 @@ import (
 	"golang.org/x/term"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/loop"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/session"
 )
 
 // ChatConfig wires the fullscreen chat app.

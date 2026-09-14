@@ -8,9 +8,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/teexue/common-agent/core/embedding"
-	"github.com/teexue/common-agent/core/mcp"
-	"github.com/teexue/common-agent/core/provider"
 	"gopkg.in/yaml.v3"
 )
 
@@ -60,14 +57,18 @@ func (db *DB) migrateSettingsFile() error {
 		return err
 	}
 	var raw struct {
-		DefaultAgent string            `yaml:"default_agent"`
-		Locale       string            `yaml:"locale"`
-		Embedding    *embedding.Config `yaml:"embedding"`
+		DefaultAgent string         `yaml:"default_agent"`
+		Locale       string         `yaml:"locale"`
+		Embedding    *fileEmbedding `yaml:"embedding"`
 	}
 	if err := yaml.Unmarshal(data, &raw); err != nil {
 		return fmt.Errorf("parse config.yaml: %w", err)
 	}
-	s := Settings{DefaultAgent: raw.DefaultAgent, Locale: raw.Locale, Embedding: raw.Embedding}
+	s := Settings{DefaultAgent: raw.DefaultAgent, Locale: raw.Locale}
+	if raw.Embedding != nil {
+		cfg := raw.Embedding.toConfig()
+		s.Embedding = &cfg
+	}
 	if err := db.SaveSettings(s); err != nil {
 		return err
 	}
@@ -115,11 +116,11 @@ func (db *DB) migrateProvidersFile() error {
 		}
 		return err
 	}
-	var file provider.CatalogFile
+	var file CatalogFile
 	if err := yaml.Unmarshal(data, &file); err != nil {
 		return fmt.Errorf("parse providers.yaml: %w", err)
 	}
-	for name, entry := range file.Providers {
+	for name, entry := range file.Entries() {
 		if err := db.UpsertProviderEntry(name, entry); err != nil {
 			return err
 		}
@@ -141,13 +142,13 @@ func (db *DB) migrateMCPFile() error {
 		return err
 	}
 	var f struct {
-		Servers []mcp.ServerConfig `yaml:"servers"`
+		Servers []fileMCPServer `yaml:"servers"`
 	}
 	if err := yaml.Unmarshal(data, &f); err != nil {
 		return fmt.Errorf("parse mcp.yaml: %w", err)
 	}
 	for _, srv := range f.Servers {
-		if err := db.UpsertGlobalMCP(srv); err != nil {
+		if err := db.UpsertGlobalMCP(srv.toConfig()); err != nil {
 			return err
 		}
 	}

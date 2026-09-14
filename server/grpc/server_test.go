@@ -17,11 +17,11 @@ import (
 	"google.golang.org/grpc/test/bufconn"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
-	"github.com/teexue/common-agent/core/tool"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
+	"github.com/teexue/nexakit/tool"
 	commonagentv1 "github.com/teexue/common-agent/proto"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/registry"
 )
 
 const bufSize = 1024 * 1024

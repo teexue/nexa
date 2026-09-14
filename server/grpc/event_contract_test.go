@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/teexue/common-agent/core/event"
+	"github.com/teexue/nexakit/event"
 	commonagentv1 "github.com/teexue/common-agent/proto"
 )
 

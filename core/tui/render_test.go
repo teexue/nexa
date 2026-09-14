@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/teexue/common-agent/core/event"
+	"github.com/teexue/nexakit/event"
 	"github.com/teexue/common-agent/core/i18n"
 )
 

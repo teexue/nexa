@@ -7,8 +7,7 @@ import (
 	"strings"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
-	"gopkg.in/yaml.v3"
+	"github.com/teexue/nexakit/provider"
 )
 
 // AgentSummary is the lightweight representation of an agent for list endpoints.
@@ -138,7 +137,7 @@ func (s *Service) writeAgent(a *agent.Agent) error {
 	if err := os.MkdirAll(s.AgentsDir, 0o755); err != nil {
 		return fmt.Errorf("create agents dir: %w", err)
 	}
-	data, err := yaml.Marshal(a)
+	data, err := agent.Marshal(a)
 	if err != nil {
 		return fmt.Errorf("marshal agent: %w", err)
 	}

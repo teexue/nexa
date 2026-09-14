@@ -3,10 +3,10 @@ package tui
 import (
 	"context"
 
-	"github.com/teexue/common-agent/core/event"
-	"github.com/teexue/common-agent/core/loop"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
 )
 
 // ModelOption is one selectable provider+model pair for the /model picker.

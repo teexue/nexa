@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/teexue/common-agent/core/tool"
+	"github.com/teexue/nexakit/tool"
 	"gopkg.in/yaml.v3"
 )
 

@@ -14,8 +14,8 @@ import (
 	"time"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
 )
 
 // parseSSEEvents parses data: lines from an SSE response body.

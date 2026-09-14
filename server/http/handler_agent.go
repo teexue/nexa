@@ -9,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/permission"
 	"github.com/teexue/common-agent/core/service"
 )
 
@@ -26,20 +25,20 @@ type AgentListItem struct {
 
 // AgentDetail is the HTTP DTO for GET /v1/agents/:id.
 type AgentDetail struct {
-	ID            string                  `json:"id"`
-	Name          string                  `json:"name"`
-	Provider      string                  `json:"provider"`
-	Model         string                  `json:"model"`
-	SystemPrompt  string                  `json:"system_prompt"`
-	Tools         []string                `json:"tools"`
-	MaxTurns      int                     `json:"max_turns"`
-	MaxTokens     int                     `json:"max_tokens"`
-	ToolExecution *agent.ToolExecution    `json:"tool_execution,omitempty"`
-	Permissions   *permission.Permissions `json:"permissions,omitempty"`
-	MCPServers    []agent.MCPServerConfig `json:"mcp_servers,omitempty"`
-	Knowledge     *agent.KnowledgeConfig  `json:"knowledge,omitempty"`
-	Optimize      *agent.OptimizeConfig   `json:"optimize,omitempty"`
-	Compaction    *agent.CompactionConfig `json:"compaction,omitempty"`
+	ID            string             `json:"id"`
+	Name          string             `json:"name"`
+	Provider      string             `json:"provider"`
+	Model         string             `json:"model"`
+	SystemPrompt  string             `json:"system_prompt"`
+	Tools         []string           `json:"tools"`
+	MaxTurns      int                `json:"max_turns"`
+	MaxTokens     int                `json:"max_tokens"`
+	ToolExecution *toolExecutionJSON `json:"tool_execution,omitempty"`
+	Permissions   *permissionsJSON   `json:"permissions,omitempty"`
+	MCPServers    []mcpServerJSON    `json:"mcp_servers,omitempty"`
+	Knowledge     *knowledgeJSON     `json:"knowledge,omitempty"`
+	Optimize      *optimizeJSON      `json:"optimize,omitempty"`
+	Compaction    *compactionJSON    `json:"compaction,omitempty"`
 }
 
 func (s *Server) handleAgents(c *gin.Context) {
@@ -71,22 +70,7 @@ func (s *Server) handleAgentGet(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, AgentDetail{
-		ID:            a.ID,
-		Name:          a.Name,
-		Provider:      a.Provider,
-		Model:         a.Model,
-		SystemPrompt:  a.SystemPrompt,
-		Tools:         a.Tools,
-		MaxTurns:      a.MaxTurns,
-		MaxTokens:     a.MaxTokens,
-		ToolExecution: a.ToolExecution,
-		Permissions:   a.Permissions,
-		MCPServers:    a.MCPServers,
-		Knowledge:     a.Knowledge,
-		Optimize:      a.Optimize,
-		Compaction:    a.Compaction,
-	})
+	c.JSON(http.StatusOK, agentDetailFrom(a))
 }
 
 func (s *Server) handleAgentCreate(c *gin.Context) {

@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/store"
 	"github.com/teexue/common-agent/core/tui"
 )

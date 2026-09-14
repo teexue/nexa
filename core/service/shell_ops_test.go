@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/tools/builtin"
+	"github.com/teexue/nexakit/builtin"
 )
 
 func TestSaveAndGetShellSettings(t *testing.T) {

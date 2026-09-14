@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/loop"
 )
 
 // HTTPApprover implements loop.Approver for HTTP/SSE clients.

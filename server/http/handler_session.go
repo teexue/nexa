@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/teexue/common-agent/core/audit"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/store"
 )
 

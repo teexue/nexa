@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/teexue/common-agent/core/event"
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/loop"
 )
 
 func TestApplyEvent_TextAndTools(t *testing.T) {

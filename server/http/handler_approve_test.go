@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/loop"
 )
 
 func TestHandleApprove(t *testing.T) {

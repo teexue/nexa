@@ -9,15 +9,17 @@ import (
 	"strings"
 
 	"github.com/teexue/common-agent/core/agent"
+	"github.com/teexue/common-agent/core/audit"
 	"github.com/teexue/common-agent/core/auth"
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/loop"
-	"github.com/teexue/common-agent/core/mcp"
-	"github.com/teexue/common-agent/core/permission"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/common-agent/core/knowledge"
 	"github.com/teexue/common-agent/core/skill"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/mcp"
+	"github.com/teexue/nexakit/permission"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 )
 
 // RunRequest is the transport-agnostic DTO for a run request.
@@ -119,6 +121,8 @@ func (s *Service) PrepareRun(ctx context.Context, req RunRequest, approver loop.
 		Source:        req.Source,
 		AgentsDir:     s.AgentsDir,
 		NewProvider:   s.NewProvider,
+		LoadAgent:     agent.LoadByName,
+		EnrichContext: knowledgeScope,
 		ContextWindow: s.savedContextWindow(a),
 		Subagent:      limits,
 		Shell:         s.preferredShell(),
@@ -131,6 +135,16 @@ func (s *Service) PrepareRun(ctx context.Context, req RunRequest, approver loop.
 		MCPManager:    mcpMgr,
 		MCPToolNames:  mcpToolNames,
 	}, nil
+}
+
+func knowledgeScope(ctx context.Context, a *agent.Agent) context.Context {
+	if a == nil || a.Knowledge == nil {
+		return ctx
+	}
+	return knowledge.WithScope(ctx, knowledge.Scope{
+		Bases: a.Knowledge.Bases,
+		TopK:  a.Knowledge.TopK,
+	})
 }
 
 func (s *Service) loadRunAgent(name string) (*agent.Agent, []string, error) {
@@ -146,7 +160,7 @@ func (s *Service) prepareRunProvider(ctx context.Context, a *agent.Agent, prompt
 	if err != nil {
 		return nil, "", &ServerError{Message: fmt.Sprintf("create provider: %v", err)}
 	}
-	p = provider.WrapAudited(p, s.RequestLogger)
+	p = audit.WrapProvider(p, s.RequestLogger)
 	optCtx := provider.WithRunMeta(ctx, provider.RunMeta{Agent: a.Name, Source: "optimize"})
 	return p, OptimizeUserPrompt(optCtx, a, p, prompt, s.Logger), nil
 }

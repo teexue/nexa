@@ -5,10 +5,10 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"github.com/teexue/common-agent/core/event"
-	"github.com/teexue/common-agent/core/loop"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
 )
 
 // streamEventMsg delivers one agent event into the tea update loop.

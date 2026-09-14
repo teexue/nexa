@@ -11,10 +11,10 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/common-agent/core/service"
-	"github.com/teexue/common-agent/core/session"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/session"
+	"github.com/teexue/nexakit/registry"
 )
 
 // memStore is a minimal in-memory session.Store for workdir tests.

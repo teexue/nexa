@@ -9,7 +9,7 @@ import (
 
 	"github.com/teexue/common-agent/core/auth"
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 	commonagentv1 "github.com/teexue/common-agent/proto"
 )
 

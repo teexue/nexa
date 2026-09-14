@@ -10,7 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
-	"github.com/teexue/common-agent/core/event"
+	"github.com/teexue/nexakit/event"
 	"github.com/teexue/common-agent/core/telemetry"
 )
 

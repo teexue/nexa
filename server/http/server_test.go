@@ -10,10 +10,10 @@ import (
 	"testing"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
-	"github.com/teexue/common-agent/core/tool"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
+	"github.com/teexue/nexakit/tool"
+	"github.com/teexue/nexakit/registry"
 )
 
 // mockTool is a minimal tool for testing.

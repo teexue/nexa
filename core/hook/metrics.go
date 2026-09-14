@@ -4,6 +4,8 @@ import (
 	"context"
 	"sync"
 	"time"
+
+	kithook "github.com/teexue/nexakit/hook"
 )
 
 // ToolMetrics holds timing information for a single tool execution.
@@ -15,7 +17,7 @@ type ToolMetrics struct {
 
 // MetricsHook collects tool execution timing metrics.
 type MetricsHook struct {
-	BaseHook
+	kithook.BaseHook
 	mu      sync.Mutex
 	starts  map[string]time.Time
 	results []ToolMetrics
@@ -29,7 +31,7 @@ func NewMetricsHook() *MetricsHook {
 }
 
 // OnToolStart records the start time of a tool execution.
-func (h *MetricsHook) OnToolStart(_ context.Context, info ToolStartInfo) error {
+func (h *MetricsHook) OnToolStart(_ context.Context, info kithook.ToolStartInfo) error {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	h.starts[info.Name] = time.Now()
@@ -37,7 +39,7 @@ func (h *MetricsHook) OnToolStart(_ context.Context, info ToolStartInfo) error {
 }
 
 // OnToolResult records the duration and error status of a completed tool execution.
-func (h *MetricsHook) OnToolResult(_ context.Context, info ToolResultInfo) error {
+func (h *MetricsHook) OnToolResult(_ context.Context, info kithook.ToolResultInfo) error {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	start, ok := h.starts[info.Name]

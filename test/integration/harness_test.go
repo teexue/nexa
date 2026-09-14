@@ -11,10 +11,10 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/tool"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/tool"
 	httpapi "github.com/teexue/common-agent/server/http"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/registry"
 )
 
 const runAgentYAML = `name: test

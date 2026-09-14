@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/loop"
+	"github.com/teexue/nexakit/loop"
 )
 
 func newComposer() textarea.Model {

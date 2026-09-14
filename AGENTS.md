@@ -26,79 +26,42 @@ make release            # 必须先 check
 - **Tool 统一抽象**：一切能力通过 `Tool` 接口暴露，禁止在 loop 内 hardcode 业务逻辑
 - **Agent 驱动差异**：提示词、工具白名单、权限、模型配置来自 Agent YAML，禁止在 core 写 `switch agent` 分支
 - **事件流输出**：对外只有 `event.Event`。类型：`text_delta` / `reasoning_delta` / `tool_start` / `tool_result` / `tool_approval_required` / `compaction` / `sub_agent_start` / `sub_agent_end` / `error` / `done`
-- **事件是契约**：新增 `event.Type` 必须同一变更同步：`core/event`（含 `PrintEvents` / `AllTypes`）、HTTP SSE、gRPC convert、TUI、前端 SSE 分发、`sdk/ts`、`sdk/python`；漏一处不得合并；commit 注明 breaking
-- **依赖方向**：`cmd → server → core ← tools`；core 不得依赖 server / cmd。HTTP 解析与编码在 `server/http`，业务在 `core/service`；handler 不调用 Provider、不复制 loop
+- **事件是契约**：本仓库消费的事件类型必须在同一变更里同步 HTTP SSE、gRPC convert、TUI、前端 SSE 分发、`sdk/ts`、`sdk/python`。漏一处不得合并；commit 注明 breaking
+- **依赖方向**：`cmd → server → core`。core 不得依赖 server / cmd。HTTP 解析与编码在 `server/http`，业务在 `core/service`；handler 不调用 Provider、不复制 loop
 
 ## 目录与包布局
 
 ```
 cmd/                  # 入口，仅 wiring
-core/{loop,event,session,agent,provider,config,permission,hook,telemetry,compaction,subagent,mcp,skill,service,store,audit,auth,embedding,i18n,kanban,knowledge,tui,version}
-tools/{registry,builtin}
+core/{agent,config,hook,knowledge,service,skill,store,telemetry,audit,auth,i18n,kanban,tui,version}
 server/{http,grpc}
 frontend/             # React SPA（Vite + Tailwind + shadcn）
 sdk/{ts,python}
 ```
 
-不得存在 `core/billing`、`core/tenant`、`core/workflow`（除非用户另开产品任务）。
+本仓库负责配置、知识库、Skill 文件、Agent 文件、观测和界面。不得存在 `core/billing`、`core/tenant`、`core/workflow`（除非用户另开产品任务）。
 
 | 层 | 包 | 职责 |
 |----|----|------|
 | 入口 | `cmd/` | CLI wiring；默认命令启动 Web UI（`web`；`serve` 为别名） |
 | 传输 | `server/http/` | HTTP/SSE：解析请求 → 调用 `loop.Run` → 流式事件 |
 | 业务 | `core/service/` | HTTP/gRPC 共用业务；handler 不调 Provider、不复制 loop |
-| 核心 | `core/loop/` | 唯一 Agent Loop；所有路径必须走 `Run` |
-| 核心 | `core/event/` | 统一事件类型 |
-| 核心 | `core/provider/` | LLM `Stream` 接口 + OpenAI/Anthropic + mock + catalog |
-| 核心 | `core/tool/` | Tool 接口（`Name/Description/InputSchema/Execute`）；`Result.Output` 为 `json.RawMessage` |
-| 核心 | `core/agent/` | YAML 加载（prompt、tools、model、max turns、max tokens、tool_execution） |
-| 核心 | `core/session/` | 线程安全会话：`AddMessages` / `GetMessages` / `Clear` |
 | 核心 | `core/config/` | 用户配置 `~/.common-agent/`（settings、providers、`CredentialStore`、wizard） |
-| 扩展 | `tools/registry/` | 按名注册工具，解析给 LLM 的 definitions |
-| 内置 | `tools/builtin/` | `get_time`、`read_file`、`read_image`、`write_file` 等 |
 
 - 包名小写、短、无下划线（`loop` 而非 `agent_loop`）；目录名即包名
 - 每个目录一个包；禁止 `util`、`common`、`helper`、`misc` 包或文件（含 `handler_misc.go`，必须按资源拆并改名）
-- 跨包共享类型放语义明确的包（如 `core/event`、`core/agent`）
+- 跨包共享类型放语义明确的包（如 `event`、`agent`）
 
 ## 关键约定
 
-- **工具执行**：Agent `tool_execution.mode` 控制并行（流式，默认）或串行；`tool_execution.max_parallel` 限制并发（默认 4）
-- **测试 Mock**：用 `provider.MockProvider`（每步可设 `Text` / `Reasoning` / `ToolCalls`）和 `provider.EchoThenReply()`，无需真实 LLM
 - **配置目录**：`~/.common-agent/` — `state.db`（设置、供应商、凭证、会话等）、`agents/*.yaml`（Agent 定义）。禁止提交 credentials 或 `.env`。升级时会一次性把旧的 `config.yaml` / `providers.yaml` / `credentials.yaml` / `mcp.yaml` 迁入 SQLite。
 - **凭证**：`config.NewCredentialStore(home)` 创建线程安全 store（读 `state.db`），将其 `Lookup` 传给 catalog；包级旧函数已废弃
 - **工具命名**：snake_case，全局唯一（如 `read_file`）。通过 `registry.Register()` 显式注册，禁止 `init()` 魔法注册
-- **Provider 解析**：`cmd` 层按名从 catalog 解析并创建具体 `provider.Provider`；core 只依赖接口
-- **HTTP 客户端**：Provider 使用 `provider.DefaultHTTPClient()`（120s 超时），禁止 `http.DefaultClient`
-- **思考/推理**：OpenAI 兼容的 `ThinkingConfig` 控制 Kimi 风格 reasoning；`ReasoningDelta` 写入事件流
+- **Provider 解析**：`cmd` 层按名从 catalog 解析并创建具体 `provider.Provider`。业务层只依赖接口
 
 ## Agent YAML 参考
 
-```yaml
-id: agt_demo01          # 稳定主键；文件名 agents/{id}.yaml
-name: demo              # 显示名，可改
-version: 1
-provider: anthropic
-model: claude-sonnet-4-20250514
-system_prompt: |
-  You are a helpful assistant.
-tools:
-  - read_file
-  - get_time
-  - delegate_task
-max_turns: 10
-max_tokens: 4096
-tool_execution:
-  mode: parallel       # parallel | serial
-  max_parallel: 4      # max concurrent tools
-compaction:
-  strategy: cascade    # cascade（默认）| truncation | sliding_window | summarize
-  trigger_ratio: 1.0   # 用量超过 window*ratio 时压缩（默认 1.0 = window − summary budget）
-  target_ratio: 0.6    # 压到 window*ratio（必须低于 trigger）
-  keep_recent: 20      # 最近对话原文保留
-  keep_head: 2         # 最旧消息作为稳定 cache 前缀保留
-  summary_model: ""    # summarize 策略用的模型；空 = Agent 模型
-```
+加载、校验工具引用、文件监听在 `core/agent`。文件放在 `agents/{id}.yaml`。
 
 ## 可维护性约束
 
@@ -129,7 +92,6 @@ compaction:
 - **接口**：小接口 + `NewXxx(deps...)` 注入；避免 `init()` 全局注册
 - **注释**：导出符号必须有 doc comment（以名称开头的简短注释）；只写「为什么」，禁止复述代码与分区横幅（`// ───`）
 - **日志**：`log/slog` 结构化日志，统一字段 `session_id` / `agent` / `tool` / `turn`
-- **拆 `loop.Run`**：只抽同包私有函数，不得改变单入口与对外语义
 - 新函数参数已超过 5 个则必须带 Config，不得先写后改
 
 ## 前端编码规范
@@ -199,9 +161,6 @@ compaction:
 
 - 单次变更聚焦一个子任务
 - 仅用户明确要求时才 git commit
-- 新 Tool：`registry.Register` + Agent YAML 示例 + 表驱动测试（成功与失败）+ UI 展示则补 i18n
-- 新 `event.Type`：全部消费方 + 契约测试仍绿；commit 注明 breaking
 - 新 HTTP 路由：解析编码在 `server/http`，业务在 `core/service`
 - 新页面：独立路由 + PageShell 原语 + 挂已有 Shell Outlet + `en.json` 与 `zh-CN.json`
-- 新 Provider：实现 `provider.Provider`；`DefaultHTTPClient`；由 cmd 从 catalog 解析
 - 新包：目录名即包名，职责一句话能说清

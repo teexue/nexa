@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/teexue/common-agent/core/embedding"
+	"github.com/teexue/nexakit/embedding"
 )
 
 var allowedExts = map[string]bool{

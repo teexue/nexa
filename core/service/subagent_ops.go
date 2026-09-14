@@ -5,8 +5,8 @@ import (
 
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/loop"
-	"github.com/teexue/common-agent/core/subagent"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/subagent"
 )
 
 const (

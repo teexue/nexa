@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/teexue/common-agent/core/agent"
-	"github.com/teexue/common-agent/core/provider"
+	"github.com/teexue/nexakit/provider"
 )
 
 // userPromptOptimizer is the meta prompt for optimizing user inputs.

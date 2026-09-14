@@ -8,15 +8,16 @@ import (
 	"time"
 
 	"github.com/teexue/common-agent/core/hook"
+	kithook "github.com/teexue/nexakit/hook"
 )
 
 func TestMetricsHook_CollectsTimings(t *testing.T) {
 	m := hook.NewMetricsHook()
 	ctx := context.Background()
 
-	m.OnToolStart(ctx, hook.ToolStartInfo{Name: "echo", Arguments: json.RawMessage(`{}`)})
+	m.OnToolStart(ctx, kithook.ToolStartInfo{Name: "echo", Arguments: json.RawMessage(`{}`)})
 	time.Sleep(10 * time.Millisecond)
-	m.OnToolResult(ctx, hook.ToolResultInfo{Name: "echo", Output: json.RawMessage(`"ok"`)})
+	m.OnToolResult(ctx, kithook.ToolResultInfo{Name: "echo", Output: json.RawMessage(`"ok"`)})
 
 	results := m.Results()
 	if len(results) != 1 {
@@ -37,8 +38,8 @@ func TestMetricsHook_ErrorTracking(t *testing.T) {
 	m := hook.NewMetricsHook()
 	ctx := context.Background()
 
-	m.OnToolStart(ctx, hook.ToolStartInfo{Name: "fail_tool"})
-	m.OnToolResult(ctx, hook.ToolResultInfo{Name: "fail_tool", Error: fmt.Errorf("simulated error")})
+	m.OnToolStart(ctx, kithook.ToolStartInfo{Name: "fail_tool"})
+	m.OnToolResult(ctx, kithook.ToolResultInfo{Name: "fail_tool", Error: fmt.Errorf("simulated error")})
 
 	results := m.Results()
 	if len(results) != 1 {
@@ -53,8 +54,8 @@ func TestMetricsHook_Reset(t *testing.T) {
 	m := hook.NewMetricsHook()
 	ctx := context.Background()
 
-	m.OnToolStart(ctx, hook.ToolStartInfo{Name: "echo"})
-	m.OnToolResult(ctx, hook.ToolResultInfo{Name: "echo"})
+	m.OnToolStart(ctx, kithook.ToolStartInfo{Name: "echo"})
+	m.OnToolResult(ctx, kithook.ToolResultInfo{Name: "echo"})
 
 	if len(m.Results()) != 1 {
 		t.Fatal("expected 1 result before reset")
@@ -64,15 +65,4 @@ func TestMetricsHook_Reset(t *testing.T) {
 	if len(m.Results()) != 0 {
 		t.Fatal("expected 0 results after reset")
 	}
-}
-
-func TestLoggingHook_NoPanic(t *testing.T) {
-	h := hook.NewLoggingHook(nil) // should use slog.Default()
-	ctx := context.Background()
-
-	// Just verify no panics.
-	h.OnToolStart(ctx, hook.ToolStartInfo{Name: "echo"})
-	h.OnToolResult(ctx, hook.ToolResultInfo{Name: "echo", Output: json.RawMessage(`"ok"`)})
-	h.OnTurnStart(ctx, hook.TurnInfo{TurnNumber: 1})
-	h.OnTurnEnd(ctx, hook.TurnInfo{TurnNumber: 1})
 }

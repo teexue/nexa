@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/teexue/common-agent/core/embedding"
+	"github.com/teexue/nexakit/embedding"
 )
 
 // Retriever searches knowledge bases by embedding similarity.

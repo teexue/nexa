@@ -9,12 +9,12 @@ import (
 	"github.com/teexue/common-agent/core/agent"
 	"github.com/teexue/common-agent/core/audit"
 	"github.com/teexue/common-agent/core/config"
-	"github.com/teexue/common-agent/core/embedding"
+	"github.com/teexue/nexakit/embedding"
 	"github.com/teexue/common-agent/core/knowledge"
-	"github.com/teexue/common-agent/core/provider"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/provider"
+	"github.com/teexue/nexakit/session"
 	"github.com/teexue/common-agent/core/store"
-	"github.com/teexue/common-agent/tools/registry"
+	"github.com/teexue/nexakit/registry"
 )
 
 // Service provides shared operations used by both HTTP and gRPC handlers.

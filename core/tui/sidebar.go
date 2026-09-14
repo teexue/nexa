@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/lipgloss"
 
 	"github.com/teexue/common-agent/core/i18n"
-	"github.com/teexue/common-agent/core/session"
+	"github.com/teexue/nexakit/session"
 )
 
 const sidebarWidth = 28
