@@ -11,19 +11,20 @@ import (
 	"sync"
 
 	"github.com/gin-gonic/gin"
+	"github.com/teexue/nexakit/embedding"
+	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/audit"
 	"github.com/teexue/nexa/core/auth"
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/embedding"
 	"github.com/teexue/nexa/core/knowledge"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexa/core/store"
 	"github.com/teexue/nexa/core/telemetry"
-	"github.com/teexue/nexakit/registry"
 )
 
 // Server exposes agent HTTP endpoints via Gin.
@@ -38,7 +39,7 @@ type Server struct {
 	svc           *service.Service        // shared business logic
 	approver      *HTTPApprover           // handles tool approval flow
 	requestLogger *audit.RequestLogger    // optional LLM request audit; nil disables request logs
-	catalog       *provider.Catalog       // optional provider catalog; nil disables provider listing
+	catalog       *kitcatalog.Catalog     // optional provider catalog; nil disables provider listing
 	creds         *config.CredentialStore // optional credentials for provider upsert/reload
 	health        *telemetry.HealthServer
 	watcher       *agent.Watcher  // watches agents dir for changes
@@ -290,7 +291,7 @@ func (s *Server) resolveCLIKey(raw string) (auth.Identity, bool) {
 
 // SetCatalog sets the provider catalog for listing available providers.
 // Also rewires Service.NewProvider so subsequent runs use the latest catalog.
-func (s *Server) SetCatalog(c *provider.Catalog) {
+func (s *Server) SetCatalog(c *kitcatalog.Catalog) {
 	s.catalog = c
 	if s.svc != nil {
 		if c != nil {

@@ -6,6 +6,10 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/health/grpc_health_v1"
@@ -14,12 +18,9 @@ import (
 
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/i18n"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexa/core/telemetry"
 	nexav1 "github.com/teexue/nexa/proto"
-	"github.com/teexue/nexakit/registry"
 )
 
 // withRequestLocale attaches an i18n bundle from gRPC metadata.
@@ -90,7 +91,7 @@ func NewGRPCServer(
 }
 
 // SetCatalog attaches the provider catalog so PrepareRun enforces enabled models.
-func (s *GRPCServer) SetCatalog(c *provider.Catalog) {
+func (s *GRPCServer) SetCatalog(c *kitcatalog.Catalog) {
 	if s.svc != nil {
 		s.svc.Catalog = c
 	}

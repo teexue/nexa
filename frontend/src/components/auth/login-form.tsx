@@ -103,7 +103,7 @@ function LoginBrand({ mode }: { mode: Mode }) {
     <div className="flex flex-col items-center gap-3 text-center">
       <img src="/logo.png" alt="Nexa" className="h-12 w-12 rounded-xl" />
       <div>
-        <h1 className="font-heading text-xl tracking-tight text-foreground">
+        <h1 className="font-heading text-2xl tracking-tight text-foreground">
           Nexa
         </h1>
         <p className="mt-1 text-xs text-muted-foreground">
@@ -219,7 +219,7 @@ function LoginCard({
 }) {
   const { t } = useTranslation()
   return (
-    <div className="space-y-3 rounded-xl border border-border bg-card p-5">
+    <div className="glass-tile space-y-3 rounded-2xl border border-[color:var(--glass-edge)] p-5">
       {form.effectiveMode === "register" && !hasUsers && (
         <p className="rounded-lg bg-primary/10 px-3 py-2 text-[11px] leading-relaxed text-primary">
           {t("auth.firstUserAdminHint")}
@@ -242,7 +242,7 @@ export function LoginScreen({
 }) {
   const form = useLoginForm({ hasUsers, allowRegistration, refresh })
   return (
-    <div className="flex h-full min-h-svh items-center justify-center bg-background px-4">
+    <div className="flex h-full min-h-svh items-center justify-center px-4">
       <div className="w-full max-w-sm space-y-6">
         <LoginBrand mode={form.effectiveMode} />
         <LoginCard hasUsers={hasUsers} form={form} />

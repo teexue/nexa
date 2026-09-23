@@ -49,7 +49,7 @@ export function ThinkingBlock({
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className="mt-1 ml-3 border-l-2 border-primary/15 pl-3">
-          <p className="text-xs leading-relaxed whitespace-pre-wrap text-muted-foreground">
+          <p className="text-xs leading-relaxed wrap-anywhere whitespace-pre-wrap text-muted-foreground">
             {content}
           </p>
         </div>

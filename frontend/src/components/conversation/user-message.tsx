@@ -7,26 +7,22 @@ import type { ConversationEntry, FileAttachment } from "@/types/agent"
 export function UserMessage({ entry }: { entry: ConversationEntry }) {
   const attachments = entry.attachments ?? []
   return (
-    <div className="flex justify-end">
-      <div className="flex max-w-[85%] flex-col items-end gap-1.5">
-        {attachments.length > 0 && (
-          <UserAttachments attachments={attachments} />
-        )}
-        {entry.content ? (
-          <div className="rounded-2xl rounded-br-md bg-gradient-to-br from-accent via-primary/10 to-primary/25 px-3.5 py-2 shadow-md shadow-primary/15">
-            <p className="text-[13px] leading-relaxed whitespace-pre-wrap text-foreground">
-              {entry.content}
-            </p>
-          </div>
-        ) : null}
-      </div>
+    <div className="my-4 flex w-full min-w-0 flex-col gap-1.5">
+      {attachments.length > 0 && <UserAttachments attachments={attachments} />}
+      {entry.content ? (
+        <div className="glass-tile-user w-full max-w-full min-w-0 rounded-xl border px-3.5 py-3">
+          <p className="text-[13px] leading-relaxed wrap-anywhere whitespace-pre-wrap text-foreground">
+            {entry.content}
+          </p>
+        </div>
+      ) : null}
     </div>
   )
 }
 
 function UserAttachments({ attachments }: { attachments: FileAttachment[] }) {
   return (
-    <div className="flex flex-wrap justify-end gap-1.5">
+    <div className="flex flex-wrap gap-1.5">
       {attachments.map((item, i) =>
         item.kind === "image" ? (
           <ConstrainedImage

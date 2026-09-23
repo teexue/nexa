@@ -108,7 +108,7 @@ function ExpandedSidebar({
   onDeleteSession,
 }: SidebarProps) {
   return (
-    <div className="flex h-full w-60 shrink-0 flex-col overflow-hidden border-r border-border bg-sidebar">
+    <div className="glass-panel flex h-full w-60 shrink-0 flex-col overflow-hidden border-r border-[color:var(--glass-edge)]">
       <SidebarBrand onToggle={onToggle} />
       <Separator />
       <NewSessionButton onClick={onNewSession} />

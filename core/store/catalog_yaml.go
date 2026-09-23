@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
 	"gopkg.in/yaml.v3"
 )
 
@@ -29,8 +30,8 @@ type fileProfileEntry struct {
 	ModelWindows map[string]int     `yaml:"model_windows,omitempty"`
 }
 
-func (e fileProfileEntry) toEntry() provider.ProfileEntry {
-	out := provider.ProfileEntry{
+func (e fileProfileEntry) toEntry() kitcatalog.ProfileEntry {
+	out := kitcatalog.ProfileEntry{
 		APIStyle: e.APIStyle, BaseURL: e.BaseURL, APIKeyEnv: e.APIKeyEnv,
 		APIVersion: e.APIVersion, AuthStyle: e.AuthStyle, DefaultModel: e.DefaultModel,
 		DisplayName: e.DisplayName, Models: e.Models, ModelsPath: e.ModelsPath,
@@ -48,8 +49,8 @@ type CatalogFile struct {
 }
 
 // Entries converts the file document into runtime provider entries.
-func (f CatalogFile) Entries() map[string]provider.ProfileEntry {
-	out := make(map[string]provider.ProfileEntry, len(f.Providers))
+func (f CatalogFile) Entries() map[string]kitcatalog.ProfileEntry {
+	out := make(map[string]kitcatalog.ProfileEntry, len(f.Providers))
 	for name, entry := range f.Providers {
 		out[name] = entry.toEntry()
 	}
@@ -57,11 +58,11 @@ func (f CatalogFile) Entries() map[string]provider.ProfileEntry {
 }
 
 // LoadProviderCatalog reads providers.yaml into a runtime catalog.
-func LoadProviderCatalog(path string, credLookup func(string) string) (*provider.Catalog, error) {
+func LoadProviderCatalog(path string, credLookup func(string) string) (*kitcatalog.Catalog, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return nil, provider.MissingCatalog(path)
+			return nil, kitcatalog.MissingCatalog(path)
 		}
 		return nil, fmt.Errorf("read providers %q: %w", path, err)
 	}
@@ -69,5 +70,5 @@ func LoadProviderCatalog(path string, credLookup func(string) string) (*provider
 	if err := yaml.Unmarshal(data, &file); err != nil {
 		return nil, fmt.Errorf("parse providers %q: %w", path, err)
 	}
-	return provider.NewCatalog(file.Entries(), credLookup)
+	return kitcatalog.NewCatalog(file.Entries(), credLookup)
 }

@@ -9,10 +9,12 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
+
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexakit/registry"
 )
 
 // setupSkillTestServer builds a server whose home layout mirrors production:
@@ -28,7 +30,7 @@ func setupSkillTestServer(t *testing.T) (*Server, string) {
 	reg := registry.New()
 	reg.Register(&mockTool{})
 	newProvider := func(a *agent.Agent) (provider.Provider, error) {
-		return &provider.MockProvider{}, nil
+		return &kitmock.MockProvider{}, nil
 	}
 	srv := NewServer(ServerConfig{AgentsDir: agentsDir, Registry: reg, NewProvider: newProvider})
 	return srv, home

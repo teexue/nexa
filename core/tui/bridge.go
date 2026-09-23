@@ -4,7 +4,6 @@ import (
 	"context"
 
 	tea "github.com/charmbracelet/bubbletea"
-
 	"github.com/teexue/nexakit/event"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/provider"
@@ -22,7 +21,7 @@ type approvalNeededMsg struct{ Req loop.ApprovalRequest }
 
 // sessionsLoadedMsg carries a refreshed session list.
 type sessionsLoadedMsg struct {
-	Metas []session.SessionMeta
+	Metas []session.Meta
 	Err   error
 }
 

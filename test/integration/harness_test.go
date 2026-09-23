@@ -10,11 +10,13 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexakit/tool"
-	httpapi "github.com/teexue/nexa/server/http"
+	kitmock "github.com/teexue/nexakit/provider/mock"
 	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/tool"
+
+	"github.com/teexue/nexa/core/agent"
+	httpapi "github.com/teexue/nexa/server/http"
 )
 
 const runAgentYAML = `name: test
@@ -46,7 +48,7 @@ func (m *mockTool) Execute(_ context.Context, _ json.RawMessage) (tool.Result, e
 	return tool.Result{Output: json.RawMessage(`"ok"`)}, nil
 }
 
-func newRunServer(t *testing.T, yaml string, mock *provider.MockProvider) *httpapi.Server {
+func newRunServer(t *testing.T, yaml string, mock *kitmock.MockProvider) *httpapi.Server {
 	t.Helper()
 	dir := t.TempDir()
 	require.NoError(t, os.WriteFile(filepath.Join(dir, "test.yaml"), []byte(yaml), 0o644))
@@ -62,15 +64,15 @@ func newRunServer(t *testing.T, yaml string, mock *provider.MockProvider) *httpa
 	})
 }
 
-func textMock() *provider.MockProvider {
-	return &provider.MockProvider{
-		Calls: [][]provider.MockStep{{{Text: "hello from loop"}}},
+func textMock() *kitmock.MockProvider {
+	return &kitmock.MockProvider{
+		Calls: [][]kitmock.MockStep{{{Text: "hello from loop"}}},
 	}
 }
 
-func toolCallMock() *provider.MockProvider {
-	return &provider.MockProvider{
-		Calls: [][]provider.MockStep{
+func toolCallMock() *kitmock.MockProvider {
+	return &kitmock.MockProvider{
+		Calls: [][]kitmock.MockStep{
 			{{ToolCalls: []provider.ToolCall{{ID: "tc-1", Name: "test_tool", Arguments: json.RawMessage(`{}`)}}}},
 			{{Text: "approved"}},
 		},

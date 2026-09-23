@@ -7,11 +7,11 @@ import (
 	"github.com/charmbracelet/bubbles/textarea"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/i18n"
-	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/nexakit/session"
 )
 
 // focusPane tracks which region receives keys.
@@ -44,7 +44,7 @@ type ChatModel struct {
 	modelLocked bool
 
 	sess     *session.Session
-	sessions []session.SessionMeta
+	sessions []session.Meta
 	entries  []Entry
 	models   []ModelOption
 	files    []string

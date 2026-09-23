@@ -68,12 +68,12 @@ func (s *SessionStore) Load(id string) (*session.Session, error) {
 }
 
 // List returns metadata for all sessions (caller filters by user if needed).
-func (s *SessionStore) List() ([]session.SessionMeta, error) {
+func (s *SessionStore) List() ([]session.Meta, error) {
 	return s.ListByUser("")
 }
 
 // ListByUser returns sessions for a user, or all when userID is empty.
-func (s *SessionStore) ListByUser(userID string) ([]session.SessionMeta, error) {
+func (s *SessionStore) ListByUser(userID string) ([]session.Meta, error) {
 	q := s.db.Model(&SessionRow{}).Order("updated_at desc")
 	if userID != "" {
 		q = q.Where("user_id = ?", userID)
@@ -82,9 +82,9 @@ func (s *SessionStore) ListByUser(userID string) ([]session.SessionMeta, error) 
 	if err := q.Find(&rows).Error; err != nil {
 		return nil, err
 	}
-	out := make([]session.SessionMeta, 0, len(rows))
+	out := make([]session.Meta, 0, len(rows))
 	for _, r := range rows {
-		meta := session.SessionMeta{
+		meta := session.Meta{
 			ID: r.ID, UserID: r.UserID, Agent: r.Agent, Title: r.Title,
 			CreatedAt: r.CreatedAt, UpdatedAt: r.UpdatedAt,
 		}

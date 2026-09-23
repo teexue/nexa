@@ -10,14 +10,15 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/teexue/nexakit/event"
+	"github.com/teexue/nexakit/loop"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	"github.com/teexue/nexakit/session"
+
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/event"
 	"github.com/teexue/nexa/core/i18n"
-	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexa/core/store"
 	"github.com/teexue/nexa/core/tui"
 )
@@ -141,7 +142,7 @@ func parseRunFlags(args []string) runFlags {
 // runBootstrap holds the runtime resources opened for one CLI run.
 type runBootstrap struct {
 	paths    runtimePaths
-	catalog  *provider.Catalog
+	catalog  *kitcatalog.Catalog
 	creds    *config.CredentialStore
 	stateDB  *store.DB
 	agent    *agent.Agent

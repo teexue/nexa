@@ -69,15 +69,15 @@ func TestListAgents_ContextWindow(t *testing.T) {
 	dir := t.TempDir()
 	svc := &service.Service{AgentsDir: dir, Logger: slog.Default()}
 
-	// Model with an official spec → 1M window.
-	require.NoError(t, svc.SaveAgent("spec", []byte(`id: spec
-name: spec-agent
+	// No saved provider window and no compaction window → omit.
+	require.NoError(t, svc.SaveAgent("plain", []byte(`id: plain
+name: plain-agent
 provider: openai
-model: deepseek-v4-pro
+model: gpt-4o
 system_prompt: hi
 tools: [echo]
 `)))
-	// Unknown model + explicit compaction window → configured value wins.
+	// Explicit compaction window → configured value wins.
 	require.NoError(t, svc.SaveAgent("cfg", []byte(`id: cfg
 name: cfg-agent
 provider: openai
@@ -95,7 +95,7 @@ compaction:
 	for _, s := range summaries {
 		byID[s.ID] = s
 	}
-	assert.Equal(t, 1_000_000, byID["spec"].ContextWindow, "model spec window")
+	assert.Equal(t, 0, byID["plain"].ContextWindow, "no advertised window")
 	assert.Equal(t, 256000, byID["cfg"].ContextWindow, "configured compaction window")
 
 	// Unknown model with no compaction window → omit (do not advertise 128K).

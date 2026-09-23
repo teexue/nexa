@@ -10,15 +10,16 @@ import (
 	"testing"
 	"time"
 
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/test/bufconn"
 
 	"github.com/teexue/nexa/core/agent"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/telemetry"
 	nexav1 "github.com/teexue/nexa/proto"
-	"github.com/teexue/nexakit/registry"
 )
 
 func TestGRPCHealth_Check_Serving(t *testing.T) {
@@ -92,8 +93,8 @@ max_tokens: 1024
 	reg.Register(&testTool{})
 
 	newProvider := func(a *agent.Agent) (provider.Provider, error) {
-		return &provider.MockProvider{
-			Calls: [][]provider.MockStep{
+		return &kitmock.MockProvider{
+			Calls: [][]kitmock.MockStep{
 				{{Text: "test response"}},
 			},
 		}, nil

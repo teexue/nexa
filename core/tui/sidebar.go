@@ -5,14 +5,14 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/i18n"
-	"github.com/teexue/nexakit/session"
 )
 
 const sidebarWidth = 28
 
-func renderSidebar(theme Theme, metas []session.SessionMeta, activeID string, collapsed bool, height int) string {
+func renderSidebar(theme Theme, metas []session.Meta, activeID string, collapsed bool, height int) string {
 	if collapsed {
 		return theme.Sidebar.Width(3).Height(height).Render(theme.Accent.Render("›"))
 	}
@@ -57,7 +57,7 @@ func renderHeader(theme Theme, agentName, model string, status StreamStatus, spi
 	dot := statusGlyph(status == StatusStreaming, frame, spin)
 	left := theme.Title.Render(agentName)
 	if model != "" {
-		left += theme.Muted.Render(" · "+model)
+		left += theme.Muted.Render(" · " + model)
 	}
 	right := theme.StatusDot.Render(dot+" ") + theme.Muted.Render(statusLabel(status))
 	gap := width - lipgloss.Width(left) - lipgloss.Width(right) - 2

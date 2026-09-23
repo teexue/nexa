@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	embmock "github.com/teexue/nexakit/embedding/mock"
 
-	"github.com/teexue/nexakit/embedding"
 	"github.com/teexue/nexa/core/knowledge"
 )
 
@@ -31,7 +31,7 @@ func TestKnowledgeRoundTrip(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, "product_docs", meta.ID)
 
-	emb := &embedding.MockEmbedder{Dim: 8}
+	emb := &embmock.MockEmbedder{Dim: 8}
 	ing := knowledge.NewIngester(mgr, emb)
 	ret := knowledge.NewRetriever(mgr, emb)
 

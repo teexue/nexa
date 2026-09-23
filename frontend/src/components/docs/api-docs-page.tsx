@@ -62,7 +62,7 @@ function DocsMobileNav({
 }) {
   const { t } = useTranslation()
   return (
-    <div className="sticky top-0 z-10 -mx-6 -mt-6 mb-6 flex gap-1.5 overflow-x-auto border-b border-border bg-background/95 px-4 py-2 backdrop-blur lg:hidden">
+    <div className="glass-panel sticky top-0 z-10 -mx-6 -mt-6 mb-6 flex gap-1.5 overflow-x-auto border-b border-[color:var(--glass-edge)] px-4 py-2 lg:hidden">
       {SECTIONS.map((id) => (
         <button
           key={id}

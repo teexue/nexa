@@ -5,9 +5,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
 
 	"github.com/teexue/nexa/core/agent"
-	"github.com/teexue/nexakit/provider"
 )
 
 // staticProvider replies with a fixed text on every Stream call.
@@ -53,7 +54,7 @@ func TestOptimizeUserPrompt_EmptyResponseFallsBack(t *testing.T) {
 func TestOptimizeUserPrompt_SkipsMockProvider(t *testing.T) {
 	// MockProvider's scripted responses must be reserved for the actual run.
 	a := &agent.Agent{Name: "t", Model: "m", Optimize: &agent.OptimizeConfig{UserPrompt: true}}
-	mock := &provider.MockProvider{Calls: [][]provider.MockStep{{{Text: "run reply"}}}}
+	mock := &kitmock.MockProvider{Calls: [][]kitmock.MockStep{{{Text: "run reply"}}}}
 	got := OptimizeUserPrompt(context.Background(), a, mock, "原始问题", nil)
 	assert.Equal(t, "原始问题", got)
 }

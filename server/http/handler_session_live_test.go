@@ -9,10 +9,11 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/agent"
-	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexakit/session"
 )
 
 func TestHandleSessionEvents_FollowAfterDisconnect(t *testing.T) {
@@ -60,7 +61,7 @@ func TestHandleSessionEvents_NotRunning(t *testing.T) {
 func TestHandleSessionAbort_CancelsRun(t *testing.T) {
 	srv, _, _ := setupTestServerWithStore(t)
 	srv.newProvider = func(a *agent.Agent) (provider.Provider, error) {
-		return &provider.MockProvider{BlockOnStream: true}, nil
+		return &kitmock.MockProvider{BlockOnStream: true}, nil
 	}
 	srv.svc.NewProvider = srv.newProvider
 	router := srv.Handler()

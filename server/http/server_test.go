@@ -9,11 +9,13 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
 	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexakit/tool"
-	"github.com/teexue/nexakit/registry"
+
+	"github.com/teexue/nexa/core/agent"
 )
 
 // mockTool is a minimal tool for testing.
@@ -59,8 +61,8 @@ max_tokens: 1024
 
 	// Create server with mock provider factory.
 	newProvider := func(a *agent.Agent) (provider.Provider, error) {
-		return &provider.MockProvider{
-			Calls: [][]provider.MockStep{
+		return &kitmock.MockProvider{
+			Calls: [][]kitmock.MockStep{
 				{{Text: "test response"}},
 			},
 		}, nil

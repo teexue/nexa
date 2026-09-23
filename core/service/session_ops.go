@@ -4,16 +4,17 @@ import (
 	"fmt"
 
 	"github.com/teexue/nexakit/session"
+
 	"github.com/teexue/nexa/core/store"
 )
 
 // ListSessions returns metadata for sessions owned by userID. Sessions
 // created by kanban or sub-agent runs are excluded from the conversation list.
-func (s *Service) ListSessions(userID string) ([]session.SessionMeta, error) {
+func (s *Service) ListSessions(userID string) ([]session.Meta, error) {
 	if s.Store == nil {
 		return nil, fmt.Errorf("session persistence not configured")
 	}
-	var metas []session.SessionMeta
+	var metas []session.Meta
 	if gs, ok := s.Store.(*store.SessionStore); ok {
 		var err error
 		metas, err = gs.ListByUser(userID)
@@ -27,7 +28,7 @@ func (s *Service) ListSessions(userID string) ([]session.SessionMeta, error) {
 			return nil, err
 		}
 	}
-	out := make([]session.SessionMeta, 0, len(metas))
+	out := make([]session.Meta, 0, len(metas))
 	for _, m := range metas {
 		if hiddenSessionSource(m.Metadata[session.MetadataKeySource]) {
 			continue

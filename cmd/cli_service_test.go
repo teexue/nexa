@@ -10,15 +10,16 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/teexue/nexakit/loop"
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexa/core/store"
-	"github.com/teexue/nexakit/registry"
 )
 
 // testLogger silences slog output during tests.
@@ -53,7 +54,7 @@ func newRunService(t *testing.T) (*service.Service, *registry.Registry, string) 
 		HomeDir:   home,
 		Registry:  reg,
 		NewProvider: func(*agent.Agent) (provider.Provider, error) {
-			return provider.EchoThenReply("hi"), nil
+			return kitmock.EchoThenReply("hi"), nil
 		},
 		Logger: testLogger(),
 	})

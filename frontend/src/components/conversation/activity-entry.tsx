@@ -61,7 +61,7 @@ function AssistantBody({
   const { entry, isActive } = props
   const hasToolCalls = entry.toolCalls && entry.toolCalls.length > 0
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex min-w-0 flex-col gap-1.5">
       {isActive && <GeneratingPulse />}
       {entry.reasoningContent && (
         <ThinkingBlock
@@ -81,7 +81,7 @@ function AssistantBody({
         />
       )}
       {entry.content && (
-        <div className="text-[13px] leading-relaxed">
+        <div className="min-w-0 text-[13px] leading-relaxed">
           <MarkdownRenderer
             content={entry.content}
             isStreaming={!!isActive && !hasToolCalls}

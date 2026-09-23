@@ -3,10 +3,12 @@ package audit
 import (
 	"context"
 	"encoding/json"
+	"log/slog"
 	"time"
 
-	"github.com/teexue/nexa/core/auth"
 	"github.com/teexue/nexakit/provider"
+
+	"github.com/teexue/nexa/core/auth"
 )
 
 // textTruncateLimit caps aggregated text/reasoning stored per record.
@@ -41,7 +43,7 @@ func (a *auditedProvider) ResolveContextWindow(ctx context.Context, model string
 	if r, ok := a.inner.(provider.ContextResolver); ok {
 		return r.ResolveContextWindow(ctx, model, configured)
 	}
-	return provider.EffectiveContextWindow(model, configured)
+	return provider.EffectiveContextWindow(configured)
 }
 
 // Stream delegates to the inner provider, draining the chunk stream and
@@ -134,7 +136,14 @@ func (a *auditedProvider) record(ctx context.Context, args recordArgs) {
 	if args.callErr != nil {
 		rec.Error = args.callErr.Error()
 	}
-	_ = a.logger.Log(rec)
+	if err := a.logger.Log(rec); err != nil {
+		slog.Warn("log.audit.persist_failed",
+			"error", err,
+			"session_id", rec.SessionID,
+			"agent", rec.Agent,
+			"model", rec.Model,
+		)
+	}
 }
 
 // truncateRunes truncates s to at most n bytes on a UTF-8 boundary.

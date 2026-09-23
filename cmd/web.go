@@ -12,6 +12,10 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/teexue/nexakit/embedding"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 	"google.golang.org/grpc"
 
 	"github.com/teexue/nexa/core/audit"
@@ -23,10 +27,6 @@ import (
 	"github.com/teexue/nexa/core/telemetry"
 	grpcapi "github.com/teexue/nexa/server/grpc"
 	httpapi "github.com/teexue/nexa/server/http"
-	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexakit/registry"
-	"github.com/teexue/nexakit/session"
 )
 
 type webFlags struct {
@@ -94,7 +94,7 @@ func initKnowledge(cfg knowledgeInit) knowledgeRuntime {
 type webHTTPConfig struct {
 	paths     runtimePaths
 	reg       *registry.Registry
-	catalog   *provider.Catalog
+	catalog   *kitcatalog.Catalog
 	creds     *config.CredentialStore
 	stateDB   *store.DB
 	sessStore session.Store
@@ -237,7 +237,7 @@ type GRPCConfig struct {
 	Addr      string
 	Paths     runtimePaths
 	Reg       *registry.Registry
-	Catalog   *provider.Catalog
+	Catalog   *kitcatalog.Catalog
 	Mock      bool
 	Logger    *slog.Logger
 	SessStore session.Store

@@ -7,11 +7,7 @@ interface PageShellProps {
 
 /** Standard page root: full-height column with background. */
 export function PageShell({ children, className }: PageShellProps) {
-  return (
-    <div className={cn("flex h-full flex-col bg-background", className)}>
-      {children}
-    </div>
-  )
+  return <div className={cn("flex h-full flex-col", className)}>{children}</div>
 }
 
 interface PageMainProps {

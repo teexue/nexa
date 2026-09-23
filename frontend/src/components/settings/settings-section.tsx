@@ -17,7 +17,7 @@ export function SettingsSection({
   children: ReactNode
 }) {
   return (
-    <section className="overflow-hidden rounded-2xl border border-border bg-card">
+    <section className="glass-tile overflow-hidden rounded-2xl border border-[color:var(--glass-edge)]">
       <SettingsSectionHead
         title={title}
         description={description}

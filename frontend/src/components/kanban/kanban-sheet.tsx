@@ -11,7 +11,7 @@ export function KanbanSheet({
   return (
     <div
       className={cn(
-        "rounded-2xl bg-card px-6 py-7 shadow-sm ring-1 ring-border/50 sm:px-9 sm:py-8",
+        "glass-tile rounded-2xl border border-[color:var(--glass-edge)] px-6 py-7 sm:px-9 sm:py-8",
         className
       )}
     >

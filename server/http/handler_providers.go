@@ -8,14 +8,15 @@ import (
 	"unicode"
 
 	"github.com/gin-gonic/gin"
+	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
 
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/provider"
 )
 
 func (s *Server) handleProvidersList(c *gin.Context) {
 	if s.catalog == nil {
-		c.JSON(http.StatusOK, []provider.ProviderInfo{})
+		c.JSON(http.StatusOK, []kitcatalog.Info{})
 		return
 	}
 	c.JSON(http.StatusOK, s.catalog.Entries())
@@ -104,7 +105,7 @@ func (s *Server) buildInlineProvider(req ProviderModelsRequest) (provider.Provid
 	}
 
 	baseURL, modelsPath, apiVersion, authStyle := inlineProviderFields(req, style)
-	return provider.NewProvider(provider.ListingProfile(provider.Profile{
+	return kitcatalog.NewProvider(kitcatalog.ListingProfile(kitcatalog.Profile{
 		Name:       req.Name,
 		APIStyle:   style,
 		BaseURL:    baseURL,
@@ -360,7 +361,7 @@ func (s *Server) reloadCatalog() error {
 			lookup = cs.Lookup
 		}
 	}
-	var cat *provider.Catalog
+	var cat *kitcatalog.Catalog
 	var err error
 	if s.stateDB != nil {
 		cat, err = s.stateDB.LoadCatalog(lookup)

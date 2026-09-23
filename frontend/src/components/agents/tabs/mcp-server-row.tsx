@@ -18,7 +18,7 @@ export function McpServerRow({
 }) {
   const { t } = useTranslation()
   return (
-    <div className="rounded-xl border border-border bg-background p-4">
+    <div className="glass-tile rounded-xl border border-[color:var(--glass-edge)] p-4">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Plug className="h-3.5 w-3.5 text-muted-foreground" />

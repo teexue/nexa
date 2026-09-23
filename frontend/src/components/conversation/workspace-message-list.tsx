@@ -5,6 +5,7 @@ import { StreamProgress } from "./stream-progress"
 import { ActivityEntry } from "./activity-entry"
 import type { MessageSearch } from "@/hooks/use-message-search"
 import type { ConversationEntry } from "@/types/agent"
+import { cn } from "@/lib/utils"
 
 interface WorkspaceMessageListProps {
   messages: ConversationEntry[]
@@ -32,15 +33,15 @@ export function WorkspaceMessageList({
   onScroll,
 }: WorkspaceMessageListProps) {
   return (
-    <ScrollArea className="h-full">
+    <ScrollArea className="h-full min-w-0">
       <div
         ref={containerRef}
         onScroll={onScroll}
-        className="h-full overflow-auto"
+        className="h-full min-w-0 overflow-x-hidden overflow-y-auto"
       >
-        <div className="flex flex-col gap-2.5 px-5 py-4">
+        <div className="flex min-w-0 flex-col gap-2.5 px-5 py-4">
           {search.searchOpen && (
-            <div className="sticky top-0 z-10 -mx-5 bg-background px-5 py-2">
+            <div className="glass-panel sticky top-0 z-10 -mx-5 px-5 py-2">
               <SearchBar
                 onSearch={search.setSearchQuery}
                 onClear={search.handleClear}
@@ -110,7 +111,10 @@ function MessageRow({
       ref={(el) => {
         if (el && matchIdx >= 0) matchesRef.current[matchIdx] = el
       }}
-      className={isCurrent ? "rounded-xl ring-1 ring-primary/40" : ""}
+      className={cn(
+        "max-w-full min-w-0",
+        isCurrent && "rounded-xl ring-1 ring-primary/40"
+      )}
     >
       <ActivityEntry
         entry={entry}

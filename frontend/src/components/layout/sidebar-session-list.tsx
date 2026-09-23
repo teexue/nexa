@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Clock, Loader2, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -6,6 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { ConfirmDeleteDialog } from "@/components/settings/confirm-delete-dialog"
 import type { SessionMeta } from "@/types/agent"
 import { formatRelativeTime } from "@/lib/format"
 
@@ -62,7 +64,7 @@ function SessionListItem({
   const title = sess.title?.trim() || t("layout.untitledSession")
   return (
     <div
-      className={`group flex items-center gap-2 rounded-xl px-2.5 py-2 text-left transition-all ${active ? "bg-primary/8 text-primary" : "text-sidebar-foreground hover:bg-sidebar-accent"}`}
+      className={`group flex items-center gap-2 rounded-lg px-2.5 py-2 text-left transition-all ${active ? "bg-primary/12 text-foreground" : "text-sidebar-foreground hover:bg-primary/12"}`}
     >
       <button
         onClick={() => onResume?.(sess.id)}
@@ -80,7 +82,7 @@ function SessionListItem({
         {sess.running && (
           <Tooltip>
             <TooltipTrigger render={<span data-slot="running-indicator" />}>
-              <Loader2 className="h-3 w-3 shrink-0 animate-spin text-primary" />
+              <Loader2 className="h-3 w-3 shrink-0 animate-spin text-live" />
             </TooltipTrigger>
             <TooltipContent side="right">
               {t("layout.sessionRunning")}
@@ -113,8 +115,10 @@ export function SessionList({
   agentLabels,
 }: SessionListProps) {
   const { t } = useTranslation()
+  const [pendingId, setPendingId] = useState<string | null>(null)
+  const pending = sessions.find((s) => s.id === pendingId)
   if (sessions.length === 0) return null
-
+  const pendingTitle = pending?.title?.trim() || t("layout.untitledSession")
   return (
     <div className="p-2.5">
       <div className="mb-2 flex items-center gap-1.5 px-2 text-[11px] font-semibold tracking-widest text-muted-foreground/70 uppercase">
@@ -127,11 +131,25 @@ export function SessionList({
             sess={sess}
             active={activeSessionId === sess.id}
             onResume={onResumeSession}
-            onDelete={onDeleteSession}
+            onDelete={setPendingId}
             agentLabel={agentLabels?.[sess.agent]}
           />
         ))}
       </div>
+      <ConfirmDeleteDialog
+        open={pendingId !== null}
+        title={t("layout.deleteSession")}
+        message={t("layout.deleteSessionConfirm", { title: pendingTitle })}
+        error={null}
+        deleting={false}
+        onClose={() => setPendingId(null)}
+        onConfirm={() => {
+          if (!pendingId) return
+          const id = pendingId
+          setPendingId(null)
+          onDeleteSession?.(id)
+        }}
+      />
     </div>
   )
 }

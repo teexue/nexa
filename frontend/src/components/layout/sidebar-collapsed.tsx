@@ -160,7 +160,7 @@ export function CollapsedSidebar({
 }: CollapsedSidebarProps) {
   const { t } = useTranslation()
   return (
-    <div className="flex h-full w-12 flex-col items-center gap-1 border-r border-border bg-sidebar py-3">
+    <div className="glass-panel flex h-full w-12 flex-col items-center gap-1 border-r border-[color:var(--glass-edge)] py-3">
       <CollapsedIconButton
         tooltip={t("layout.expandSidebar")}
         onClick={onToggle}

@@ -5,15 +5,16 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/teexue/nexakit/embedding"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
+
 	"github.com/teexue/nexa/core/audit"
 	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexa/core/knowledge"
 	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexa/core/store"
-	"github.com/teexue/nexakit/embedding"
-	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexakit/registry"
-	"github.com/teexue/nexakit/session"
 )
 
 // cliServiceConfig holds everything needed to assemble the shared Service for
@@ -22,7 +23,7 @@ import (
 type cliServiceConfig struct {
 	paths    runtimePaths
 	reg      *registry.Registry
-	catalog  *provider.Catalog
+	catalog  *kitcatalog.Catalog
 	creds    *config.CredentialStore
 	stateDB  *store.DB
 	settings config.Settings

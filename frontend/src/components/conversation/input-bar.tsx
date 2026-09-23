@@ -39,7 +39,7 @@ export function InputBar(props: InputBarProps) {
         attachments={attachments}
         onRemove={removeAttachment}
       />
-      <div className="relative rounded-2xl border border-border bg-card shadow-sm transition-shadow focus-within:border-primary/30 focus-within:shadow-md">
+      <div className="glass-tile relative rounded-xl border border-[color:var(--glass-edge)] transition-shadow focus-within:border-primary/45">
         <PromptField
           text={text}
           onChange={setText}
@@ -105,8 +105,8 @@ function PromptField({
             : t("conversation.placeholderIdle")
         }
         disabled={false}
-        className="max-h-[6lh] min-h-6 flex-1 resize-none overflow-y-auto overscroll-contain border-0 bg-transparent px-1.5 py-0 text-sm leading-6 shadow-none focus-visible:ring-0"
         rows={1}
+        className="glass-plain field-sizing-content max-h-[6lh] min-h-6 flex-1 resize-none overflow-y-auto overscroll-contain border-0 bg-transparent px-1.5 py-0 text-sm leading-6 shadow-none focus-visible:ring-0"
       />
     </div>
   )

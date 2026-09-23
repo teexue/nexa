@@ -13,7 +13,7 @@ function CodeBlock({
   if (isInline) {
     return (
       <code
-        className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[13px] text-foreground ring-1 ring-border"
+        className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[13px] wrap-anywhere text-foreground ring-1 ring-border"
         {...props}
       >
         {children}
@@ -23,7 +23,7 @@ function CodeBlock({
 
   const code = String(children).replace(/\n$/, "")
   return (
-    <div className="group relative my-2 overflow-hidden rounded-xl border border-border bg-card">
+    <div className="group relative my-2 max-w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card">
       <div className="flex items-center justify-between border-b border-border bg-muted/50 px-3 py-1.5">
         <span className="font-mono text-[11px] font-medium text-muted-foreground">
           {match?.[1] ?? "code"}
@@ -48,7 +48,7 @@ const MD_COMPONENTS = {
   }: React.HTMLAttributes<HTMLTableElement> & {
     children?: React.ReactNode
   }) => (
-    <div className="my-2 overflow-x-auto rounded-xl border border-border">
+    <div className="my-2 max-w-full min-w-0 overflow-x-auto rounded-xl border border-border">
       <table className="w-full border-collapse text-[13px]" {...p}>
         {children}
       </table>
@@ -200,7 +200,7 @@ export function MarkdownRenderer({
   isStreaming?: boolean
 }) {
   return (
-    <div className="space-y-2 text-[13px] leading-relaxed">
+    <div className="max-w-full min-w-0 space-y-2 text-[13px] leading-relaxed wrap-anywhere">
       <Markdown remarkPlugins={[remarkGfm]} components={MD_COMPONENTS}>
         {content}
       </Markdown>

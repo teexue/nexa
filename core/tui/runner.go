@@ -39,7 +39,7 @@ type TurnResult struct {
 // core/service (which would cycle through config → tui).
 type ChatRunner interface {
 	RunTurn(ctx context.Context, req TurnRequest, approver loop.Approver) (TurnResult, error)
-	ListSessions() ([]session.SessionMeta, error)
+	ListSessions() ([]session.Meta, error)
 	LoadSession(id string) (*session.Session, error)
 	// ListModels returns enabled provider/model pairs for the /model picker.
 	ListModels() []ModelOption

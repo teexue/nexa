@@ -16,7 +16,7 @@ export function PageHeader({
   actions,
 }: PageHeaderProps) {
   return (
-    <header className="flex items-center gap-3 border-b border-border px-6 py-4">
+    <header className="flex items-center gap-3 border-b border-[color:var(--glass-edge)] px-6 py-4">
       <div className="flex items-center gap-2">
         {Icon && <Icon className="h-4 w-4 text-primary" />}
         <div>

@@ -25,7 +25,7 @@ export function ToolRow({
   const permConfig = getPermConfig(t)
   return (
     <div
-      className={`rounded-xl border px-3 py-2.5 transition-colors ${selected ? "border-primary/30 bg-primary/5" : "border-border bg-background hover:bg-muted/40"}`}
+      className={`rounded-xl border px-3 py-2.5 transition-colors ${selected ? "border-primary/45 bg-primary/12" : "glass-tile border-[color:var(--glass-edge)] hover:bg-primary/12"}`}
     >
       <label className="flex cursor-pointer items-start gap-3">
         <input

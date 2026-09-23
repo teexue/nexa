@@ -9,6 +9,9 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials/insecure"
@@ -17,9 +20,7 @@ import (
 	"google.golang.org/grpc/test/bufconn"
 
 	"github.com/teexue/nexa/core/agent"
-	"github.com/teexue/nexakit/provider"
 	nexav1 "github.com/teexue/nexa/proto"
-	"github.com/teexue/nexakit/registry"
 )
 
 func setupTestGRPCWithAuth(t *testing.T, apiKey string) (nexav1.AgentServiceClient, func()) {
@@ -46,8 +47,8 @@ max_tokens: 1024
 	reg.Register(&testTool{})
 
 	newProvider := func(a *agent.Agent) (provider.Provider, error) {
-		return &provider.MockProvider{
-			Calls: [][]provider.MockStep{
+		return &kitmock.MockProvider{
+			Calls: [][]kitmock.MockStep{
 				{{Text: "test response"}},
 			},
 		}, nil

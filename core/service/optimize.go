@@ -6,8 +6,10 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+
+	"github.com/teexue/nexa/core/agent"
 )
 
 // userPromptOptimizer is the meta prompt for optimizing user inputs.
@@ -163,7 +165,7 @@ func streamOptimized(ctx context.Context, p provider.Provider, model, metaPrompt
 
 // isMockProvider reports whether p is the scripted test double.
 func isMockProvider(p provider.Provider) bool {
-	_, ok := p.(*provider.MockProvider)
+	_, ok := p.(*kitmock.MockProvider)
 	return ok
 }
 

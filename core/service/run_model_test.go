@@ -8,14 +8,14 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexa/core/store"
-	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexakit/session"
 )
 
-func writeSharedModelCatalog(t *testing.T) *provider.Catalog {
+func writeSharedModelCatalog(t *testing.T) *kitcatalog.Catalog {
 	t.Helper()
 	t.Setenv("OPENAI_API_KEY", "test-key")
 	path := filepath.Join(t.TempDir(), "providers.yaml")

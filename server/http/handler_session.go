@@ -6,9 +6,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/audit"
-	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexa/core/store"
 )
 
@@ -23,7 +23,7 @@ func (s *Server) handleSessionsList(c *gin.Context) {
 		return
 	}
 	if metas == nil {
-		metas = []session.SessionMeta{}
+		metas = []session.Meta{}
 	}
 	c.JSON(http.StatusOK, metas)
 }

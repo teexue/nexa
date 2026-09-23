@@ -6,12 +6,13 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
 
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/kanban"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/store"
-	"github.com/teexue/nexakit/builtin"
 )
 
 // Kanban retries (reject/failure) must continue the original session, never
@@ -19,13 +20,13 @@ import (
 func TestKanbanRunnerRetryContinuesSession(t *testing.T) {
 	agentsDir := t.TempDir()
 	writePlainAgent(t, agentsDir)
-	mock := &provider.MockProvider{Calls: [][]provider.MockStep{
+	mock := &kitmock.MockProvider{Calls: [][]kitmock.MockStep{
 		{{Text: "first attempt output"}},
 		{{Text: "second attempt output"}},
 	}}
 	sessStore := newMemStore()
 	svc := newWorkdirService(t, agentsDir, sessStore)
-	builtin.RegisterAll(svc.Registry, t.TempDir())
+	registry.RegisterBuiltin(svc.Registry, t.TempDir())
 	svc.NewProvider = func(*agent.Agent) (provider.Provider, error) { return mock, nil }
 
 	row := &store.KanbanRow{

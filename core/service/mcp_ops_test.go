@@ -12,17 +12,17 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/teexue/nexa/core/agent"
-	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexakit/event"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/mcp"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/session"
-	"github.com/teexue/nexakit/builtin"
+	kitmock "github.com/teexue/nexakit/provider/mock"
 	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
+
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/config"
+	"github.com/teexue/nexa/core/service"
 )
 
 // mockMCPScript writes a minimal JSON-RPC MCP server that exposes one tool
@@ -83,15 +83,15 @@ func TestPrepareRun_InjectsMCPTools(t *testing.T) {
 	writeAgentWithMCP(t, agentsDir, script)
 
 	reg := registry.New()
-	builtin.RegisterAll(reg, "")
+	registry.RegisterBuiltin(reg, "")
 
 	toolCall := provider.ToolCall{
 		ID:        "call_1",
 		Name:      "mcp_echo",
 		Arguments: json.RawMessage(`{"msg":"hi"}`),
 	}
-	mockProv := &provider.MockProvider{
-		Calls: [][]provider.MockStep{
+	mockProv := &kitmock.MockProvider{
+		Calls: [][]kitmock.MockStep{
 			{{ToolCalls: []provider.ToolCall{toolCall}}},
 			{{Text: "done after mcp"}},
 		},
@@ -152,8 +152,8 @@ tools: [get_time]
 `), 0o644))
 
 	reg := registry.New()
-	builtin.RegisterAll(reg, "")
-	mockProv := &provider.MockProvider{Calls: [][]provider.MockStep{
+	registry.RegisterBuiltin(reg, "")
+	mockProv := &kitmock.MockProvider{Calls: [][]kitmock.MockStep{
 		{{Text: "ok"}},
 	}}
 	svc := service.New(service.ServiceConfig{
@@ -199,12 +199,12 @@ tools: [get_time]
 	}))
 
 	reg := registry.New()
-	builtin.RegisterAll(reg, "")
+	registry.RegisterBuiltin(reg, "")
 	toolCall := provider.ToolCall{
 		ID: "call_1", Name: "mcp_echo",
 		Arguments: json.RawMessage(`{"msg":"hi"}`),
 	}
-	mockProv := &provider.MockProvider{Calls: [][]provider.MockStep{
+	mockProv := &kitmock.MockProvider{Calls: [][]kitmock.MockStep{
 		{{ToolCalls: []provider.ToolCall{toolCall}}},
 		{{Text: "ok"}},
 	}}

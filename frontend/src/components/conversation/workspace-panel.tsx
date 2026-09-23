@@ -77,10 +77,10 @@ function WorkspaceColumn({
 }) {
   const isEmpty = props.messages.length === 0 && !props.error
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full min-w-0 flex-col">
       {/* 3xl until the pane is wide enough that 2/3 exceeds it. */}
-      <div className="mx-auto flex h-full w-full max-w-[max(48rem,calc(100%*2/3))] flex-col">
-        <div className="flex-1 overflow-hidden">
+      <div className="mx-auto flex h-full w-full max-w-[max(48rem,calc(100%*2/3))] min-w-0 flex-col">
+        <div className="min-h-0 min-w-0 flex-1 overflow-hidden">
           {isEmpty ? (
             <WorkspaceEmptyState
               noAgent={props.noAgent}

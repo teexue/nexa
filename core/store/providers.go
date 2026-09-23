@@ -4,18 +4,18 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
 )
 
 // ListProviderEntries returns all provider profile entries.
-func (db *DB) ListProviderEntries() (map[string]provider.ProfileEntry, error) {
+func (db *DB) ListProviderEntries() (map[string]kitcatalog.ProfileEntry, error) {
 	var rows []ProviderRow
 	if err := db.Find(&rows).Error; err != nil {
 		return nil, err
 	}
-	out := make(map[string]provider.ProfileEntry, len(rows))
+	out := make(map[string]kitcatalog.ProfileEntry, len(rows))
 	for _, r := range rows {
-		var e provider.ProfileEntry
+		var e kitcatalog.ProfileEntry
 		if err := json.Unmarshal([]byte(r.SpecJSON), &e); err != nil {
 			return nil, fmt.Errorf("parse provider %q: %w", r.Name, err)
 		}
@@ -25,7 +25,7 @@ func (db *DB) ListProviderEntries() (map[string]provider.ProfileEntry, error) {
 }
 
 // UpsertProviderEntry saves a provider profile entry.
-func (db *DB) UpsertProviderEntry(name string, entry provider.ProfileEntry) error {
+func (db *DB) UpsertProviderEntry(name string, entry kitcatalog.ProfileEntry) error {
 	if name == "" {
 		return fmt.Errorf("provider name is required")
 	}
@@ -51,11 +51,11 @@ func (db *DB) DeleteProviderEntry(name string) error {
 	return nil
 }
 
-// LoadCatalog builds a provider.Catalog from the DB.
-func (db *DB) LoadCatalog(credLookup func(string) string) (*provider.Catalog, error) {
+// LoadCatalog builds a kitcatalog.Catalog from the DB.
+func (db *DB) LoadCatalog(credLookup func(string) string) (*kitcatalog.Catalog, error) {
 	entries, err := db.ListProviderEntries()
 	if err != nil {
 		return nil, err
 	}
-	return provider.NewCatalog(entries, credLookup)
+	return kitcatalog.NewCatalog(entries, credLookup)
 }

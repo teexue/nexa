@@ -1,39 +1,28 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/dm-sans";
-@import "@fontsource/dm-serif-display/400.css";
-@import "@fontsource/dm-serif-display/400-italic.css";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/sora";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Typography — editorial pairing */
-  --font-heading: "DM Serif Display", Georgia, "Times New Roman", serif;
+  --font-heading:
+    "Sora", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
   --font-sans:
-    "DM Sans Variable", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    "Sora", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
   --font-mono:
-    "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, monospace;
+    "IBM Plex Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  --font-display: var(--font-heading);
 
-  /* Brand accent: warm terracotta */
-  --color-brand-50: #fdf4f1;
-  --color-brand-100: #fbe6df;
-  --color-brand-200: #f7c8ba;
-  --color-brand-300: #f0a48d;
-  --color-brand-400: #e07a5f;
-  --color-brand-500: #c05746;
-  --color-brand-600: #a8453a;
-  --color-brand-700: #8c372f;
-  --color-brand-800: #742f29;
-  --color-brand-900: #5e2924;
-
-  /* Semantic colors */
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
+  --color-iris: var(--iris);
+  --color-live: var(--live);
+  --color-provisional: var(--provisional);
 
-  /* Sidebar tokens */
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -43,14 +32,12 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
 
-  /* Chart tokens */
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
 
-  /* Core design tokens */
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -71,7 +58,6 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
 
-  /* Terminal tokens (dark surface in both themes) */
   --color-terminal: var(--terminal);
   --color-terminal-foreground: var(--terminal-foreground);
   --color-terminal-muted: var(--terminal-muted);
@@ -79,198 +65,139 @@
   --color-terminal-error: var(--terminal-error);
   --color-terminal-border: var(--terminal-border);
 
-  /* Radius scale */
   --radius-sm: 6px;
   --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 22px;
-  --radius-3xl: 28px;
-  --radius-4xl: 36px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 28px;
 }
 
-/* ─── Light theme: Warm Paper ─────────────────────────────── */
 :root {
-  /* Terminal: follows theme — light surface in light mode */
-  --terminal: #ffffff;
-  --terminal-foreground: #1c1917;
-  --terminal-muted: #78716c;
-  --terminal-success: #2d7a4f;
-  --terminal-error: #b91c1c;
-  --terminal-border: #d8d2c8;
-
-  --background: #faf8f5;
-  --foreground: #1c1917;
-  --card: #ffffff;
-  --card-foreground: #1c1917;
-  --popover: #ffffff;
-  --popover-foreground: #1c1917;
-  --primary: #c05746;
-  --primary-foreground: #fefcfa;
-  --primary-hover: #a8453a;
-  --secondary: #f0ece6;
-  --secondary-foreground: #292524;
-  --muted: #ece8e1;
-  --muted-foreground: #78716c;
-  --accent: #fdf4f1;
-  --accent-foreground: #8c372f;
-  --destructive: #b91c1c;
-  --border: #d8d2c8;
-  --input: #d8d2c8;
-  --ring: #c05746;
-  --radius: 12px;
-  --success: #2d7a4f;
-  --success-foreground: #5cb882;
-  --warning: #b45309;
-
-  --chart-1: #c05746;
-  --chart-2: #0e7490;
-  --chart-3: #2d7a4f;
-  --chart-4: #b45309;
-  --chart-5: #9333ea;
-
-  --sidebar: #f5f2ed;
-  --sidebar-foreground: #1c1917;
-  --sidebar-primary: #c05746;
-  --sidebar-primary-foreground: #fefcfa;
-  --sidebar-accent: #ece8e1;
-  --sidebar-accent-foreground: #1c1917;
-  --sidebar-border: #e0dcd5;
-  --sidebar-ring: #c05746;
+  --background: #f4f5f8;
+  --foreground: #191a1f;
+  --card: #fcfcfd;
+  --card-foreground: #191a1f;
+  --popover: #fcfcfd;
+  --popover-foreground: #191a1f;
+  --primary: #5b8ef4;
+  --primary-foreground: #ffffff;
+  --primary-hover: color-mix(in srgb, #5b8ef4 85%, #191a1f);
+  --secondary: #e8eaef;
+  --secondary-foreground: #191a1f;
+  --muted: #e8eaef;
+  --muted-foreground: #636872;
+  --accent: #eef0f5;
+  --accent-foreground: #191a1f;
+  --destructive: #d94b4b;
+  --border: rgb(25 26 31 / 8%);
+  --input: rgb(25 26 31 / 12%);
+  --ring: #5b8ef4;
+  --radius: 0.75rem;
+  --success: #3dcfb2;
+  --success-foreground: #0b0b0d;
+  --warning: #e0b15a;
+  --iris: #6b63e8;
+  --live: #3dcfb2;
+  --provisional: #e0b15a;
+  --chart-1: #5b8ef4;
+  --chart-2: #6b63e8;
+  --chart-3: #3dcfb2;
+  --chart-4: #e0b15a;
+  --chart-5: #6b7390;
+  --sidebar: rgb(252 252 253 / 52%);
+  --sidebar-foreground: #191a1f;
+  --sidebar-primary: #5b8ef4;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8eaef;
+  --sidebar-accent-foreground: #191a1f;
+  --sidebar-border: rgb(25 26 31 / 8%);
+  --sidebar-ring: #5b8ef4;
+  --glass-edge: rgb(255 255 255 / 40%);
+  --font-display:
+    "Sora", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --font-sans:
+    "Sora", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+  --font-mono:
+    "IBM Plex Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  --terminal: #fcfcfd;
+  --terminal-foreground: #191a1f;
+  --terminal-muted: #636872;
+  --terminal-success: #3dcfb2;
+  --terminal-error: #d94b4b;
+  --terminal-border: rgb(25 26 31 / 12%);
 }
 
-/* ─── Dark theme: Warm Charcoal ───────────────────────────── */
 .dark {
-  /* Terminal: follows theme — dark surface in dark mode */
-  --terminal: #0d0c0a;
-  --terminal-foreground: #f5f0eb;
-  --terminal-muted: #a8a29e;
-  --terminal-success: #5cb882;
-  --terminal-error: #ef4444;
-  --terminal-border: #2a2622;
-
-  --background: #161412;
-  --foreground: #f5f0eb;
-  --card: #211d19;
-  --card-foreground: #f5f0eb;
-  --popover: #211d19;
-  --popover-foreground: #f5f0eb;
-  --primary: #e07a5f;
-  --primary-foreground: #1a1210;
-  --primary-hover: #c05746;
-  --secondary: #2a2622;
-  --secondary-foreground: #f5f0eb;
-  --muted: #2a2622;
-  --muted-foreground: #a8a29e;
-  --accent: #3d2219;
-  --accent-foreground: #f0c4b4;
-  --destructive: #ef4444;
-  --border: #36302b;
-  --input: #36302b;
-  --ring: #e07a5f;
-  --radius: 12px;
-  --success: #5cb882;
-  --success-foreground: #2d7a4f;
-  --warning: #fbbf24;
-
-  --chart-1: #e07a5f;
-  --chart-2: #22d3ee;
-  --chart-3: #5cb882;
-  --chart-4: #fbbf24;
-  --chart-5: #c084fc;
-
-  --sidebar: #161412;
-  --sidebar-foreground: #f5f0eb;
-  --sidebar-primary: #e07a5f;
-  --sidebar-primary-foreground: #1a1210;
-  --sidebar-accent: #2a2622;
-  --sidebar-accent-foreground: #f5f0eb;
-  --sidebar-border: #302b27;
-  --sidebar-ring: #e07a5f;
+  --background: #0b0b0d;
+  --foreground: #f2f3f7;
+  --card: #161618;
+  --card-foreground: #f2f3f7;
+  --popover: #161618;
+  --popover-foreground: #f2f3f7;
+  --primary: #85b0fc;
+  --primary-foreground: #0b0b0d;
+  --primary-hover: color-mix(in srgb, #85b0fc 85%, #f2f3f7);
+  --secondary: #232328;
+  --secondary-foreground: #f2f3f7;
+  --muted: #232328;
+  --muted-foreground: #8e9199;
+  --accent: #232328;
+  --accent-foreground: #f2f3f7;
+  --destructive: #e06a6a;
+  --border: rgb(242 243 247 / 10%);
+  --input: rgb(242 243 247 / 14%);
+  --ring: #85b0fc;
+  --success: #5ee0c8;
+  --success-foreground: #0b0b0d;
+  --warning: #e8c57a;
+  --iris: #a39af5;
+  --live: #5ee0c8;
+  --provisional: #e8c57a;
+  --chart-1: #85b0fc;
+  --chart-2: #a39af5;
+  --chart-3: #5ee0c8;
+  --chart-4: #e8c57a;
+  --chart-5: #9aa0b4;
+  --sidebar: rgb(22 22 24 / 58%);
+  --sidebar-foreground: #f2f3f7;
+  --sidebar-primary: #85b0fc;
+  --sidebar-primary-foreground: #0b0b0d;
+  --sidebar-accent: #232328;
+  --sidebar-accent-foreground: #f2f3f7;
+  --sidebar-border: rgb(242 243 247 / 10%);
+  --sidebar-ring: #85b0fc;
+  --glass-edge: rgb(255 255 255 / 10%);
+  --terminal: #161618;
+  --terminal-foreground: #f2f3f7;
+  --terminal-muted: #8e9199;
+  --terminal-success: #5ee0c8;
+  --terminal-error: #e06a6a;
+  --terminal-border: rgb(242 243 247 / 14%);
 }
 
-/* ─── Slate theme (light): Cool Engineering ──────────────── */
+/* Cool frost: same role colors, cooler canvas. */
 .theme-slate {
-  --background: #f6f8fa;
-  --foreground: #1c2430;
-  --card: #ffffff;
-  --card-foreground: #1c2430;
-  --popover: #ffffff;
-  --popover-foreground: #1c2430;
-  --primary: #0e7490;
-  --primary-foreground: #f0fdff;
-  --primary-hover: #0b6178;
-  --secondary: #eef2f5;
-  --secondary-foreground: #1c2430;
-  --muted: #eef2f5;
-  --muted-foreground: #5b6b7a;
-  --accent: #e0f2f7;
-  --accent-foreground: #0e7490;
-  --destructive: #b91c1c;
-  --border: #d4dbe2;
-  --input: #d4dbe2;
-  --ring: #0e7490;
-  --radius: 12px;
-  --success: #2d7a4f;
-  --success-foreground: #5cb882;
-  --warning: #b45309;
-
-  --chart-1: #0e7490;
-  --chart-2: #4f46e5;
-  --chart-3: #2d7a4f;
-  --chart-4: #b45309;
-  --chart-5: #7c3aed;
-
-  --sidebar: #f1f4f7;
-  --sidebar-foreground: #1c2430;
-  --sidebar-primary: #0e7490;
-  --sidebar-primary-foreground: #f0fdff;
-  --sidebar-accent: #eef2f5;
-  --sidebar-accent-foreground: #1c2430;
-  --sidebar-border: #d4dbe2;
-  --sidebar-ring: #0e7490;
+  --background: #eef1f6;
+  --card: #f7f8fb;
+  --popover: #f7f8fb;
+  --secondary: #e2e6ee;
+  --muted: #e2e6ee;
+  --accent: #e8ecf3;
+  --sidebar: rgb(247 248 251 / 52%);
+  --sidebar-accent: #e2e6ee;
 }
 
-/* ─── Slate theme (dark): Cool Charcoal ─────────────────── */
 .theme-slate.dark {
-  --background: #0f1418;
-  --foreground: #e4e9f0;
-  --card: #161c22;
-  --card-foreground: #e4e9f0;
-  --popover: #161c22;
-  --popover-foreground: #e4e9f0;
-  --primary: #22d3ee;
-  --primary-foreground: #06181d;
-  --primary-hover: #0e7490;
-  --secondary: #1e252c;
-  --secondary-foreground: #e4e9f0;
-  --muted: #1e252c;
-  --muted-foreground: #8a99a8;
-  --accent: #0e2a33;
-  --accent-foreground: #7dd3ec;
-  --destructive: #ef4444;
-  --border: #273039;
-  --input: #273039;
-  --ring: #22d3ee;
-  --radius: 12px;
-  --success: #5cb882;
-  --success-foreground: #2d7a4f;
-  --warning: #fbbf24;
-
-  --chart-1: #22d3ee;
-  --chart-2: #38bdf8;
-  --chart-3: #5cb882;
-  --chart-4: #fbbf24;
-  --chart-5: #c084fc;
-
-  --sidebar: #0f1418;
-  --sidebar-foreground: #e4e9f0;
-  --sidebar-primary: #22d3ee;
-  --sidebar-primary-foreground: #06181d;
-  --sidebar-accent: #1e252c;
-  --sidebar-accent-foreground: #e4e9f0;
-  --sidebar-border: #273039;
-  --sidebar-ring: #22d3ee;
+  --background: #08090c;
+  --card: #121316;
+  --popover: #121316;
+  --secondary: #1c1d22;
+  --muted: #1c1d22;
+  --accent: #1c1d22;
+  --sidebar: rgb(18 19 22 / 58%);
+  --sidebar-accent: #1c1d22;
 }
 
 @layer base {
@@ -279,130 +206,332 @@
   }
 
   html {
-    @apply font-sans;
+    font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    color: var(--foreground);
+    background: transparent;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
-/* ─── Background image: continuous image + frosted components ───
-   When a user background image is enabled, the root html gets `.has-bg`.
-   Layout regions (workspace, top bar, sidebar, inspector) become near-transparent
-   with NO blur, so the image flows continuously behind the whole app. Functional
-   components (cards, input, menus, dialogs, buttons) get a frosted-glass treatment
-   with component-level blur plus a border + elevation shadow — the "按钮磨砂" look —
-   so edges and content read as cohesive floating elements over the image. */
-/* Unify faded/secondary text toward one solid color so it stays readable over the
-   image. Uses :root.has-bg (specificity 0,2,0) to override the theme token definitions
-   on .dark / .theme-slate / .theme-slate.dark. */
+::selection {
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--foreground);
+  caret-color: var(--foreground);
+  box-shadow: 0 0 0 1000px color-mix(in srgb, var(--card) 78%, transparent)
+    inset;
+  transition: background-color 99999s ease-out;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.018em;
+  font-weight: 600;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: -0.018em;
+  font-weight: 600;
+}
+
+.glass-panel {
+  background: color-mix(in srgb, var(--card) 46%, transparent);
+  border-color: var(--glass-edge);
+  backdrop-filter: saturate(160%) blur(32px);
+  -webkit-backdrop-filter: saturate(160%) blur(32px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 62%) inset,
+    0 1px 2px rgb(25 26 31 / 6%),
+    0 8px 22px rgb(25 26 31 / 7%);
+}
+
+.dark .glass-panel {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 1px 2px rgb(0 0 0 / 28%),
+    0 10px 28px rgb(0 0 0 / 32%);
+}
+
+.glass-tile {
+  background: color-mix(in srgb, var(--card) 50%, transparent);
+  border-color: var(--glass-edge);
+  backdrop-filter: saturate(150%) blur(20px);
+  -webkit-backdrop-filter: saturate(150%) blur(20px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 55%) inset,
+    0 1px 1px rgb(25 26 31 / 5%),
+    0 4px 12px rgb(25 26 31 / 5%);
+}
+
+.dark .glass-tile {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 7%) inset,
+    0 1px 1px rgb(0 0 0 / 24%),
+    0 6px 16px rgb(0 0 0 / 22%);
+}
+
+.glass-tile-user {
+  background: color-mix(
+    in srgb,
+    var(--primary) 16%,
+    color-mix(in srgb, var(--card) 78%, transparent)
+  );
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--glass-edge));
+  backdrop-filter: saturate(150%) blur(20px);
+  -webkit-backdrop-filter: saturate(150%) blur(20px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 58%) inset,
+    0 1px 1px rgb(25 26 31 / 4%),
+    0 4px 12px rgb(25 26 31 / 5%);
+}
+
+.dark .glass-tile-user {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 1px 1px rgb(0 0 0 / 22%),
+    0 6px 16px rgb(0 0 0 / 20%);
+}
+
+.btn-aurora {
+  background-image: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--iris) 100%
+  );
+  box-shadow:
+    0 1px 2px rgb(25 26 31 / 10%),
+    0 4px 14px color-mix(in srgb, var(--primary) 24%, transparent);
+}
+
+.btn-aurora:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.dark .btn-aurora {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 28%),
+    0 6px 16px color-mix(in srgb, var(--iris) 28%, transparent);
+}
+
+textarea.glass-plain {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.aurora-surface {
+  background:
+    radial-gradient(110% 80% at 6% 0%, rgb(61 116 240 / 20%), transparent 62%),
+    radial-gradient(90% 70% at 96% 8%, rgb(107 99 232 / 15%), transparent 58%),
+    radial-gradient(
+      95% 75% at 82% 100%,
+      rgb(61 207 178 / 10%),
+      transparent 60%
+    ),
+    var(--background);
+}
+
+.dark .aurora-surface {
+  background:
+    radial-gradient(110% 80% at 6% 0%, rgb(107 154 250 / 12%), transparent 62%),
+    radial-gradient(90% 70% at 96% 8%, rgb(163 154 245 / 9%), transparent 58%),
+    radial-gradient(95% 75% at 82% 100%, rgb(94 224 200 / 7%), transparent 60%),
+    var(--background);
+}
+
+html:not(.has-bg) {
+  background:
+    radial-gradient(110% 80% at 6% 0%, rgb(61 116 240 / 20%), transparent 62%),
+    radial-gradient(90% 70% at 96% 8%, rgb(107 99 232 / 15%), transparent 58%),
+    radial-gradient(
+      95% 75% at 82% 100%,
+      rgb(61 207 178 / 10%),
+      transparent 60%
+    ),
+    var(--background);
+}
+
+html.dark:not(.has-bg) {
+  background:
+    radial-gradient(110% 80% at 6% 0%, rgb(107 154 250 / 12%), transparent 62%),
+    radial-gradient(90% 70% at 96% 8%, rgb(163 154 245 / 9%), transparent 58%),
+    radial-gradient(95% 75% at 82% 100%, rgb(94 224 200 / 7%), transparent 60%),
+    var(--background);
+}
+
+/* Existing solid surfaces pick up frost glass without rewriting every page. */
+.bg-card {
+  background-color: color-mix(in srgb, var(--card) 50%, transparent);
+  border-color: var(--glass-edge);
+  backdrop-filter: saturate(150%) blur(20px);
+  -webkit-backdrop-filter: saturate(150%) blur(20px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 55%) inset,
+    0 1px 1px rgb(25 26 31 / 5%),
+    0 4px 12px rgb(25 26 31 / 5%);
+}
+
+.dark .bg-card {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 7%) inset,
+    0 1px 1px rgb(0 0 0 / 24%),
+    0 6px 16px rgb(0 0 0 / 22%);
+}
+
+.bg-popover {
+  background-color: color-mix(in srgb, var(--card) 46%, transparent);
+  border-color: var(--glass-edge);
+  backdrop-filter: saturate(160%) blur(32px);
+  -webkit-backdrop-filter: saturate(160%) blur(32px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 62%) inset,
+    0 1px 2px rgb(25 26 31 / 6%),
+    0 8px 22px rgb(25 26 31 / 7%);
+}
+
+.dark .bg-popover {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 1px 2px rgb(0 0 0 / 28%),
+    0 10px 28px rgb(0 0 0 / 32%);
+}
+
+.bg-sidebar {
+  background-color: color-mix(in srgb, var(--card) 46%, transparent);
+  backdrop-filter: saturate(160%) blur(32px);
+  -webkit-backdrop-filter: saturate(160%) blur(32px);
+}
+
+.status-led-run {
+  background: var(--live);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--live) 18%, transparent);
+}
+
+.status-led-wait {
+  background: var(--provisional);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes frost-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-up {
+    animation: frost-fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes frost-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  .status-led-run {
+    animation: frost-pulse 2.2s ease-in-out infinite;
+  }
+
+  .status-led-wait {
+    animation: frost-pulse 0.9s ease-in-out infinite;
+  }
+}
+
+/*
+  Background image: aurora yields so the wallpaper can run continuously.
+  Chrome (sidebar / top bar) drops blur; cards and controls keep glass-tile.
+*/
 :root.has-bg {
   --muted-foreground: var(--foreground);
 }
-/* Restore faded text utilities (with opacity modifiers) to solid colors so
-   secondary text stays readable over the background image. */
+
 .has-bg .text-muted-foreground\/70,
 .has-bg .text-muted-foreground\/60,
 .has-bg .text-muted-foreground\/50 {
   color: var(--muted-foreground);
 }
+
 .has-bg .text-foreground\/70,
 .has-bg .text-foreground\/60 {
   color: var(--foreground);
 }
-/* Browser default ::placeholder is a translucent grey; make it solid over the image. */
+
 .has-bg ::placeholder {
   color: var(--muted-foreground);
   opacity: 1;
 }
-.has-bg {
-  /* Adaptive elevation: uses --foreground so the shadow reads as a dark drop on
-     light themes and a soft glow on dark themes. */
-  --bg-shadow-sm:
-    0 1px 2px color-mix(in srgb, var(--foreground) 14%, transparent),
-    0 2px 8px -2px color-mix(in srgb, var(--foreground) 20%, transparent);
-  --bg-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--foreground) 8%, transparent),
-    0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent),
-    0 10px 28px -8px color-mix(in srgb, var(--foreground) 30%, transparent);
-  --bg-shadow-lg:
-    inset 0 1px 0 color-mix(in srgb, var(--foreground) 10%, transparent),
-    0 6px 16px color-mix(in srgb, var(--foreground) 18%, transparent),
-    0 20px 44px -10px color-mix(in srgb, var(--foreground) 34%, transparent);
+
+.has-bg,
+.has-bg .aurora-surface {
+  background: transparent;
 }
+
 .has-bg .bg-background {
-  background-color: color-mix(in srgb, var(--background) 12%, transparent);
+  background-color: color-mix(in srgb, var(--background) 10%, transparent);
 }
-.has-bg .bg-sidebar {
-  background-color: color-mix(in srgb, var(--sidebar) 10%, transparent);
-}
-.has-bg .bg-card {
-  background-color: color-mix(in srgb, var(--card) 50%, transparent);
-  backdrop-filter: blur(8px);
-  border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
-  box-shadow: var(--bg-shadow);
-}
+
+.has-bg .glass-panel,
+.has-bg .bg-sidebar,
 .has-bg .bg-popover {
-  background-color: color-mix(in srgb, var(--popover) 72%, transparent);
-  backdrop-filter: blur(10px);
-  border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
-  box-shadow: var(--bg-shadow-lg);
+  background-color: color-mix(in srgb, var(--card) 14%, transparent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
 }
-.has-bg .bg-muted {
-  background-color: color-mix(in srgb, var(--muted) 55%, transparent);
+
+.has-bg .glass-tile,
+.has-bg .bg-card {
+  background-color: color-mix(in srgb, var(--card) 55%, transparent);
 }
-.has-bg .bg-secondary {
-  background-color: color-mix(in srgb, var(--secondary) 55%, transparent);
-  box-shadow: var(--bg-shadow-sm);
+
+.has-bg .glass-tile-user {
+  background-color: color-mix(
+    in srgb,
+    var(--primary) 16%,
+    color-mix(in srgb, var(--card) 72%, transparent)
+  );
 }
-/* Outline buttons share the `bg-background` class with regions; give them a
-   frosted glass fill + border + shadow instead of the near-transparent region value. */
+
 .has-bg [data-slot="button"].bg-background {
-  background-color: color-mix(in srgb, var(--card) 45%, transparent);
-  backdrop-filter: blur(8px);
-  border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
-  box-shadow: var(--bg-shadow-sm);
+  background-color: color-mix(in srgb, var(--card) 50%, transparent);
+  backdrop-filter: saturate(150%) blur(20px);
+  -webkit-backdrop-filter: saturate(150%) blur(20px);
+  border-color: var(--glass-edge);
 }
-/* Soften the hard region dividers so the image isn't chopped into slabs. */
+
 .has-bg .border-border {
-  border-color: color-mix(in srgb, var(--border) 45%, transparent);
+  border-color: color-mix(in srgb, var(--border) 55%, transparent);
 }
-/* But keep frosted component borders crisp (re-raise above the region softening). */
+
+.has-bg .glass-tile,
 .has-bg .bg-card,
-.has-bg .bg-popover,
 .has-bg [data-slot="button"].bg-background {
-  border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
+  border-color: var(--glass-edge);
 }
 
-/* ─── Paper grain texture ─────────────────────────────────── */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 180px;
-}
-
-.dark body::before {
-  opacity: 0.035;
-}
-
-/* ─── Selection ───────────────────────────────────────────── */
-::selection {
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-
-/* ─── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -413,45 +542,41 @@ body::before {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: color-mix(in oklch, var(--muted-foreground) 25%, transparent);
+  background: color-mix(in srgb, var(--muted-foreground) 25%, transparent);
   border-radius: 100px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in oklch, var(--muted-foreground) 45%, transparent);
+  background: color-mix(in srgb, var(--muted-foreground) 45%, transparent);
 }
 
-/* ─── Focus ring ──────────────────────────────────────────── */
 *:not([class*="focus-visible:ring"]):not([class*="focus:ring"]):not(
     [class*="focus-visible:outline"]
   ):focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 3px solid color-mix(in srgb, var(--primary) 40%, transparent);
   outline-offset: 2px;
 }
 
-/* ─── Code ────────────────────────────────────────────────── */
 code {
   font-family: var(--font-mono);
   font-size: 0.9em;
 }
 
-/* ─── Utilities ───────────────────────────────────────────── */
 .transition-smooth {
   transition-property:
     background-color, border-color, color, box-shadow, opacity, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   transition-duration: 200ms;
 }
 
 .glass {
-  background: color-mix(in oklch, var(--card) 85%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--card) 50%, transparent);
+  backdrop-filter: saturate(150%) blur(20px);
+  -webkit-backdrop-filter: saturate(150%) blur(20px);
 }
 
-/* Shimmer skeleton placeholder (shown while waiting for first token) */
 .shimmer-line {
   height: 0.625rem;
   border-radius: var(--radius-sm);
@@ -464,10 +589,12 @@ code {
   background-size: 400% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
 }
+
 .shimmer-line:nth-child(2) {
   width: 88%;
   animation-delay: 0.12s;
 }
+
 .shimmer-line:nth-child(3) {
   width: 72%;
   animation-delay: 0.24s;
@@ -482,7 +609,6 @@ code {
   }
 }
 
-/* Top streaming progress bar */
 .stream-progress {
   position: sticky;
   top: 0;
@@ -493,6 +619,7 @@ code {
   border-radius: 0;
   background: transparent;
 }
+
 .stream-progress::before {
   content: "";
   position: absolute;
@@ -500,8 +627,9 @@ code {
   width: 35%;
   border-radius: inherit;
   background: linear-gradient(90deg, transparent, var(--primary), transparent);
-  animation: stream-sweep 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: stream-sweep 1.1s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
+
 @keyframes stream-sweep {
   0% {
     transform: translateX(-120%);

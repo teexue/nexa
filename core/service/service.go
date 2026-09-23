@@ -6,15 +6,17 @@ package service
 import (
 	"log/slog"
 
+	"github.com/teexue/nexakit/embedding"
+	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
+
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/audit"
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/embedding"
 	"github.com/teexue/nexa/core/knowledge"
-	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexakit/session"
 	"github.com/teexue/nexa/core/store"
-	"github.com/teexue/nexakit/registry"
 )
 
 // Service provides shared operations used by both HTTP and gRPC handlers.
@@ -29,7 +31,7 @@ type Service struct {
 	Creds       *config.CredentialStore
 	// Catalog, when set, validates run-time model selection against each
 	// provider's enabled model list.
-	Catalog *provider.Catalog
+	Catalog *kitcatalog.Catalog
 	// RequestLogger, when set, audits every LLM request/response. Optional.
 	RequestLogger *audit.RequestLogger
 

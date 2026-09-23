@@ -3,6 +3,7 @@ package agent
 import (
 	"fmt"
 
+	"github.com/teexue/nexakit/compaction"
 	"github.com/teexue/nexakit/permission"
 	"gopkg.in/yaml.v3"
 )
@@ -176,7 +177,7 @@ func compactionFromFile(in *fileCompaction) *CompactionConfig {
 		return nil
 	}
 	return &CompactionConfig{
-		Strategy: in.Strategy, ContextWindow: in.ContextWindow,
+		Strategy: compaction.Strategy(in.Strategy), ContextWindow: in.ContextWindow,
 		TriggerRatio: in.TriggerRatio, TargetRatio: in.TargetRatio,
 		KeepRecent: in.KeepRecent, KeepHead: in.KeepHead,
 		MaxMessages: in.MaxMessages, SummaryModel: in.SummaryModel,
@@ -188,7 +189,7 @@ func compactionToFile(in *CompactionConfig) *fileCompaction {
 		return nil
 	}
 	return &fileCompaction{
-		Strategy: in.Strategy, ContextWindow: in.ContextWindow,
+		Strategy: string(in.Strategy), ContextWindow: in.ContextWindow,
 		TriggerRatio: in.TriggerRatio, TargetRatio: in.TargetRatio,
 		KeepRecent: in.KeepRecent, KeepHead: in.KeepHead,
 		MaxMessages: in.MaxMessages, SummaryModel: in.SummaryModel,

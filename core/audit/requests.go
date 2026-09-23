@@ -13,9 +13,14 @@ import (
 	"time"
 )
 
-// requestRecordMaxBytes caps a single persisted request record; larger
-// payloads are truncated by the caller before logging.
-const requestRecordMaxBytes = 128 * 1024
+// requestRecordMaxBytes caps a single persisted request record. Oversized
+// payloads are degraded (request/response shrunk) before write so the
+// metadata row still lands on disk. Raised from 128KiB now that shrink is
+// mandatory — scanner buffers must stay larger than this constant.
+const requestRecordMaxBytes = 256 * 1024
+
+// requestLogScanMax is the bufio.Scanner token limit for daily files.
+const requestLogScanMax = 512 * 1024
 
 // RequestRecord captures one LLM request/response pair for audit and
 // troubleshooting purposes.
@@ -49,15 +54,12 @@ func NewRequestLogger(dir string) *RequestLogger {
 	return &RequestLogger{dir: dir}
 }
 
-// Log appends a request record to today's file. Oversized records are
-// dropped with an error rather than written partially.
+// Log appends a request record to today's file. Oversized payloads are
+// degraded in place so a metadata-bearing row is still written.
 func (l *RequestLogger) Log(rec RequestRecord) error {
-	data, err := json.Marshal(rec)
+	data, err := marshalRequestRecord(rec)
 	if err != nil {
-		return fmt.Errorf("marshal request record: %w", err)
-	}
-	if len(data) > requestRecordMaxBytes {
-		return fmt.Errorf("request record too large: %d bytes", len(data))
+		return err
 	}
 
 	l.mu.Lock()
@@ -75,6 +77,25 @@ func (l *RequestLogger) Log(rec RequestRecord) error {
 		return fmt.Errorf("write request record: %w", err)
 	}
 	return nil
+}
+
+// marshalRequestRecord encodes rec, shrinking bulky fields when needed.
+func marshalRequestRecord(rec RequestRecord) ([]byte, error) {
+	data, err := json.Marshal(rec)
+	if err != nil {
+		return nil, fmt.Errorf("marshal request record: %w", err)
+	}
+	if len(data) <= requestRecordMaxBytes {
+		return data, nil
+	}
+	data, err = json.Marshal(degradeRecord(rec))
+	if err != nil {
+		return nil, fmt.Errorf("marshal degraded request record: %w", err)
+	}
+	if len(data) > requestRecordMaxBytes {
+		return nil, fmt.Errorf("request record too large after degrade: %d bytes", len(data))
+	}
+	return data, nil
 }
 
 // RequestFilter constrains request log queries.
@@ -154,7 +175,7 @@ func findInFile(path, ts, sessionID string) (RequestRecord, error) {
 	}
 	defer f.Close()
 	scanner := bufio.NewScanner(f)
-	scanner.Buffer(make([]byte, 256*1024), 256*1024)
+	scanner.Buffer(make([]byte, 64*1024), requestLogScanMax)
 	for scanner.Scan() {
 		line := scanner.Bytes()
 		if len(line) == 0 {
@@ -228,7 +249,7 @@ func readRequestFile(path string, filter RequestFilter) ([]RequestRecord, error)
 
 	var recs []RequestRecord
 	scanner := bufio.NewScanner(f)
-	scanner.Buffer(make([]byte, 256*1024), 256*1024)
+	scanner.Buffer(make([]byte, 64*1024), requestLogScanMax)
 	for scanner.Scan() {
 		line := scanner.Bytes()
 		if len(line) == 0 {

@@ -6,8 +6,9 @@ import (
 	"sort"
 
 	"github.com/teexue/nexakit/loop"
-	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/session"
+
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexa/core/tui"
 )
 
@@ -37,7 +38,7 @@ func (r serviceChatRunner) RunTurn(ctx context.Context, req tui.TurnRequest, app
 	}, nil
 }
 
-func (r serviceChatRunner) ListSessions() ([]session.SessionMeta, error) {
+func (r serviceChatRunner) ListSessions() ([]session.Meta, error) {
 	if r.svc.Store == nil {
 		return nil, nil
 	}

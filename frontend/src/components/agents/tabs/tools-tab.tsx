@@ -86,7 +86,7 @@ function ToolsToolbar({
   const { t } = useTranslation()
   return (
     <div className="flex items-center gap-2">
-      <label className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-border bg-background px-2.5 py-1.5 text-[11px] text-muted-foreground transition-colors hover:bg-muted/40">
+      <label className="glass-tile flex cursor-pointer items-center gap-1.5 rounded-lg border border-[color:var(--glass-edge)] px-2.5 py-1.5 text-[11px] text-muted-foreground transition-colors hover:bg-primary/12">
         <input
           type="checkbox"
           ref={(el) => {

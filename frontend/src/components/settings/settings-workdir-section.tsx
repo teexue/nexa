@@ -51,7 +51,7 @@ function WorkDirInput({
 }) {
   const { t } = useTranslation()
   return (
-    <div className="flex overflow-hidden rounded-xl border border-border bg-background focus-within:border-primary/40">
+    <div className="glass-tile flex overflow-hidden rounded-xl border border-[color:var(--glass-edge)] focus-within:border-primary/45">
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}

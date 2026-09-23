@@ -3,8 +3,9 @@ package service
 import (
 	"fmt"
 
+	"github.com/teexue/nexakit/tool/builtin"
+
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/builtin"
 )
 
 // ShellView is the public DTO for command-terminal settings.

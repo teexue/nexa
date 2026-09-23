@@ -13,9 +13,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
 	"github.com/teexue/nexakit/session"
+
+	"github.com/teexue/nexa/core/agent"
 )
 
 // parseSSEEvents parses data: lines from an SSE response body.
@@ -134,8 +136,8 @@ func TestHandleRun_SessionResume(t *testing.T) {
 
 	// Provider returns a response for the resumed conversation.
 	srv.newProvider = func(a *agent.Agent) (provider.Provider, error) {
-		return &provider.MockProvider{
-			Calls: [][]provider.MockStep{
+		return &kitmock.MockProvider{
+			Calls: [][]kitmock.MockStep{
 				{{Text: "resumed response"}},
 			},
 		}, nil
@@ -306,8 +308,8 @@ permissions:
 	// Provider emits a tool call that will require approval.
 	args, _ := json.Marshal(map[string]string{})
 	mockProviderFactory := func(a *agent.Agent) (provider.Provider, error) {
-		return &provider.MockProvider{
-			Calls: [][]provider.MockStep{
+		return &kitmock.MockProvider{
+			Calls: [][]kitmock.MockStep{
 				{{
 					ToolCalls: []provider.ToolCall{{
 						ID:        "call_1",

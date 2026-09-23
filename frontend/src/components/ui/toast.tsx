@@ -117,7 +117,7 @@ function ToastCard({
 }) {
   return (
     <div
-      className={`pointer-events-auto flex items-start gap-3 rounded-lg border px-4 py-3 shadow-lg backdrop-blur ${VARIANT_STYLE[toast.variant]}`}
+      className={`glass-panel pointer-events-auto flex items-start gap-3 rounded-2xl border border-[color:var(--glass-edge)] px-4 py-3 ${VARIANT_STYLE[toast.variant]}`}
       role="status"
     >
       <span className="mt-0.5 shrink-0">{VARIANT_ICON[toast.variant]}</span>

@@ -43,7 +43,7 @@ export function AppLayout({
   ...sidebarProps
 }: AppLayoutProps) {
   return (
-    <div className="flex h-svh overflow-hidden bg-background">
+    <div className="flex h-svh overflow-hidden">
       <BackgroundLayer />
       <Sidebar
         {...sidebarProps}

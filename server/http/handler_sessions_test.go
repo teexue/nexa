@@ -26,7 +26,7 @@ func TestHandleSessionsList(t *testing.T) {
 		t.Fatalf("expected status 200, got %d", w.Code)
 	}
 
-	var metas []session.SessionMeta
+	var metas []session.Meta
 	if err := json.Unmarshal(w.Body.Bytes(), &metas); err != nil {
 		t.Fatalf("failed to unmarshal sessions: %v", err)
 	}

@@ -12,16 +12,15 @@ function getStatusConfig(
       label: t("status.idle"),
     },
     streaming: {
-      dot: "bg-primary",
+      dot: "status-led-run",
       label: t("status.running"),
-      className: "animate-pulse",
     },
     error: {
       dot: "bg-destructive",
       label: t("status.error"),
     },
     done: {
-      dot: "bg-success",
+      dot: "bg-live",
       label: t("status.done"),
     },
   }

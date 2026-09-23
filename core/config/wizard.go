@@ -5,8 +5,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+
+	"github.com/teexue/nexa/core/i18n"
 	"github.com/teexue/nexa/core/store"
 	"github.com/teexue/nexa/core/tui"
 )
@@ -281,7 +283,7 @@ func UpsertProvider(home string, spec ProviderSpec) error {
 	return writeProviderEntry(spec.Name, spec.toEntry(existing))
 }
 
-func listProviderEntries() (map[string]provider.ProfileEntry, error) {
+func listProviderEntries() (map[string]kitcatalog.ProfileEntry, error) {
 	db, err := requireDB()
 	if err != nil {
 		return nil, err
@@ -302,7 +304,7 @@ func LookupAPIKeyEnv(name string) (string, bool) {
 	return entry.APIKeyEnv, true
 }
 
-func writeProviderEntry(name string, entry provider.ProfileEntry) error {
+func writeProviderEntry(name string, entry kitcatalog.ProfileEntry) error {
 	db, err := requireDB()
 	if err != nil {
 		return err
@@ -310,7 +312,7 @@ func writeProviderEntry(name string, entry provider.ProfileEntry) error {
 	return db.UpsertProviderEntry(name, entry)
 }
 
-func (spec *ProviderSpec) applyDefaults(existing provider.ProfileEntry) {
+func (spec *ProviderSpec) applyDefaults(existing kitcatalog.ProfileEntry) {
 	if spec.APIKeyEnv == "" {
 		spec.APIKeyEnv = existing.APIKeyEnv
 	}
@@ -334,8 +336,8 @@ func (spec *ProviderSpec) applyDefaults(existing provider.ProfileEntry) {
 	}
 }
 
-func (spec ProviderSpec) toEntry(existing provider.ProfileEntry) provider.ProfileEntry {
-	entry := provider.ProfileEntry{
+func (spec ProviderSpec) toEntry(existing kitcatalog.ProfileEntry) kitcatalog.ProfileEntry {
+	entry := kitcatalog.ProfileEntry{
 		APIStyle:     spec.APIStyle,
 		BaseURL:      spec.BaseURL,
 		APIKeyEnv:    spec.APIKeyEnv,
@@ -347,7 +349,7 @@ func (spec ProviderSpec) toEntry(existing provider.ProfileEntry) provider.Profil
 		ModelsPath:   spec.ModelsPath,
 		Vision:       spec.Vision,
 		KeepAlive:    existing.KeepAlive,
-		ModelWindows: provider.MergeModelWindows(existing.ModelWindows, spec.ModelWindows),
+		ModelWindows: kitcatalog.MergeModelWindows(existing.ModelWindows, spec.ModelWindows),
 	}
 	if spec.ThinkingType != "" {
 		entry.Thinking = &provider.ThinkingConfig{Type: spec.ThinkingType, Keep: spec.ThinkingKeep}
@@ -376,7 +378,7 @@ func MergeProviderModelWindow(home, name, model string, window int) (bool, error
 	if entry.ModelWindows[model] == window {
 		return false, nil
 	}
-	entry.ModelWindows = provider.MergeModelWindows(entry.ModelWindows, map[string]int{model: window})
+	entry.ModelWindows = kitcatalog.MergeModelWindows(entry.ModelWindows, map[string]int{model: window})
 	if err := writeProviderEntry(name, entry); err != nil {
 		return false, err
 	}

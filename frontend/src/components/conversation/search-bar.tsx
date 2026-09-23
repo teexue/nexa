@@ -97,7 +97,7 @@ function SearchBarRow({
     if (e.key === "Escape") props.onClear()
   }
   return (
-    <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2 shadow-sm">
+    <div className="glass-tile flex items-center gap-2 rounded-xl border border-[color:var(--glass-edge)] px-3 py-2">
       <Search className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
       <Input
         ref={inputRef}

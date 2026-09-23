@@ -9,12 +9,13 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/session"
 
 	"github.com/teexue/nexa/core/agent"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/session"
-	"github.com/teexue/nexakit/registry"
 )
 
 // memStore is a minimal in-memory session.Store for workdir tests.
@@ -37,10 +38,10 @@ func (m *memStore) Load(id string) (*session.Session, error) {
 	return sess, nil
 }
 
-func (m *memStore) List() ([]session.SessionMeta, error) {
-	metas := make([]session.SessionMeta, 0, len(m.sessions))
+func (m *memStore) List() ([]session.Meta, error) {
+	metas := make([]session.Meta, 0, len(m.sessions))
 	for _, sess := range m.sessions {
-		metas = append(metas, session.SessionMeta{
+		metas = append(metas, session.Meta{
 			ID:        sess.ID,
 			UserID:    sess.UserID,
 			Agent:     sess.Agent,
@@ -74,7 +75,7 @@ func newWorkdirService(t *testing.T, agentsDir string, store session.Store) *ser
 	return service.New(service.ServiceConfig{
 		AgentsDir:   agentsDir,
 		Registry:    registry.New(),
-		NewProvider: func(*agent.Agent) (provider.Provider, error) { return &provider.MockProvider{}, nil },
+		NewProvider: func(*agent.Agent) (provider.Provider, error) { return &kitmock.MockProvider{}, nil },
 		Store:       store,
 		Logger:      slog.Default(),
 	})

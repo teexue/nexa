@@ -63,7 +63,7 @@ export function TopBar({
 }: TopBarProps) {
   const { t } = useTranslation()
   return (
-    <header className="flex h-10 shrink-0 items-center justify-between border-b border-border bg-background px-4">
+    <header className="glass-panel flex h-10 shrink-0 items-center justify-between border-b border-[color:var(--glass-edge)] px-4">
       <div className="flex items-center gap-2.5">
         <AgentSwitcher
           agent={agent}

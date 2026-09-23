@@ -1,8 +1,9 @@
 package httpapi
 
 import (
-	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/permission"
+
+	"github.com/teexue/nexa/core/agent"
 )
 
 // toolExecutionJSON keeps Mode and MaxParallel because the editor already reads those names.
@@ -92,7 +93,7 @@ func compactionFrom(in *agent.CompactionConfig) *compactionJSON {
 		return nil
 	}
 	return &compactionJSON{
-		Strategy: in.Strategy, ContextWindow: in.ContextWindow,
+		Strategy: string(in.Strategy), ContextWindow: in.ContextWindow,
 		TriggerRatio: in.TriggerRatio, TargetRatio: in.TargetRatio,
 		KeepRecent: in.KeepRecent, KeepHead: in.KeepHead,
 		MaxMessages: in.MaxMessages, SummaryModel: in.SummaryModel,

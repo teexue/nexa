@@ -8,14 +8,14 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/teexue/nexakit/provider"
+	kitmock "github.com/teexue/nexakit/provider/mock"
+	"github.com/teexue/nexakit/registry"
+	"github.com/teexue/nexakit/subagent"
 
 	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexa/core/config"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/subagent"
-	"github.com/teexue/nexakit/builtin"
-	"github.com/teexue/nexakit/registry"
 )
 
 func TestSaveAndGetSubagentSettings(t *testing.T) {
@@ -47,12 +47,12 @@ system_prompt: hi
 tools: [get_time]
 `), 0o644))
 	reg := registry.New()
-	builtin.RegisterAll(reg, "")
+	registry.RegisterBuiltin(reg, "")
 	svc := service.New(service.ServiceConfig{
 		AgentsDir:   agentsDir,
 		HomeDir:     home,
 		Registry:    reg,
-		NewProvider: func(*agent.Agent) (provider.Provider, error) { return &provider.MockProvider{}, nil },
+		NewProvider: func(*agent.Agent) (provider.Provider, error) { return &kitmock.MockProvider{}, nil },
 	})
 	result, err := svc.PrepareRun(context.Background(), service.RunRequest{
 		Agent: "agt_plain", Prompt: "hi",

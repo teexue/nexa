@@ -5,8 +5,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/teexue/nexa/core/store"
 	"github.com/teexue/nexakit/provider"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+
+	"github.com/teexue/nexa/core/store"
 )
 
 func TestLoadCatalog(t *testing.T) {
@@ -167,14 +169,14 @@ func TestResolveVendorAnthropicAuth(t *testing.T) {
 
 func TestListingProfileDualVendor(t *testing.T) {
 	// Moonshot configured as Anthropic: listing should switch to the OpenAI endpoint.
-	anthropic := provider.Profile{
+	anthropic := kitcatalog.Profile{
 		Name:      "moonshot",
 		APIStyle:  provider.StyleAnthropic,
 		BaseURL:   "https://api.moonshot.cn/anthropic",
 		APIKey:    "k",
 		AuthStyle: provider.AuthBearer,
 	}
-	got := provider.ListingProfile(anthropic)
+	got := kitcatalog.ListingProfile(anthropic)
 	if got.APIStyle != provider.StyleOpenAI {
 		t.Fatalf("listing api_style = %q, want openai", got.APIStyle)
 	}
@@ -189,21 +191,21 @@ func TestListingProfileDualVendor(t *testing.T) {
 	}
 
 	// Pure-Anthropic vendor keeps its native style.
-	native := provider.Profile{
+	native := kitcatalog.Profile{
 		Name:      "anthropic",
 		APIStyle:  provider.StyleAnthropic,
 		BaseURL:   "https://api.anthropic.com",
 		APIKey:    "k",
 		AuthStyle: provider.AuthXAPIKey,
 	}
-	if got := provider.ListingProfile(native); got.APIStyle != provider.StyleAnthropic {
+	if got := kitcatalog.ListingProfile(native); got.APIStyle != provider.StyleAnthropic {
 		t.Fatalf("anthropic listing api_style = %q, want anthropic", got.APIStyle)
 	}
 
 	// Custom Anthropic base URL on a dual vendor is respected (user override).
 	custom := anthropic
 	custom.BaseURL = "https://custom.example.com"
-	if got := provider.ListingProfile(custom); got.BaseURL != "https://custom.example.com" || got.APIStyle != provider.StyleAnthropic {
+	if got := kitcatalog.ListingProfile(custom); got.BaseURL != "https://custom.example.com" || got.APIStyle != provider.StyleAnthropic {
 		t.Fatalf("custom base_url listing should be respected, got %+v", got)
 	}
 }
@@ -239,11 +241,11 @@ func TestModelContextWindow(t *testing.T) {
 }
 
 func TestMergeModelWindows(t *testing.T) {
-	got := provider.MergeModelWindows(map[string]int{"a": 1000}, map[string]int{"b": 2000, "a": 0})
+	got := kitcatalog.MergeModelWindows(map[string]int{"a": 1000}, map[string]int{"b": 2000, "a": 0})
 	if got["a"] != 1000 || got["b"] != 2000 {
 		t.Fatalf("merge = %v", got)
 	}
-	if provider.MergeModelWindows(nil, nil) != nil {
+	if kitcatalog.MergeModelWindows(nil, nil) != nil {
 		t.Fatal("empty merge should be nil")
 	}
 }
@@ -253,7 +255,7 @@ func TestMissingCatalog(t *testing.T) {
 	path := filepath.Join(dir, "providers.yaml")
 	if _, err := store.LoadProviderCatalog(path, nil); err == nil {
 		t.Fatal("expected error for missing providers file")
-	} else if !provider.IsMissingCatalogError(err) {
+	} else if !kitcatalog.IsMissingCatalogError(err) {
 		t.Fatalf("expected missingCatalogError, got %v", err)
 	}
 
@@ -263,7 +265,7 @@ func TestMissingCatalog(t *testing.T) {
 	}
 	if _, err := store.LoadProviderCatalog(path, nil); err == nil {
 		t.Fatal("expected error for empty providers")
-	} else if !provider.IsMissingCatalogError(err) {
+	} else if !kitcatalog.IsMissingCatalogError(err) {
 		t.Fatalf("expected missingCatalogError for empty, got %v", err)
 	}
 }

@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/teexue/nexa/core/agent"
-	"github.com/teexue/nexakit/provider"
 )
 
 // AgentSummary is the lightweight representation of an agent for list endpoints.
@@ -22,8 +21,8 @@ type AgentSummary struct {
 }
 
 // agentContextWindow is the window advertised on the agent list: explicit
-// compaction config, then a window saved on the provider (Ollama /api/show
-// at setup), then an official model spec. Unknown models stay 0.
+// compaction config, then a window saved on the provider (e.g. Ollama
+// /api/show at setup). Unknown models stay 0.
 func (s *Service) agentContextWindow(a *agent.Agent) int {
 	if a.Compaction != nil && a.Compaction.ContextWindow > 0 {
 		return a.Compaction.ContextWindow
@@ -32,9 +31,6 @@ func (s *Service) agentContextWindow(a *agent.Agent) int {
 		if n := s.ModelWindow(a.Provider, a.Model); n > 0 {
 			return n
 		}
-	}
-	if spec, ok := provider.SpecForModel(a.Model); ok {
-		return spec.ContextWindow
 	}
 	return 0
 }

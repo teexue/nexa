@@ -5,9 +5,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/teexue/nexakit/tool/builtin"
 
 	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/builtin"
 )
 
 func TestSaveAndGetShellSettings(t *testing.T) {

@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"log/slog"
 
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+
 	"github.com/teexue/nexa/core/config"
 	"github.com/teexue/nexa/core/i18n"
-	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexa/core/store"
 )
 
@@ -43,7 +44,7 @@ func openStateDB(home string, logger *slog.Logger) (*store.DB, error) {
 	return db, nil
 }
 
-func bootstrapRuntime(paths runtimePaths, useMock bool, logger *slog.Logger) (*provider.Catalog, *config.CredentialStore, *store.DB, error) {
+func bootstrapRuntime(paths runtimePaths, useMock bool, logger *slog.Logger) (*kitcatalog.Catalog, *config.CredentialStore, *store.DB, error) {
 	if useMock {
 		return nil, nil, nil, nil
 	}
@@ -60,7 +61,7 @@ func bootstrapRuntime(paths runtimePaths, useMock bool, logger *slog.Logger) (*p
 
 	catalog, err := db.LoadCatalog(creds.Lookup)
 	if err != nil {
-		if provider.IsMissingCatalogError(err) {
+		if kitcatalog.IsMissingCatalogError(err) {
 			logger.Warn("log.runtime.no_providers", "path", "state.db")
 			return nil, creds, db, nil
 		}

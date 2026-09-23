@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/teexue/nexa/core/agent"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexa/core/service"
-	"github.com/teexue/nexakit/builtin"
+	kitcatalog "github.com/teexue/nexakit/provider/catalog"
+	kitmock "github.com/teexue/nexakit/provider/mock"
 	"github.com/teexue/nexakit/registry"
+
+	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexa/core/service"
 )
 
 // resolveRunAgent picks the agent for CLI run/chat: an explicit --agent must
@@ -28,11 +30,11 @@ func newRegistry(workDir string) *registry.Registry {
 		}
 	}
 	reg := registry.New()
-	builtin.RegisterAll(reg, workDir)
+	registry.RegisterBuiltin(reg, workDir)
 	return reg
 }
 
-func resolveProvider(catalog *provider.Catalog, useMock bool) func(a *agent.Agent) (provider.Provider, error) {
+func resolveProvider(catalog *kitcatalog.Catalog, useMock bool) func(a *agent.Agent) (provider.Provider, error) {
 	return func(a *agent.Agent) (provider.Provider, error) {
 		if useMock {
 			return mockProvider(), nil
@@ -45,8 +47,8 @@ func resolveProvider(catalog *provider.Catalog, useMock bool) func(a *agent.Agen
 }
 
 func mockProvider() provider.Provider {
-	return &provider.MockProvider{
-		Calls: [][]provider.MockStep{
+	return &kitmock.MockProvider{
+		Calls: [][]kitmock.MockStep{
 			{{
 				ToolCalls: []provider.ToolCall{{
 					ID: "call_1", Name: "get_time", Arguments: []byte("{}"),

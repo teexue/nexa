@@ -19,7 +19,7 @@ export function LoginPage({
 
   if (state === "loading") {
     return (
-      <div className="flex h-full min-h-svh items-center justify-center bg-background">
+      <div className="flex h-full min-h-svh items-center justify-center">
         <p className="text-sm text-muted-foreground">{t("common.loading")}</p>
       </div>
     )

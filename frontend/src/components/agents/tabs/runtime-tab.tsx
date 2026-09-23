@@ -157,8 +157,8 @@ function KnowledgeBaseToggle({
       onClick={onToggle}
       className={`flex w-full items-center justify-between rounded-xl border px-3 py-2.5 text-left text-xs transition-colors ${
         selected
-          ? "border-primary/30 bg-primary/5"
-          : "border-border bg-background hover:bg-muted/40"
+          ? "border-primary/45 bg-primary/12"
+          : "glass-tile border-[color:var(--glass-edge)] hover:bg-primary/12"
       }`}
     >
       <span>
