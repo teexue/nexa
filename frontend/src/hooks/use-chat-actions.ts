@@ -25,6 +25,7 @@ export interface SendMessageOpts {
   attachments?: FileAttachment[]
   model?: string
   provider?: string
+  thinkingEffort?: string
 }
 
 function detachLocal(abortRef: AbortRef): void {
@@ -81,6 +82,7 @@ export function useChatSend(
           images: imagesFromAttachments(opts.attachments),
           model: opts.model,
           provider: opts.provider,
+          thinkingEffort: opts.thinkingEffort,
         })
       } catch (err: unknown) {
         if (err instanceof DOMException && err.name === "AbortError") return

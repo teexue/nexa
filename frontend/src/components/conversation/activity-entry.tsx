@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { ChevronDown, ChevronRight, Minimize2 } from "lucide-react"
 import { MarkdownRenderer } from "@/components/shared/markdown-renderer"
+import { firstTextLine } from "@/lib/activity-fold"
 import { ThinkingBlock } from "./thinking-block"
 import { ToolCallGroup } from "./tool-call-group"
 import { UserMessage } from "./user-message"
@@ -14,6 +15,7 @@ interface ActivityEntryProps {
   onApproveTool?: (approvalId: string) => void
   onDenyTool?: (approvalId: string) => void
   isActive?: boolean
+  isConclusion?: boolean
 }
 
 function GeneratingPulse() {
@@ -28,15 +30,12 @@ function GeneratingPulse() {
 
 export function ActivityEntry(props: ActivityEntryProps) {
   const { entry, isActive } = props
-  const [thinkingExpanded, setThinkingExpanded] = useState(false)
   if (entry.compactionSummary)
     return <CompactionBanner summary={entry.compactionSummary} />
   if (entry.role === "user") return <UserMessage entry={entry} />
   return (
     <AssistantBody
       props={props}
-      thinkingExpanded={thinkingExpanded}
-      onToggleThinking={() => setThinkingExpanded((v) => !v)}
       isWaiting={
         !!isActive &&
         !entry.content &&
@@ -49,53 +48,127 @@ export function ActivityEntry(props: ActivityEntryProps) {
 
 function AssistantBody({
   props,
-  thinkingExpanded,
-  onToggleThinking,
   isWaiting,
 }: {
   props: ActivityEntryProps
-  thinkingExpanded: boolean
-  onToggleThinking: () => void
   isWaiting: boolean
 }) {
-  const { entry, isActive } = props
-  const hasToolCalls = entry.toolCalls && entry.toolCalls.length > 0
   return (
     <div className="flex min-w-0 flex-col gap-1.5">
-      {isActive && <GeneratingPulse />}
-      {entry.reasoningContent && (
-        <ThinkingBlock
-          content={entry.reasoningContent}
-          isStreaming={!!isActive}
-          isExpanded={thinkingExpanded}
-          onToggle={onToggleThinking}
-        />
+      {props.isActive ? <GeneratingPulse /> : null}
+      <ThinkingSlot props={props} />
+      <ToolSlot props={props} />
+      <ReplySlot props={props} />
+      <TruncationNote entry={props.entry} isActive={!!props.isActive} />
+      {isWaiting ? <WaitingShimmer /> : null}
+    </div>
+  )
+}
+
+function ThinkingSlot({ props }: { props: ActivityEntryProps }) {
+  const { entry, isActive } = props
+  if (!entry.reasoningContent) return null
+  const busy = !!isActive && !entry.content && !entry.toolCalls?.length
+  return (
+    <ThinkingBlock
+      key={isActive ? "live" : "done"}
+      content={entry.reasoningContent}
+      isStreaming={busy}
+    />
+  )
+}
+
+function ToolSlot({ props }: { props: ActivityEntryProps }) {
+  const calls = props.entry.toolCalls
+  if (!calls?.length) return null
+  const lastTool = calls[calls.length - 1]?.id ?? ""
+  const phase = props.isActive ? "live" : "done"
+  return (
+    <ToolCallGroup
+      toolCalls={calls}
+      foldKey={`${phase}:${lastTool}`}
+      selectedToolCallId={props.selectedToolCallId}
+      onSelectToolCall={props.onSelectToolCall}
+      onApproveTool={props.onApproveTool}
+      onDenyTool={props.onDenyTool}
+    />
+  )
+}
+
+function ReplySlot({ props }: { props: ActivityEntryProps }) {
+  const { entry, isActive, isConclusion } = props
+  if (!entry.content) return null
+  const open = !!isConclusion || (!!isActive && !!entry.content)
+  return (
+    <ReplyBlock
+      key={open ? "open" : "shut"}
+      content={entry.content}
+      initiallyOpen={open}
+      pinned={!!isConclusion}
+      streaming={!!isActive && !entry.toolCalls?.length}
+    />
+  )
+}
+
+function TruncationNote({
+  entry,
+  isActive,
+}: {
+  entry: ConversationEntry
+  isActive: boolean
+}) {
+  if (!entry.outputTruncated || isActive) return null
+  return <OutputTruncatedBanner />
+}
+
+function WaitingShimmer() {
+  return (
+    <div className="flex flex-col gap-1.5" aria-hidden>
+      <div className="shimmer-line" />
+      <div className="shimmer-line" />
+      <div className="shimmer-line" />
+    </div>
+  )
+}
+
+function ReplyBlock({
+  content,
+  initiallyOpen,
+  pinned,
+  streaming,
+}: {
+  content: string
+  initiallyOpen: boolean
+  pinned: boolean
+  streaming: boolean
+}) {
+  const [open, setOpen] = useState(initiallyOpen)
+  const line = firstTextLine(content)
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="flex w-full min-w-0 items-center gap-1 text-left text-[13px] text-muted-foreground"
+      >
+        <ChevronRight className="h-3 w-3 shrink-0" />
+        <span className="truncate">{line}</span>
+      </button>
+    )
+  }
+  return (
+    <div className="min-w-0 text-[13px] leading-relaxed">
+      {!pinned && (
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          className="mb-1 flex w-full min-w-0 items-center gap-1 text-left text-[11px] text-muted-foreground"
+        >
+          <ChevronDown className="h-3 w-3 shrink-0" />
+          <span className="truncate">{line}</span>
+        </button>
       )}
-      {hasToolCalls && (
-        <ToolCallGroup
-          toolCalls={entry.toolCalls!}
-          selectedToolCallId={props.selectedToolCallId}
-          onSelectToolCall={props.onSelectToolCall}
-          onApproveTool={props.onApproveTool}
-          onDenyTool={props.onDenyTool}
-        />
-      )}
-      {entry.content && (
-        <div className="min-w-0 text-[13px] leading-relaxed">
-          <MarkdownRenderer
-            content={entry.content}
-            isStreaming={!!isActive && !hasToolCalls}
-          />
-        </div>
-      )}
-      {entry.outputTruncated && !isActive && <OutputTruncatedBanner />}
-      {isWaiting && (
-        <div className="flex flex-col gap-1.5" aria-hidden>
-          <div className="shimmer-line" />
-          <div className="shimmer-line" />
-          <div className="shimmer-line" />
-        </div>
-      )}
+      <MarkdownRenderer content={content} isStreaming={streaming} />
     </div>
   )
 }

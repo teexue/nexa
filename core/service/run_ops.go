@@ -37,6 +37,10 @@ type RunRequest struct {
 	// default provider if it enables Model, else the lexicographically first
 	// catalog provider that does.
 	Provider string `json:"provider,omitempty"`
+	// ThinkingEffort is the unified intensity for this run (off, on, low,
+	// medium, high, max). Empty leaves the vendor default. The provider
+	// client maps it onto that vendor's documented fields.
+	ThinkingEffort string `json:"thinking_effort,omitempty"`
 	// Source attributes the run for request auditing (e.g. "http", "kanban").
 	Source string `json:"-"`
 }
@@ -89,6 +93,7 @@ func (s *Service) PrepareRun(ctx context.Context, req RunRequest, approver loop.
 	if err := s.applyRunModel(req, sess, a); err != nil {
 		return nil, err
 	}
+	applyRunEffort(req, a)
 	p, prompt, err := s.prepareRunProvider(ctx, a, req.Prompt)
 	if err != nil {
 		return nil, err

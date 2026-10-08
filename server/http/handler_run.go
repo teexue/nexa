@@ -10,10 +10,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"github.com/teexue/nexa/core/service"
 	"github.com/teexue/nexakit/event"
 	"github.com/teexue/nexakit/loop"
 	"github.com/teexue/nexakit/provider"
-	"github.com/teexue/nexa/core/service"
 )
 
 // ImageAttachment is an uploaded image in the run request.
@@ -24,14 +24,15 @@ type ImageAttachment struct {
 
 // RunRequest is the HTTP DTO for POST /v1/agents/run.
 type RunRequest struct {
-	Agent     string             `json:"agent"`
-	Prompt    string             `json:"prompt"`
-	SessionID string             `json:"session_id,omitempty"`
-	Messages  []provider.Message `json:"messages,omitempty"`
-	WorkDir   string             `json:"workdir,omitempty"`
-	Images    []ImageAttachment  `json:"images,omitempty"`
-	Model     string             `json:"model,omitempty"`
-	Provider  string             `json:"provider,omitempty"`
+	Agent          string             `json:"agent"`
+	Prompt         string             `json:"prompt"`
+	SessionID      string             `json:"session_id,omitempty"`
+	Messages       []provider.Message `json:"messages,omitempty"`
+	WorkDir        string             `json:"workdir,omitempty"`
+	Images         []ImageAttachment  `json:"images,omitempty"`
+	Model          string             `json:"model,omitempty"`
+	Provider       string             `json:"provider,omitempty"`
+	ThinkingEffort string             `json:"thinking_effort,omitempty"`
 }
 
 func (s *Server) handleRun(c *gin.Context) {
@@ -51,15 +52,16 @@ func (s *Server) handleRun(c *gin.Context) {
 	}
 
 	result, err := s.svc.PrepareRun(c.Request.Context(), service.RunRequest{
-		Agent:     req.Agent,
-		Prompt:    req.Prompt,
-		SessionID: req.SessionID,
-		Messages:  req.Messages,
-		WorkDir:   req.WorkDir,
-		Images:    images,
-		Model:     req.Model,
-		Provider:  req.Provider,
-		Source:    "http",
+		Agent:          req.Agent,
+		Prompt:         req.Prompt,
+		SessionID:      req.SessionID,
+		Messages:       req.Messages,
+		WorkDir:        req.WorkDir,
+		Images:         images,
+		Model:          req.Model,
+		Provider:       req.Provider,
+		ThinkingEffort: req.ThinkingEffort,
+		Source:         "http",
 	}, s.approver)
 	if err != nil {
 		respondServiceError(c, err, errorDetails{

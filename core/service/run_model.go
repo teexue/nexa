@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/teexue/nexa/core/agent"
+	"github.com/teexue/nexakit/provider"
 	"github.com/teexue/nexakit/session"
 )
 
@@ -17,6 +18,18 @@ func (s *Service) applyRunModel(req RunRequest, sess *session.Session, a *agent.
 	sess.SetMetadata(session.MetadataKeyProvider, providerName)
 	sess.SetMetadata(session.MetadataKeyModel, model)
 	return nil
+}
+
+func applyRunEffort(req RunRequest, a *agent.Agent) {
+	effort := strings.TrimSpace(req.ThinkingEffort)
+	if effort == "" || a == nil {
+		return
+	}
+	keep := ""
+	if a.Thinking != nil {
+		keep = a.Thinking.Keep
+	}
+	a.Thinking = &provider.ThinkingConfig{Effort: effort, Keep: keep}
 }
 
 func (s *Service) resolveRunModel(req RunRequest, sess *session.Session, a *agent.Agent) (string, string, error) {

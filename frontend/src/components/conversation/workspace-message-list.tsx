@@ -3,6 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { SearchBar } from "./search-bar"
 import { StreamProgress } from "./stream-progress"
 import { ActivityEntry } from "./activity-entry"
+import { isTurnConclusion } from "@/lib/activity-fold"
 import type { MessageSearch } from "@/hooks/use-message-search"
 import type { ConversationEntry } from "@/types/agent"
 import { cn } from "@/lib/utils"
@@ -64,6 +65,7 @@ export function WorkspaceMessageList({
               onSelectToolCall={onSelectToolCall}
               onApproveTool={onApproveTool}
               onDenyTool={onDenyTool}
+              isConclusion={isTurnConclusion(messages, msgIndex, isStreaming)}
               search={search}
               matchesRef={search.matchRefs}
             />
@@ -89,6 +91,7 @@ function MessageRow({
   onSelectToolCall,
   onApproveTool,
   onDenyTool,
+  isConclusion,
   search,
   matchesRef,
 }: {
@@ -100,6 +103,7 @@ function MessageRow({
   onSelectToolCall: (id: string) => void
   onApproveTool?: (approvalId: string) => void
   onDenyTool?: (approvalId: string) => void
+  isConclusion: boolean
   search: MessageSearch
   matchesRef: React.MutableRefObject<HTMLDivElement[]>
 }) {
@@ -123,6 +127,7 @@ function MessageRow({
         onApproveTool={onApproveTool}
         onDenyTool={onDenyTool}
         isActive={isStreaming && isLast}
+        isConclusion={isConclusion}
       />
     </div>
   )

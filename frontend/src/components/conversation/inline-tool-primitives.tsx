@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { File, type LucideIcon } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { Rec } from "@/components/inspector/tool-detail-utils"
 import type { DiffLine } from "@/components/inspector/diff-utils"
@@ -135,55 +135,27 @@ export function Meta({
 }
 
 export function FilePanel({
-  path,
   meta,
   children,
-  icon: Icon = File,
 }: {
   path: string
   meta?: ReactNode
   children: ReactNode
   icon?: LucideIcon
 }) {
+  if (!meta && !children) return null
   return (
-    <div className="overflow-hidden rounded-md border border-border/70 bg-muted/20">
-      <div className="flex items-center gap-2 border-b border-border/70 bg-muted/40 px-2.5 py-1.5">
-        <Icon className="h-3 w-3 shrink-0 text-primary" />
-        <span
-          className="min-w-0 flex-1 truncate font-mono text-[11px] text-foreground"
-          title={path}
-        >
-          {path}
-        </span>
-        {meta && (
-          <span className="flex shrink-0 items-center gap-1">{meta}</span>
-        )}
-      </div>
+    <div className="flex max-h-48 flex-col gap-1 overflow-auto">
+      {meta ? <div className="flex items-center gap-1">{meta}</div> : null}
       {children}
     </div>
   )
 }
 
-export function Terminal({
-  label = "bash",
-  children,
-}: {
-  label?: string
-  children: ReactNode
-}) {
+export function Terminal({ children }: { children: ReactNode }) {
   return (
-    <div className="overflow-hidden rounded-md border border-terminal-border bg-terminal">
-      <div className="flex items-center gap-1.5 border-b border-terminal-border/60 px-2.5 py-1">
-        <span className="h-2 w-2 rounded-full bg-terminal-error/70" />
-        <span className="h-2 w-2 rounded-full bg-warning/70" />
-        <span className="h-2 w-2 rounded-full bg-terminal-success/70" />
-        <span className="ml-1.5 font-mono text-[10px] text-terminal-muted">
-          {label}
-        </span>
-      </div>
-      <div className="max-h-56 overflow-auto px-2.5 py-2 font-mono text-[11px] leading-relaxed">
-        {children}
-      </div>
+    <div className="max-h-40 overflow-auto rounded-md bg-terminal px-2.5 py-2 font-mono text-[11px] leading-relaxed">
+      {children}
     </div>
   )
 }

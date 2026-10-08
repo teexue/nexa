@@ -38,6 +38,7 @@ export interface SendRunOpts {
   images?: { dataUrl: string; name: string }[]
   model?: string
   provider?: string
+  thinkingEffort?: string
 }
 
 function buildRunBody(opts: SendRunOpts): Record<string, unknown> {
@@ -49,6 +50,7 @@ function buildRunBody(opts: SendRunOpts): Record<string, unknown> {
   if (opts.workDir) body.workdir = opts.workDir
   if (opts.model) body.model = opts.model
   if (opts.provider) body.provider = opts.provider
+  if (opts.thinkingEffort) body.thinking_effort = opts.thinkingEffort
   if (opts.images && opts.images.length > 0) {
     body.images = opts.images.map((img) => ({
       data_url: img.dataUrl,

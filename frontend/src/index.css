@@ -325,8 +325,10 @@ textarea:-webkit-autofill {
     0 6px 16px color-mix(in srgb, var(--iris) 28%, transparent);
 }
 
-textarea.glass-plain {
+textarea.glass-plain,
+.has-bg textarea.glass-plain {
   background: transparent;
+  background-color: transparent;
   border-color: transparent;
   box-shadow: none;
   backdrop-filter: none;
@@ -530,6 +532,34 @@ html.dark:not(.has-bg) {
 .has-bg .bg-card,
 .has-bg [data-slot="button"].bg-background {
   border-color: var(--glass-edge);
+}
+
+.composer-surface.glass-tile,
+.dark .composer-surface.glass-tile,
+.has-bg .composer-surface.glass-tile {
+  border: none;
+  box-shadow: none;
+  background: var(--card);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.menu-opaque,
+.has-bg .menu-opaque {
+  background-color: color-mix(in srgb, var(--popover) 94%, transparent);
+  backdrop-filter: saturate(160%) blur(20px);
+  -webkit-backdrop-filter: saturate(160%) blur(20px);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 50%) inset,
+    0 8px 24px rgb(25 26 31 / 14%);
+}
+
+.dark .menu-opaque,
+.dark.has-bg .menu-opaque,
+.has-bg.dark .menu-opaque {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 10px 28px rgb(0 0 0 / 40%);
 }
 
 ::-webkit-scrollbar {

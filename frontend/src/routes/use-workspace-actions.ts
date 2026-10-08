@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import type { NavigateFunction } from "react-router"
-import type { AgentInfo, FileAttachment } from "@/types/agent"
+import type { AgentInfo, FileAttachment, ProviderInfo } from "@/types/agent"
+import { effortForProvider } from "@/lib/think-effort"
 import type { useChat } from "@/hooks/use-chat"
 import { resolveApproval, updateSessionWorkdir } from "@/lib/api"
 
@@ -12,6 +13,8 @@ interface WorkspaceActionOpts {
   agentInfo: AgentInfo | null
   workDir: string
   runModel: { provider: string; model: string }
+  providers: ProviderInfo[]
+  thinkEffort: string
   setRunModel: (v: { provider: string; model: string }) => void
   refreshSessions: () => void
   removeSession: (id: string) => void
@@ -25,7 +28,13 @@ interface WorkspaceActionOpts {
 export function useWorkspaceSend(
   opts: Pick<
     WorkspaceActionOpts,
-    "chat" | "agentInfo" | "resolvedAgent" | "workDir" | "runModel"
+    | "chat"
+    | "agentInfo"
+    | "resolvedAgent"
+    | "workDir"
+    | "runModel"
+    | "providers"
+    | "thinkEffort"
   >
 ) {
   return useCallback(
@@ -41,9 +50,22 @@ export function useWorkspaceSend(
         attachments,
         model: opts.runModel.model || undefined,
         provider: opts.runModel.provider || undefined,
+        thinkingEffort: sendEffort(opts),
       }),
     [opts]
   )
+}
+
+function sendEffort(
+  opts: Pick<WorkspaceActionOpts, "providers" | "runModel" | "thinkEffort">
+): string | undefined {
+  const effort = effortForProvider(
+    opts.providers,
+    opts.runModel.provider,
+    opts.runModel.model,
+    opts.thinkEffort
+  )
+  return effort || undefined
 }
 
 function applyResumedSession(

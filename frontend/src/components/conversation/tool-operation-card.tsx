@@ -84,12 +84,6 @@ function resolveStatus(toolCall: ToolCallEntry, t: TFunction): StatusCfg {
   }
 }
 
-function formatDuration(start?: number, end?: number): string | null {
-  if (!start) return null
-  const ms = (end ?? Date.now()) - start
-  return ms < 1000 ? `${ms}ms` : `${(ms / 1000).toFixed(1)}s`
-}
-
 function StatusIcon({ status, config }: { status: string; config: StatusCfg }) {
   if (
     status === "running" ||
@@ -107,9 +101,7 @@ export function ToolOperationCard({
   isSelected,
 }: ToolOperationCardProps) {
   const { t } = useTranslation()
-  const [expanded, setExpanded] = useState(
-    toolCall.status === "pending_approval" || toolCall.status === "denied"
-  )
+  const [expanded, setExpanded] = useState(false)
   const config = resolveStatus(toolCall, t)
   return (
     <Collapsible open={expanded} onOpenChange={setExpanded}>
@@ -118,11 +110,10 @@ export function ToolOperationCard({
         isSelected={isSelected}
         expanded={expanded}
         config={config}
-        duration={formatDuration(toolCall.startTime, toolCall.endTime)}
         inputSummary={extractInputSummary(toolCall.name, toolCall.input)}
       />
       <CollapsibleContent>
-        <div className="ml-5 border-l-2 border-primary/15 py-1.5 pl-3">
+        <div className="py-1 pl-5">
           <InlineToolDetail toolCall={toolCall} />
           <SubAgentDetailLink
             sessionId={
@@ -145,14 +136,12 @@ function ToolCardTrigger({
   isSelected,
   expanded,
   config,
-  duration,
   inputSummary,
 }: {
   toolCall: ToolCallEntry
   isSelected: boolean
   expanded: boolean
   config: StatusCfg
-  duration: string | null
   inputSummary: ReactNode
 }) {
   const { t } = useTranslation()
@@ -163,7 +152,7 @@ function ToolCardTrigger({
           variant="ghost"
           size="sm"
           className={cn(
-            "h-auto w-full justify-start gap-1.5 rounded-lg px-2 py-1 text-left font-mono text-[10px]",
+            "h-auto w-full justify-start gap-1.5 rounded-lg px-2 py-1 text-left font-mono text-[11px]",
             isSelected
               ? "text-foreground"
               : "text-muted-foreground hover:text-foreground"
@@ -177,23 +166,12 @@ function ToolCardTrigger({
       ) : (
         <ChevronRight className="h-3 w-3 shrink-0" />
       )}
-      <span
-        className="shrink-0 truncate text-muted-foreground"
-        title={toolCall.name}
-      >
+      <span className="shrink-0 text-foreground">
         {toolDisplayName(toolCall.name, t)}
       </span>
       {inputSummary && (
-        <span className="min-w-0 flex-1 truncate text-muted-foreground">
-          {inputSummary}
-        </span>
+        <span className="min-w-0 flex-1 truncate">{inputSummary}</span>
       )}
-      <span className="ml-auto flex shrink-0 items-center gap-1.5">
-        {duration && (
-          <span className="text-muted-foreground/70">{duration}</span>
-        )}
-        <span className={cn("text-[10px]", config.color)}>{config.label}</span>
-      </span>
     </CollapsibleTrigger>
   )
 }

@@ -39,17 +39,21 @@ export function InputBar(props: InputBarProps) {
         attachments={attachments}
         onRemove={removeAttachment}
       />
-      <div className="glass-tile relative rounded-xl border border-[color:var(--glass-edge)] transition-shadow focus-within:border-primary/45">
+      <div className="composer-surface glass-tile relative rounded-xl">
         <PromptField
           text={text}
           onChange={setText}
           onKeyDown={handleKeyDown}
           isStreaming={!!props.isStreaming}
-          fileInputRef={fileInputRef}
-          onFileSelect={handleFileSelect}
         />
         <InputBarToolbar
-          accessory={props.accessory}
+          accessory={
+            <ComposerLeading
+              fileInputRef={fileInputRef}
+              onFileSelect={handleFileSelect}
+              accessory={props.accessory}
+            />
+          }
           tokenUsage={props.tokenUsage}
           isStreaming={!!props.isStreaming}
           showOptimize={!!props.onOptimize}
@@ -74,27 +78,15 @@ function PromptField({
   onChange,
   onKeyDown,
   isStreaming,
-  fileInputRef,
-  onFileSelect,
 }: {
   text: string
   onChange: (v: string) => void
   onKeyDown: (e: React.KeyboardEvent) => void
   isStreaming: boolean
-  fileInputRef: React.RefObject<HTMLInputElement | null>
-  onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
   const { t } = useTranslation()
   return (
-    <div className="flex items-start gap-0.5 pt-2.5 pr-3 pb-1 pl-2">
-      <AttachFilesButton onClick={() => fileInputRef.current?.click()} />
-      <input
-        ref={fileInputRef}
-        type="file"
-        multiple
-        className="hidden"
-        onChange={onFileSelect}
-      />
+    <div className="px-3 pt-2.5 pb-1">
       <Textarea
         value={text}
         onChange={(e) => onChange(e.target.value)}
@@ -106,9 +98,33 @@ function PromptField({
         }
         disabled={false}
         rows={1}
-        className="glass-plain field-sizing-content max-h-[6lh] min-h-6 flex-1 resize-none overflow-y-auto overscroll-contain border-0 bg-transparent px-1.5 py-0 text-sm leading-6 shadow-none focus-visible:ring-0"
+        className="glass-plain field-sizing-content max-h-[6lh] min-h-6 w-full resize-none overflow-y-auto overscroll-contain border-0 bg-transparent px-0.5 py-0 text-sm leading-6 shadow-none focus-visible:ring-0"
       />
     </div>
+  )
+}
+
+function ComposerLeading({
+  fileInputRef,
+  onFileSelect,
+  accessory,
+}: {
+  fileInputRef: React.RefObject<HTMLInputElement | null>
+  onFileSelect: (e: React.ChangeEvent<HTMLInputElement>) => void
+  accessory?: React.ReactNode
+}) {
+  return (
+    <>
+      <AttachFilesButton onClick={() => fileInputRef.current?.click()} />
+      <input
+        ref={fileInputRef}
+        type="file"
+        multiple
+        className="hidden"
+        onChange={onFileSelect}
+      />
+      {accessory}
+    </>
   )
 }
 
@@ -137,7 +153,7 @@ function InputBarToolbar({
 }) {
   return (
     <div className="flex flex-nowrap items-center gap-2 px-2 pb-2">
-      <div className="flex min-w-0 flex-1 items-center overflow-hidden">
+      <div className="flex min-w-0 flex-1 items-center gap-0.5 overflow-hidden">
         {accessory}
       </div>
       {tokenUsage ? (

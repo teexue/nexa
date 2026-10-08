@@ -1,5 +1,6 @@
 import { useState } from "react"
 import type { ConversationEntry } from "@/types/agent"
+import { isTurnConclusion } from "@/lib/activity-fold"
 import { ActivityEntry } from "./activity-entry"
 import { FileChangeSummary } from "./workspace-file-changes"
 
@@ -23,6 +24,7 @@ export function ConversationThread({
           selectedToolCallId={selectedToolCallId}
           onSelectToolCall={setSelectedToolCallId}
           isActive={!!isStreaming && i === messages.length - 1}
+          isConclusion={isTurnConclusion(messages, i, !!isStreaming)}
         />
       ))}
       <FileChangeSummary messages={messages} className="mx-0 mt-1" />

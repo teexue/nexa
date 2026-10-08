@@ -99,16 +99,24 @@ func (w *Watcher) Stop() {
 }
 
 func (w *Watcher) loop() {
+	// Stop nils the field as soon as it runs. Keep a local copy so a stop
+	// that wins the race does not dereference nil on the next select.
+	w.mu.Lock()
+	fw := w.watcher
+	w.mu.Unlock()
+	if fw == nil {
+		return
+	}
 	for {
 		select {
 		case <-w.done:
 			return
-		case event, ok := <-w.watcher.Events:
+		case event, ok := <-fw.Events:
 			if !ok {
 				return
 			}
 			w.handleEvent(event)
-		case err, ok := <-w.watcher.Errors:
+		case err, ok := <-fw.Errors:
 			if !ok {
 				return
 			}

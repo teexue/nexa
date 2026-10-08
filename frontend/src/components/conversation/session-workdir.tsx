@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Check, FolderOpen, FolderPlus, X } from "lucide-react"
+import { Check, Folder, FolderOpen, FolderPlus, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { DirPickerDialog } from "@/components/settings/dir-picker-dialog"
+import { cn } from "@/lib/utils"
 import {
   basename,
   clearWorkdirHistory,
@@ -147,8 +148,48 @@ function WorkdirMenuContent({
     <DropdownMenuContent
       side="top"
       align="start"
-      className="w-max min-w-52 rounded-xl"
+      className="menu-opaque w-72 min-w-72 rounded-xl p-1.5"
     >
+      <WorkdirRecents
+        history={history}
+        workDir={workDir}
+        onPick={onPick}
+        onRemove={onRemove}
+        onClearRecents={onClearRecents}
+      />
+      <WorkdirMenuActions
+        sessionScoped={sessionScoped}
+        onBrowse={onBrowse}
+        onClear={onClear}
+      />
+    </DropdownMenuContent>
+  )
+}
+
+function WorkdirRecents({
+  history,
+  workDir,
+  onPick,
+  onRemove,
+  onClearRecents,
+}: {
+  history: string[]
+  workDir: string
+  onPick: (dir: string) => void
+  onRemove: (dir: string) => void
+  onClearRecents: () => void
+}) {
+  const { t } = useTranslation()
+  if (history.length === 0) {
+    return (
+      <p className="px-2.5 pt-2 pb-1 text-[11px] leading-4 text-muted-foreground">
+        {t("conversation.workdirDefaultHint")}
+      </p>
+    )
+  }
+  return (
+    <>
+      <WorkdirRecentsHead onClear={onClearRecents} />
       {history.map((dir) => (
         <WorkdirRecentRow
           key={dir}
@@ -158,54 +199,55 @@ function WorkdirMenuContent({
           onRemove={onRemove}
         />
       ))}
-      <WorkdirMenuActions
-        hasRecents={history.length > 0}
-        sessionScoped={sessionScoped}
-        onClearRecents={onClearRecents}
-        onBrowse={onBrowse}
-        onClear={onClear}
-      />
-    </DropdownMenuContent>
+      <DropdownMenuSeparator />
+    </>
+  )
+}
+
+function WorkdirRecentsHead({ onClear }: { onClear: () => void }) {
+  const { t } = useTranslation()
+  return (
+    <div className="flex items-center justify-between gap-2 px-2 pt-1 pb-0.5">
+      <span className="text-[11px] text-muted-foreground">
+        {t("settings.dirRecents")}
+      </span>
+      <DropdownMenuItem
+        onClick={onClear}
+        className="h-auto rounded-md px-1.5 py-0.5 text-[11px] font-normal text-muted-foreground"
+      >
+        {t("conversation.workdirClearRecents")}
+      </DropdownMenuItem>
+    </div>
   )
 }
 
 function WorkdirMenuActions({
-  hasRecents,
   sessionScoped,
-  onClearRecents,
   onBrowse,
   onClear,
 }: {
-  hasRecents: boolean
   sessionScoped: boolean
-  onClearRecents: () => void
   onBrowse: () => void
   onClear: () => void
 }) {
   const { t } = useTranslation()
   return (
     <>
-      {hasRecents ? (
-        <DropdownMenuItem
-          onClick={onClearRecents}
-          className="text-xs font-normal text-muted-foreground"
-        >
-          {t("conversation.workdirClearRecents")}
-        </DropdownMenuItem>
-      ) : null}
-      {hasRecents ? <DropdownMenuSeparator /> : null}
       <DropdownMenuItem
         onClick={onBrowse}
-        className="gap-2 text-xs font-normal"
+        className="gap-2 rounded-lg px-2 py-1.5 text-xs font-normal"
       >
-        <FolderPlus className="h-3.5 w-3.5 shrink-0" />
+        <WorkdirMark tone="add" />
         {t("conversation.workdirAdd")}
       </DropdownMenuItem>
       {sessionScoped ? (
         <DropdownMenuItem
           onClick={onClear}
-          className="gap-2 text-xs font-normal"
+          className="gap-2 rounded-lg px-2 py-1.5 text-xs font-normal text-muted-foreground"
         >
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center">
+            <FolderOpen className="h-3.5 w-3.5" />
+          </span>
           {t("conversation.workdirReset")}
         </DropdownMenuItem>
       ) : null}
@@ -228,33 +270,113 @@ function WorkdirRecentRow({
   return (
     <DropdownMenuItem
       onClick={() => onPick(dir)}
-      className="gap-2 pr-1 text-xs font-normal"
-    >
-      {selected ? (
-        <Check className="h-3.5 w-3.5 shrink-0" />
-      ) : (
-        <span className="h-3.5 w-3.5 shrink-0" />
+      className={cn(
+        "items-start gap-2 rounded-lg px-2 py-1.5 font-normal",
+        selected && "bg-primary/12"
       )}
-      <span className="min-w-0 flex-1 truncate font-mono" title={dir}>
-        {basename(dir)}
-      </span>
-      <span
-        role="button"
-        tabIndex={-1}
-        title={t("conversation.workdirForget")}
-        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
-        onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          onRemove(dir)
-        }}
-        onPointerDown={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-        }}
-      >
-        <X className="h-3 w-3" />
-      </span>
+    >
+      <WorkdirMark />
+      <WorkdirPath name={basename(dir)} parent={parentPath(dir)} title={dir} />
+      <WorkdirRowTools
+        selected={selected}
+        forgetLabel={t("conversation.workdirForget")}
+        onRemove={() => onRemove(dir)}
+      />
     </DropdownMenuItem>
   )
+}
+
+function WorkdirPath({
+  name,
+  parent,
+  title,
+}: {
+  name: string
+  parent: string
+  title: string
+}) {
+  return (
+    <span className="min-w-0 flex-1 py-0.5" title={title}>
+      <span className="block truncate text-xs">{name}</span>
+      {parent ? (
+        <span className="block truncate font-mono text-[10px] leading-4 text-muted-foreground">
+          {parent}
+        </span>
+      ) : null}
+    </span>
+  )
+}
+
+function WorkdirRowTools({
+  selected,
+  forgetLabel,
+  onRemove,
+}: {
+  selected: boolean
+  forgetLabel: string
+  onRemove: () => void
+}) {
+  return (
+    <span className="flex shrink-0 items-center gap-0.5 pt-0.5">
+      {selected ? (
+        <Check className="h-3.5 w-3.5 text-primary" />
+      ) : (
+        <span className="h-3.5 w-3.5" />
+      )}
+      <ForgetButton label={forgetLabel} onRemove={onRemove} />
+    </span>
+  )
+}
+
+function WorkdirMark({ tone }: { tone?: "add" }) {
+  const add = tone === "add"
+  return (
+    <span
+      className={cn(
+        "flex h-6 w-6 shrink-0 items-center justify-center rounded-md",
+        add ? "bg-primary/12 text-primary" : "bg-muted text-muted-foreground"
+      )}
+    >
+      {add ? (
+        <FolderPlus className="h-3.5 w-3.5" />
+      ) : (
+        <Folder className="h-3.5 w-3.5" />
+      )}
+    </span>
+  )
+}
+
+function ForgetButton({
+  label,
+  onRemove,
+}: {
+  label: string
+  onRemove: () => void
+}) {
+  return (
+    <span
+      role="button"
+      tabIndex={-1}
+      title={label}
+      className="flex h-5 w-5 items-center justify-center rounded-md text-muted-foreground opacity-0 group-hover/dropdown-menu-item:opacity-100 group-focus/dropdown-menu-item:opacity-100 hover:bg-muted hover:text-foreground"
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onRemove()
+      }}
+      onPointerDown={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
+    >
+      <X className="h-3 w-3" />
+    </span>
+  )
+}
+
+function parentPath(path: string): string {
+  const trimmed = path.replace(/[\\/]+$/, "")
+  const slash = Math.max(trimmed.lastIndexOf("/"), trimmed.lastIndexOf("\\"))
+  if (slash <= 0) return ""
+  return trimmed.slice(0, slash)
 }

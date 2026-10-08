@@ -4,6 +4,7 @@ import { WorkspacePanel } from "@/components/conversation/workspace-panel"
 import { ConversationActions } from "@/components/conversation/conversation-actions"
 import { SessionWorkdir } from "@/components/conversation/session-workdir"
 import { ModelPicker } from "@/components/conversation/model-picker"
+import { ThinkEffortControl } from "@/components/conversation/think-effort-picker"
 import { AppDialogs } from "./app-dialogs"
 import { setWorkspaceChrome, clearWorkspaceChrome } from "./workspace-chrome"
 import type { useWorkspacePage } from "./use-workspace-page"
@@ -55,6 +56,13 @@ function WorkspaceChat({ page }: { page: WorkspacePage }) {
             model={ui.runModel.model || agent.agentInfo?.model || ""}
             locked={derived.agentLocked}
             onChange={actions.setRunModel}
+          />
+          <ThinkEffortControl
+            providers={ui.providers}
+            provider={ui.runModel.provider || agent.agentInfo?.provider || ""}
+            model={ui.runModel.model || agent.agentInfo?.model || ""}
+            value={ui.thinkEffort}
+            onChange={actions.setThinkEffort}
           />
           <SessionWorkdir
             workDir={ui.workDir}

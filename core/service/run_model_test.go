@@ -65,6 +65,22 @@ func TestPrepareRun_PrefersAgentProviderForSharedModel(t *testing.T) {
 	assert.Equal(t, "gpt-4o", result.Config.Agent.Model)
 }
 
+func TestPrepareRun_AppliesThinkingEffort(t *testing.T) {
+	agentsDir := t.TempDir()
+	writePlainAgent(t, agentsDir)
+	svc := newWorkdirService(t, agentsDir, newMemStore())
+
+	result, err := svc.PrepareRun(context.Background(), service.RunRequest{
+		Agent:          "agt_wd",
+		Prompt:         "hi",
+		ThinkingEffort: " high ",
+	}, nil)
+	require.NoError(t, err)
+	require.NotNil(t, result.Config.Agent.Thinking)
+	assert.Equal(t, "high", result.Config.Agent.Thinking.Effort)
+	assert.Empty(t, result.Config.Agent.Thinking.Type)
+}
+
 func TestPrepareRun_SessionProviderLockRejectsOverride(t *testing.T) {
 	agentsDir := t.TempDir()
 	writePlainAgent(t, agentsDir)

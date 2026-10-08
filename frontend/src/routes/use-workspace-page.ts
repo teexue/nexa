@@ -45,6 +45,7 @@ function useWorkspaceUi() {
   const [sessionWorkDir, setSessionWorkDir] = useState<string | null>(null)
   const [providers, setProviders] = useState<ProviderInfo[]>([])
   const [runModel, setRunModel] = useState({ provider: "", model: "" })
+  const [thinkEffort, setThinkEffort] = useState("")
   const workDir = (sessionWorkDir ?? localStorage.getItem("workDir")) || ""
   return {
     selectedToolCallId,
@@ -57,6 +58,8 @@ function useWorkspaceUi() {
     setProviders,
     runModel,
     setRunModel,
+    thinkEffort,
+    setThinkEffort,
     workDir,
   }
 }
@@ -181,6 +184,8 @@ function useWorkspaceBoundActions(ctx: {
       provider: ui.runModel.provider || agent.agentInfo?.provider || "",
       model: ui.runModel.model || agent.agentInfo?.model || "",
     },
+    providers: ui.providers,
+    thinkEffort: ui.thinkEffort,
     setRunModel: ui.setRunModel,
     refreshSessions: sessMgr.refresh,
     removeSession: sessMgr.remove,
@@ -196,5 +201,6 @@ function useWorkspaceBoundActions(ctx: {
     ...misc,
     handleSendMessage,
     setRunModel: ui.setRunModel,
+    setThinkEffort: ui.setThinkEffort,
   }
 }

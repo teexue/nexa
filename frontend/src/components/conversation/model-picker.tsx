@@ -157,7 +157,11 @@ function ModelMenu({
 }) {
   const selected = modelChoiceKey(provider, model)
   return (
-    <DropdownMenuContent align="start" className="w-max min-w-48 rounded-xl">
+    <DropdownMenuContent
+      side="top"
+      align="start"
+      className="menu-opaque w-max min-w-48 rounded-xl"
+    >
       {options.map((o) => {
         const key = modelChoiceKey(o.provider, o.model)
         return (
